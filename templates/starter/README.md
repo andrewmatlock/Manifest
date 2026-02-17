@@ -76,7 +76,7 @@ project-name/
 
 This project supports routes, components, dynamic data, localization, icons, color themes, and much more.
 
-For comprehensive documentation visit [manifestjs.dev](https://manifestjs.dev).
+For comprehensive documentation visit [manifestjs.org](https://manifestjs.org).
 
 ---
 

@@ -8,8 +8,8 @@ const { execSync } = require('child_process');
 const projectName = process.argv[2];
 
 if (!projectName) {
-  console.log('Usage: npx @manifest/create-starter <project-name>');
-  console.log('Example: npx @manifest/create-starter MyProject');
+  console.log('Usage: npx mnfst-starter <project-name>');
+  console.log('Example: npx mnfst-starter MyProject');
   process.exit(1);
 }
 

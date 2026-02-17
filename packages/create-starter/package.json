@@ -1,10 +1,10 @@
 {
-  "name": "manifestjs-starter",
+  "name": "mnfst-starter",
   "version": "1.5.34",
-  "description": "Create Manifest starter application",
+  "description": "Create a Manifest (mnfst) starter application",
   "main": "index.html",
   "bin": {
-    "manifest-starter": "create-starter.js"
+    "mnfst-starter": "create-starter.js"
   },
   "scripts": {
     "start": "browser-sync start --config bs-config.js",
@@ -12,6 +12,7 @@
   },
   "keywords": [
     "manifest",
+    "mnfst",
     "framework",
     "starter",
     "template",
@@ -21,6 +22,9 @@
   ],
   "author": "Andrew Matlock",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/andrewmatlock/Manifest.git",

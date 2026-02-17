@@ -275,7 +275,7 @@ function buildMainStylesheet() {
     const mainContent = [];
 
     // Add header comment
-    mainContent.push('/*  Manifest CSS\n/*  By Andrew Matlock under MIT license\n/*  https://manifestjs.dev\n/*  Modify referenced variables in manifest.theme.css\n*/');
+    mainContent.push('/*  Manifest CSS\n/*  By Andrew Matlock under MIT license\n/*  https://manifestjs.org\n/*  Modify referenced variables in manifest.theme.css\n*/');
 
     // Step 1: Add core files in order
     for (const coreFile of CONFIG.stylesheets.coreFiles) {

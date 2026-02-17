@@ -9,7 +9,7 @@ Kickstart new websites and apps with a turnkey template.
 Install the starter project locally with the `npx` command:
 
 ```bash copy
-npx manifestjs-starter MyProject
+npx mnfst-starter MyProject
 ```
 
 "MyProject" is the modifiable root directory title—name it after your project.

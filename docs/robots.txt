@@ -1,4 +1,4 @@
 User-agent: *
 Disallow:
 
-Sitemap: https://www.manifestjs.dev/sitemap.xml
+Sitemap: https://www.manifestjs.org/sitemap.xml

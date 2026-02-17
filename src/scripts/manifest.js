@@ -1,6 +1,6 @@
 /*  Manifest JS
 /*  By Andrew Matlock under MIT license
-/*  https://manifestjs.dev
+/*  https://manifestjs.org
 /*
 /*  Lightweight loader that dynamically loads Alpine.js and Manifest plugins
 /*  from jsDelivr CDN. Loads all plugins by default, or a subset if specified.
@@ -324,7 +324,7 @@
 				});
 			});
 			if (config.tailwind) {
-				pluginPromises.push(loadTailwind(config.version).catch(() => {}));
+				pluginPromises.push(loadTailwind(config.version).catch(() => { }));
 			}
 			await Promise.all(pluginPromises);
 			if (manifestPromise) {

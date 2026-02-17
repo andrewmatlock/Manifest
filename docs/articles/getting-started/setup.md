@@ -22,7 +22,7 @@ The script and stylesheets are modular, designed to work alone or together to be
 <script src="https://cdn.jsdelivr.net/npm/mnfst@latest/dist/manifest.min.js"></script>
 
 <!-- Styles -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mnfst/manifest@latest/dist/manifest.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mnfst@latest/dist/manifest.min.css">
 <link rel="stylesheet" href="/manifest.theme.css">
 ```
 

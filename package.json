@@ -19,7 +19,7 @@
         "start:src": "cd src && browser-sync start --config bs-config.js",
         "start:docs": "cd docs && browser-sync start --config bs-config.js",
         "start:starter": "cd templates/starter && browser-sync start --config bs-config.js --port 3001",
-        "publish:starter": "cd packages/create-starter && npm publish",
+        "publish:starter": "cd packages/create-starter && npm publish --auth-type=web",
         "prepublishOnly": "npm run build",
         "test": "echo 'No tests configured'",
         "lint": "echo 'No linting configured'"
@@ -48,7 +48,7 @@
     "author": "Andrew Matlock",
     "license": "MIT",
     "description": "A modern, lightweight frontend framework with built-in components and utilities",
-    "homepage": "https://manifestjs.dev",
+    "homepage": "https://manifestjs.org",
     "repository": {
         "type": "git",
         "url": "https://github.com/andrewmatlock/manifest.git"

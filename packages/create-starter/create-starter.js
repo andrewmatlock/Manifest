@@ -4,18 +4,19 @@ const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
 
-// Get project name from command line arguments
-const projectName = process.argv[2];
+// Get project name from command line arguments (join so "Playcom Platform" works)
+const projectName = process.argv.slice(2).join(' ').trim();
 
 if (!projectName) {
   console.log('Usage: npx mnfst-starter <project-name>');
   console.log('Example: npx mnfst-starter MyProject');
+  console.log('Example: npx mnfst-starter "Playcom Platform"');
   process.exit(1);
 }
 
-// Validate project name - allow most characters but prevent problematic ones
-if (!/^[a-zA-Z0-9._-]+$/.test(projectName) || projectName.includes('..') || projectName.startsWith('.') || projectName.endsWith('.')) {
-  console.error('Error: Project name must contain only letters, numbers, dots, underscores, and hyphens. Cannot start/end with dots or contain consecutive dots.');
+// Validate project name - allow letters, numbers, spaces, dots, underscores, hyphens; prevent path tricks
+if (!/^[a-zA-Z0-9._ -]+$/.test(projectName) || projectName.includes('..') || projectName.startsWith('.') || projectName.endsWith('.') || /^\s|\s$/.test(projectName)) {
+  console.error('Error: Project name must contain only letters, numbers, spaces, dots, underscores, and hyphens. Cannot start/end with dots or spaces, or contain consecutive dots.');
   process.exit(1);
 }
 

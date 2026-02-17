@@ -1,11 +1,12 @@
-# Indux Development
+# Manifest Development
 
 ## Quick Start
 
 ```bash
-npm run start
+npm run start:src    # Start src directory with live reload
+npm run start:docs   # Start docs directory with live reload
+npm run start:starter # Start starter template with live reload
 ```
-Runs any website directory in this repo with live reload.
 
 ---
 
@@ -14,11 +15,15 @@ Runs any website directory in this repo with live reload.
 ```bash
 npm run build
 ```
-- Compiles indux.components.js and indux.router.js from their respective source files in /src/scripts/components or /router
-- Bundles scripts from /src/scripts into indux.js and indux.quickstart.js
-- Bundles CSS stylesheets from /src/styles into indux.css
-- Copies indux.css and indux.quickstart.js to docs and starter template
-- Generates release assets
+
+**Build Process:**
+- Combines subscripts into monolith plugin files (components, router, utilities, auth, data, etc.)
+- Bundles CSS stylesheets from `/src/styles` into `manifest.css`
+- Minifies CSS files (`manifest.css` → `manifest.min.css`, `manifest.code.css` → `manifest.code.min.css`)
+- Syncs starter template from `/templates/starter` to `/packages/create-starter/templates`
+- Copies all files to `/dist` directory for npm publishing
+
+**Note:** The build process no longer creates bundles (`manifest.bundle.js`, `manifest.quickstart.js`). Only the dynamic loader (`manifest.js`) is produced, which loads plugins on-demand from CDN.
 
 ---
 
@@ -48,7 +53,7 @@ npm run build
 
 4. **Publish to npm:**
    ```bash
-   npm publish
+   npm publish --access public
    ```
 
 5. **Publish starter template (optional):**
@@ -58,26 +63,25 @@ npm run build
 
 **Note:** You must be logged into npm (`npm login`) before publishing.
 
-Files are then available at URLs like:
-- `https://cdn.jsdelivr.net/npm/@indux/indux@0.2.3/dist/indux.js`
-- `https://cdn.jsdelivr.net/npm/@indux/indux@0.2.3/dist/indux.css`
-
-And distributed publically like:
-
-- `https://cdn.jsdelivr.net/npm/@indux/indux@latest/dist/indux.min.js`
-- `https://cdn.jsdelivr.net/npm/@indux/indux@latest/dist/indux.min.css`
+Files are then available at CDN URLs like:
+- `https://cdn.jsdelivr.net/npm/mnfst@latest/dist/manifest.js` (dynamic loader)
+- `https://cdn.jsdelivr.net/npm/mnfst@latest/dist/manifest.css`
+- `https://cdn.jsdelivr.net/npm/mnfst@latest/dist/manifest.min.css`
+- `https://cdn.jsdelivr.net/npm/mnfst@latest/dist/manifest.components.js` (plugin)
+- `https://cdn.jsdelivr.net/npm/mnfst@latest/dist/manifest.data.js` (plugin)
+- etc.
 
 ### Version Numbering Strategy
 
-**Main Package (@indux/indux):**
+**Main Package (mnfst):**
 - Use semantic versioning (MAJOR.MINOR.PATCH)
-- For bug fixes and small improvements: `npm version patch` (0.2.4 → 0.2.5)
-- For new features: `npm version minor` (0.2.4 → 0.3.0)
-- For breaking changes: `npm version major` (0.2.4 → 1.0.0)
+- For bug fixes and small improvements: `npm version patch` (0.5.14 → 0.5.15)
+- For new features: `npm version minor` (0.5.14 → 0.6.0)
+- For breaking changes: `npm version major` (0.5.14 → 1.0.0)
 - Always check existing tags first: `git tag --list | tail -5`
 - If version already exists, manually update `package.json` and commit before tagging
 
-**Starter Template (@indux/starter):**
+**Starter Template (manifestjs-starter):**
 - Independent versioning from main package
 - Current version in `packages/create-starter/package.json`
 - Use `npm version patch` in the create-starter directory
@@ -88,7 +92,8 @@ And distributed publically like:
 2. Check current version: `git tag --list | tail -5`
 3. Update version: `npm version patch` (or manually edit package.json)
 4. Create and push tag: `git tag vX.X.X && git push origin vX.X.X`
-5. For starter template: `npm run publish:starter`
+5. Publish: `npm publish --access public`
+6. For starter template: `npm run publish:starter`
 
 ---
 
@@ -97,37 +102,36 @@ And distributed publically like:
 ```bash
 npm run publish:starter
 ```
-Publishes starter template to npm as @indux/starter.
+Publishes starter template to npm as `manifestjs-starter`.
 
 ---
 
 ## Install Starter Template
 
 ```bash
-npx @indux/starter my-app
+npx manifestjs-starter my-app
 ```
-Creates new Indux project from template.
+Creates new Manifest project from template.
 
 ---
 
-## Update Indux Files
+## Update Manifest Files
 
 ### Individual File Updates
 
 ```bash
-npx @indux/add js
-npx @indux/add css
-npx @indux/add theme
-npx @indux/add code
-npx @indux/add quickstart
+npx manifestjs-add js
+npx manifestjs-add css
+npx manifestjs-add theme
+npx manifestjs-add code
 ```
-Downloads and overwrites specific Indux files with latest versions from CDN.
+Downloads and overwrites specific Manifest files with latest versions from CDN.
 
 ### Bulk Update
 
 ```bash
-npx @indux/add update
+npx manifestjs-add update
 ```
-Scans project directory and updates all Indux files except `indux.theme.css` (which is preserved for custom modifications).
+Scans project directory and updates all Manifest files except `manifest.theme.css` (which is preserved for custom modifications).
 
-**Note:** These commands require the `@indux/add` package to be published to npm first.
+**Note:** These commands require the `manifestjs-add` package to be published to npm first.

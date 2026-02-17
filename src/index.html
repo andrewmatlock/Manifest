@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -21,279 +21,86 @@
   <link rel="manifest" href="/manifest.json">
 
   <!-- Styles -->
-  <link rel="stylesheet" href="/styles/core/indux.theme.css">
-  <link rel="stylesheet" href="/styles/core/indux.reset.css">
-  <link rel="stylesheet" href="/styles/elements/indux.accordion.css">
-  <link rel="stylesheet" href="/styles/elements/indux.avatar.css">
-  <link rel="stylesheet" href="/styles/elements/indux.button.css">
-  <link rel="stylesheet" href="/styles/elements/indux.checkbox.css">
-  <link rel="stylesheet" href="/styles/elements/indux.code.css">
-  <link rel="stylesheet" href="/styles/elements/indux.dialog.css">
-  <link rel="stylesheet" href="/styles/elements/indux.divider.css">
-  <link rel="stylesheet" href="/styles/elements/indux.dropdown.css">
-  <link rel="stylesheet" href="/styles/elements/indux.form.css">
-  <link rel="stylesheet" href="/styles/elements/indux.input.css">
-  <link rel="stylesheet" href="/styles/elements/indux.radio.css">
-  <link rel="stylesheet" href="/styles/elements/indux.range.css">
-  <link rel="stylesheet" href="/styles/elements/indux.resize.css">
-  <link rel="stylesheet" href="/styles/elements/indux.sidebar.css">
-  <link rel="stylesheet" href="/styles/elements/indux.slides.css">
-  <link rel="stylesheet" href="/styles/elements/indux.switch.css">
-  <link rel="stylesheet" href="/styles/elements/indux.table.css">
-  <link rel="stylesheet" href="/styles/elements/indux.toast.css">
-  <link rel="stylesheet" href="/styles/elements/indux.tooltip.css">
-  <link rel="stylesheet" href="/styles/elements/indux.typography.css">
-  <link rel="stylesheet" href="/styles/utilities/indux.utilities.css">
+  <link rel="stylesheet" href="/styles/core/manifest.theme.css">
+  <link rel="stylesheet" href="/styles/core/manifest.reset.css">
+  <link rel="stylesheet" href="/styles/elements/manifest.accordion.css">
+  <link rel="stylesheet" href="/styles/elements/manifest.avatar.css">
+  <link rel="stylesheet" href="/styles/elements/manifest.button.css">
+  <link rel="stylesheet" href="/styles/elements/manifest.checkbox.css">
+  <link rel="stylesheet" href="/styles/elements/manifest.code.css">
+  <link rel="stylesheet" href="/styles/elements/manifest.dialog.css">
+  <link rel="stylesheet" href="/styles/elements/manifest.divider.css">
+  <link rel="stylesheet" href="/styles/elements/manifest.dropdown.css">
+  <link rel="stylesheet" href="/styles/elements/manifest.form.css">
+  <link rel="stylesheet" href="/styles/elements/manifest.input.css">
+  <link rel="stylesheet" href="/styles/elements/manifest.presence.css">
+  <link rel="stylesheet" href="/styles/elements/manifest.radio.css">
+  <link rel="stylesheet" href="/styles/elements/manifest.range.css">
+  <link rel="stylesheet" href="/styles/elements/manifest.resize.css">
+  <link rel="stylesheet" href="/styles/elements/manifest.sidebar.css">
+  <link rel="stylesheet" href="/styles/elements/manifest.slides.css">
+  <link rel="stylesheet" href="/styles/elements/manifest.switch.css">
+  <link rel="stylesheet" href="/styles/elements/manifest.table.css">
+  <link rel="stylesheet" href="/styles/elements/manifest.toast.css">
+  <link rel="stylesheet" href="/styles/elements/manifest.tooltip.css">
+  <link rel="stylesheet" href="/styles/elements/manifest.typography.css">
+  <link rel="stylesheet" href="/styles/utilities/manifest.utilities.css">
 
   <!-- Scripts -->
+  <!-- Alpine & Tailwind -->
   <script defer src="/scripts/alpine.v3.14.9.js"></script>
-  <script src="/scripts/indux.code.js"></script>
-  <script src="/scripts/indux.components.js"></script>
-  <script src="/scripts/indux.data.js"></script>
-  <script src="/scripts/indux.dropdowns.js"></script>
-  <script src="/scripts/indux.icons.js"></script>
-  <script src="/scripts/indux.localization.js"></script>
-  <script src="/scripts/indux.markdown.js"></script>
-  <script src="/scripts/indux.resize.js"></script>
-  <script src="/scripts/indux.router.js"></script>
-  <script src="/scripts/indux.slides.js"></script>
-  <script src="/scripts/indux.tabs.js"></script>
-  <script src="/scripts/indux.themes.js"></script>
-  <script src="/scripts/indux.toasts.js"></script>
-  <script src="/scripts/indux.tooltips.js"></script>
-  <script src="/scripts/indux.url.parameters.js"></script>
-  <script src="/scripts/indux.utilities.js"></script>
   <script src="/scripts/tailwind.v4.1.js"></script>
 
-  <script src="https://cdn.jsdelivr.net/npm/appwrite@latest"></script>
-  <script src="/scripts/indux.appwrite.auth.js"></script>
+  <!-- Core plugins-->
+  <script src="/scripts/manifest.code.js"></script>
+  <script src="/scripts/manifest.data.js"></script>
+  <script src="/scripts/manifest.components.js"></script>
+  <script src="/scripts/manifest.dropdowns.js"></script>
+  <script src="/scripts/manifest.icons.js"></script>
+  <script src="/scripts/manifest.localization.js"></script>
+  <script src="/scripts/manifest.markdown.js"></script>
+  <script src="/scripts/manifest.resize.js"></script>
+  <script src="/scripts/manifest.router.js"></script>
+  <script src="/scripts/manifest.slides.js"></script>
+  <script src="/scripts/manifest.tabs.js"></script>
+  <script src="/scripts/manifest.themes.js"></script>
+  <script src="/scripts/manifest.toasts.js"></script>
+  <script src="/scripts/manifest.tooltips.js"></script>
+  <script src="/scripts/manifest.url.parameters.js"></script>
+  <script src="/scripts/manifest.utilities.js"></script>
 
+  <!-- Appwrite SDK and plugins -->
+  <script src="https://cdn.jsdelivr.net/npm/appwrite@latest"></script>
+  <script src="/scripts/manifest.appwrite.auth.js"></script>
+  <script src="/scripts/manifest.appwrite.data.js"></script>
+  <script src="/scripts/manifest.appwrite.presence.js"></script>
 
 </head>
 
 <body class="page">
 
-  <x-utilities x-route="/utilities"></x-utilities>
+  <h1 x-route="/" class="row">Home</h1>
+  <h1 x-route="page-1">Page 1</h1>
+  <h1 x-route="page-2">Page 2</h1>
+  <h1 x-route="page-3">Page 3</h1>
+  <h1 x-route="!*">404</h1>
+  <h1 x-route="/,page-1,page-2">Home, Page 1, Page 2</h1>
+  <a href="/">Home</a>
+  <a href="/page-1">Page 1</a>
+  <a href="/page-2">Page 2</a>
+  <a href="/page-3">Page 3</a>
 
-  <main class="row-wrap items-start gap-20 px-viewport-padding py-8" x-route="/">
-    
-    <!-- User Auth -->
-    <div class="col center gap-2 max-w-xs text-center [&_button]:w-full">
+  <main
+    x-data="{ tab: 'local-data', editingId: null, editName: '', editType: '', newName: '', newType: '', queryType: '', projectsError: null, uploadFile: null, fileUrl: null, previewUrl: null, assetsError: null, selectedProjectId: null, paginationMode: 'cursor', paginationCursor: null, paginationPage: 1, paginationLimit: 5, paginationResults: null, paginationLoading: false, paginationError: null, presenceSubscribed: false, presenceCursors: [], presenceError: null }">
 
-      <!-- OAuth Buttons -->
-      <button  @click="$auth.loginOAuth('google')" :disabled="!$auth.canAuthenticate()"><i x-icon="simple-icons:google"></i> <span>Sign in with Google</span></button>
-      <button @click="$auth.loginOAuth('github')" :disabled="!$auth.canAuthenticate()"><i x-icon="simple-icons:github"></i> <span>Sign in with GitHub</span></button>
+    <x-header></x-header>
 
-      <div class="divider my-8">OR</div>
-
-      <!-- Magic Link Form -->
-      <input type="email" pattern=".*@.*\..*" required autocomplete="on" placeholder="Input email" class="w-full peer" @keyup.enter="$auth.sendMagicLink()" :disabled="!$auth.canAuthenticate()" />
-      <button class="w-full peer-invalid:disabled" @click="$auth.sendMagicLink()" :disabled="!$auth.canAuthenticate()">Send Magic Link</button>
-
-      <div class="divider my-8">OR</div>
-
-      <!-- Guest Button -->
-      <button @click="$auth.requestGuest()" :disabled="!$auth.canAuthenticate()">Continue as Guest</button>
-
-      <!-- Status -->
-      <div class="my-8">
-        <p x-show="$auth.inProgress">Authorizing...</p>
-        <p x-show="$auth.magicLinkSent">Magic link sent. Check your inbox or spam to sign-in.</p>
-        <p x-show="$auth.magicLinkExpired">Magic link expired. Please try again.</p>
-        <p x-show="$auth.isAuthenticated">You're signed-in using <b x-text="$auth.method || 'guest'"></b><span x-show="$auth.provider"> via <b x-text="$auth.provider"></b></span> as <b x-text="$auth.user?.email || 'a guest'"></b></p>
-        <p x-show="!$auth.isAuthenticated">You're not signed-in.</p>
-        <p x-show="$auth.error" x-text="$auth.error"></p>
-      </div>
-
-      <!-- Logout -->
-      <button @click="$auth.logout()" :disabled="!$auth.isAuthenticated || $auth.inProgress" class="!w-fit" >Logout</button>
-
-    </div>
-
-    <!-- Teams -->
-    <div class="col gap-4 w-sm max-w-full" x-show="$auth.isAuthenticated">
-
-      <!-- Create team -->
-      <div class="row-wrap gap-2">
-        <input type="text" placeholder="New team name" class="peer flex-1" x-model="$auth.newTeamName" :disabled="$auth.inProgress" />
-        <button @click="$auth.createTeamFromName()" :disabled="!$auth.newTeamName || $auth.inProgress" class="peer-invalid:disabled">Create Team</button>
-        
-        <!-- Add back deleted template teams -->
-        <template x-for="teamName in $auth.deletedTemplateTeams" :key="teamName">
-          <button @click="$auth.reapplyTemplateTeam(teamName)" :disabled="$auth.inProgress" class="w-full">Create <b x-text="teamName"></b> Template Team</button>
-        </template>
-
-      </div>
-
-       <!-- No teams content -->
-       <small x-show="!$auth.teams || $auth.teams.length === 0" class="text-sm text-muted">No teams yet</small>
-
-      <!-- Team counter -->
-      <small>Your Teams (<b x-text="$auth.teams.length"></b>):</small>
-
-      <!-- Team list -->
-      <template x-for="team in $auth.teams" :key="team.$id">
-        
-        <!-- Team accordion-->
-        <details class="pb-4 border-b border-line" x-data="{ loaded: false, editingTeamName: team.name }" x-effect="editingTeamName = team.name" @toggle="if ($event.target.open && !loaded) { $auth.currentTeam = team; $auth.viewTeam(team); loaded = true; }">
-          
-          <!-- Team name input / expand button -->
-          <summary>
-            <input type="text" placeholder="Insert name" class="transparent hug w-fit" onclick="this.select()" x-model="editingTeamName" :disabled="!$auth.isTeamRenamable(team) || $auth.inProgress" @blur="if (editingTeamName !== team.name && editingTeamName.trim()) { $auth.updateTeamName(team.$id, editingTeamName.trim()); }" @keydown.enter="$event.target.blur()" />
-          </summary>
-
-          <!-- Team content -->
-          <div class="relative col gap-4">
-
-            <!-- Delete team -->
-            <button class="sm absolute sm top-0 end-0" @click="$auth.deleteTeam(team.$id)" :disabled="$auth.isActionDisabled('deleteTeam') || !$auth.isTeamDeletable(team)" aria-label="Delete team" x-icon="lucide:trash">Delete Team</button>
-
-            <!-- Static Info -->
-            <div class="col gap-1">
-              <small>ID: <b x-text="team.$id"></b></small>
-              <small>Created: <b x-text="$auth.teamCreatedAt(team)"></b></small>
-              <small>Modified: <b x-text="$auth.teamUpdatedAt(team)"></b></small>
-            </div>
-
-            <hr>
-
-            <!-- Roles & Permissions -->
-            <div class="col gap-4">
-              <small>Roles & Permissions</small>
-
-              <!-- List -->
-              <template x-for="(permissions, roleName) in $auth.allTeamRoles(team)" :key="roleName">
-                <div class="relative row gap-2 items-center max-w-full" x-data="{ editingRoleName: roleName, customPermInput: '' }" x-effect="editingRoleName = roleName">
-
-                    <!-- Role name input -->
-                    <input type="text" class="transparent hug flex-1" x-model="editingRoleName" @blur="if (editingRoleName !== roleName && editingRoleName.trim()) { $auth.startEditingRole(team.$id, roleName); $auth.editingRole.newRoleName = editingRoleName.trim(); $auth.saveEditingRole(); }" @keydown.enter="$event.target.blur()" :disabled="$auth.isActionDisabled('manageRoles') || ($auth.isRolePermanentSync && $auth.isRolePermanentSync(team.$id, roleName))" />
-                    
-                    <!-- Permissions dropdown button -->
-                    <button class="sm flex-1" x-dropdown="`permissions-menu-${team.$id}-${roleName}`" :disabled="$auth.isActionDisabled('manageRoles') || ($auth.isRolePermanentSync && $auth.isRolePermanentSync(team.$id, roleName))" > <span x-text="(permissions && permissions.length > 0) ? permissions.join(', ') : 'No permissions'"></span> <i class="trailing" x-icon="lucide:chevron-down"></i> </button>
-                    
-                    <!-- Permissions dropdown -->
-                    <menu popover :id="`permissions-menu-${team.$id}-${roleName}`">
-                      <template x-for="permission in $auth.allAvailablePermissions || []" :key="permission">
-                        <label>
-                          <input type="checkbox" :checked="permissions && permissions.includes(permission)" @change="const updated = permissions ? [...permissions] : []; if ($event.target.checked) { if (!updated.includes(permission)) updated.push(permission); } else { const idx = updated.indexOf(permission); if (idx > -1) updated.splice(idx, 1); } $auth.startEditingRole(team.$id, roleName); $auth.newRolePermissions = updated; $auth.saveEditingRole();" :disabled="!$auth.canManageRoles() || ($auth.isRolePermanentSync && $auth.isRolePermanentSync(team.$id, roleName))" />
-                          <span x-text="permission"></span>
-                        </label>
-                      </template>
-                      <input type="text" placeholder="Custom permission" aria-label="Custom permission" x-model="customPermInput" @keydown.enter.prevent="if (customPermInput.trim()) { const updated = permissions ? [...permissions] : []; if (!updated.includes(customPermInput.trim())) { updated.push(customPermInput.trim()); $auth.startEditingRole(team.$id, roleName); $auth.newRolePermissions = updated; $auth.saveEditingRole(); customPermInput = ''; } }" :disabled="$auth.isActionDisabled('manageRoles') || ($auth.isRolePermanentSync && $auth.isRolePermanentSync(team.$id, roleName))" />
-                    </menu>
-                  
-                  <!-- Delete button -->
-                  <button class="sm" @click="$auth.deleteUserRole(team.$id, roleName)" :disabled="$auth.isActionDisabled('manageRoles') || !$auth.isRoleDeletable(team.$id, roleName)" aria-label="Delete role" x-icon="lucide:trash" ></button>
-                </div>
-              </template>
-              
-              <!-- Create Role -->
-              <div class="row-wrap gap-2 mb-2" x-data="{ customPermInput: '' }">
-                <input type="text" placeholder="Role name" class="w-full" x-model="$auth.newRoleName" :disabled="$auth.isActionDisabled('manageRoles')" />
-                <button class="flex-1" x-dropdown="`permissions-menu-${team.$id}`" :disabled="$auth.isActionDisabled('manageRoles')">
-                  <span x-text="($auth.newRolePermissions && $auth.newRolePermissions.length > 0) ? $auth.newRolePermissions.join(', ') : 'Permissions'"></span>
-                  <i class="trailing" x-icon="lucide:chevron-down"></i>
-                </button>
-                
-                <!-- Permissions dropdown-->
-                <menu popover :id="`permissions-menu-${team.$id}`">
-                  <template x-for="permission in $auth.allAvailablePermissions || []" :key="permission">
-                    <label>
-                      <input type="checkbox" :checked="$auth.isPermissionSelected(permission)" @change="$auth.togglePermission(permission)" :disabled="!$auth.canManageRoles()" />
-                      <span x-text="permission"></span>
-                    </label>
-                  </template>
-                  <input type="text" placeholder="Custom permission" aria-label="Custom permission" x-model="customPermInput" @keydown.enter.prevent="$auth.addCustomPermissions(customPermInput); customPermInput = ''" :disabled="$auth.isActionDisabled('manageRoles')" />
-                </menu>
-                
-                <button @click="$auth.createRoleFromInputs(team.$id)" :disabled="!$auth.newRoleName || $auth.isActionDisabled('manageRoles')" class="w-fit">Create</button>
-              </div>
-
-            </div>
-
-            <hr>
-
-            <!-- Members-->
-            <div class="col gap-4">
-              <small>Members</small>
-
-              <!-- List -->
-              <template x-for="membership in $auth.currentTeamMemberships" :key="membership.$id">
-                <div class="row gap-3">
-                  <div class="flex-1 col">
-                    <small>
-                      <b x-text="$auth.getMemberDisplayName(membership)"></b>
-                      <span x-show="membership.userId === $auth.user?.$id"> (You)</span>
-                    </small>
-                    <small x-text="$auth.getMemberEmail(membership)"></small>
-                  </div>
-                  <!-- Role dropdown and actions -->
-                  <div class="row gap-1 items-center">
-                    <!-- Role dropdown -->
-                    <button class="sm" x-dropdown="`member-role-menu-${team.$id}-${membership.$id}`" :disabled="(membership.userId !== $auth.user?.$id && ($auth.isActionDisabled('updateMembers') || !$auth.canUpdateMembers())) || $auth.inProgress" x-show="membership.userId === $auth.user?.$id || $auth.canUpdateMembers()" >
-                      <span x-text="(membership.displayRoles && membership.displayRoles.length > 0) ? membership.displayRoles[0] : 'No role'"></span>
-                      <i class="trailing" x-icon="lucide:chevron-down"></i>
-                    </button>
-                    
-                    <!-- Role dropdown menu -->
-                    <menu popover :id="`member-role-menu-${team.$id}-${membership.$id}`">
-                      <template x-for="(permissions, roleName) in $auth.allTeamRoles(team)" :key="roleName">
-                        <label class="row items-center gap-2 cursor-pointer">
-                          <input type="radio" :name="`member-role-${team.$id}-${membership.$id}`" :value="roleName" :checked="(membership.displayRoles && membership.displayRoles.length > 0 && membership.displayRoles[0] === roleName)" @change="$auth.updateMembership(team.$id, membership.$id, [roleName])" :disabled="$auth.inProgress || (membership.userId !== $auth.user?.$id && $auth.isActionDisabled('updateMembers'))" />
-                          <span x-text="roleName"></span>
-                        </label>
-                      </template>
-                    </menu>
-                    
-                    <!-- Delete button (for other members) -->
-                    <button class="sm" @click="$auth.deleteMember(team.$id, membership.$id)" :disabled="$auth.isActionDisabled('removeMembers') || $auth.inProgress" aria-label="Remove member" x-icon="lucide:trash" x-show="membership.userId !== $auth.user?.$id && $auth.canRemoveMembers()" ></button>
-                    <!-- Leave button (for current user) -->
-                    <button class="sm" @click="$auth.leaveTeam(team.$id, membership.$id)" :disabled="$auth.inProgress" aria-label="Leave team" x-icon="lucide:log-out" x-show="membership.userId === $auth.user?.$id" ></button>
-                  
-                  </div>
-                </div>
-              </template>
-
-              <!-- Invite Member -->
-              <div class="row-wrap gap-2 mb-2" x-data="{ customRoleInput: '' }">
-                <input type="email" placeholder="Email" class="w-full" x-model="$auth.inviteEmail" :disabled="$auth.isActionDisabled('inviteMembers')" required />
-                <button class="flex-1" x-dropdown="`invite-roles-menu-${team.$id}`" :disabled="$auth.isActionDisabled('inviteMembers')">
-                  <span x-text="($auth.inviteRoles && $auth.inviteRoles.length > 0) ? $auth.inviteRoles.join(', ') : 'Roles'"></span>
-                  <i class="trailing" x-icon="lucide:chevron-down"></i>
-                </button>
-                
-                <!-- Roles dropdown-->
-                <menu popover :id="`invite-roles-menu-${team.$id}`">
-                  <template x-for="(permissions, roleName) in $auth.allTeamRoles(team)" :key="roleName">
-                    <label>
-                      <input 
-                        type="checkbox" 
-                        :checked="$auth.isInviteRoleSelected(roleName)"
-                        @change="$auth.toggleInviteRole(roleName)"
-                        :disabled="!$auth.canInviteMembers()"
-                      />
-                      <span x-text="roleName"></span>
-                    </label>
-                  </template>
-                  <input 
-                    type="text" 
-                    placeholder="Custom role" 
-                    aria-label="Custom role" 
-                    x-model="customRoleInput"
-                    @keydown.enter.prevent="$auth.addCustomInviteRoles(customRoleInput); customRoleInput = ''"
-                    :disabled="$auth.isActionDisabled('inviteMembers')" 
-                  />
-                </menu>
-                
-                <button @click="$auth.inviteToCurrentTeam()" :disabled="!$auth.inviteEmail || $auth.isActionDisabled('inviteMembers') || !team" class="w-fit">Invite</button>
-              </div>
-
-            </div>
-            
-          </div>
-        </details>
-      </template>
-
+    <!-- Tab Panels -->
+    <div class="col gap-4 pt-12 pb-40">
+      <x-core x-show="tab === 'core'"></x-core>
+      <x-appwrite x-show="tab === 'appwrite'"></x-appwrite>
+      <x-local-data x-show="tab === 'local-data'"></x-local-data>
+      <!-- <x-utilities x-show="tab === 'utilities'"></x-utilities> -->
     </div>
 
   </main>

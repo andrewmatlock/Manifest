@@ -8,8 +8,8 @@ const { execSync } = require('child_process');
 const projectName = process.argv[2];
 
 if (!projectName) {
-  console.log('Usage: npx @indux/create-starter <project-name>');
-  console.log('Example: npx @indux/create-starter MyProject');
+  console.log('Usage: npx @manifest/create-starter <project-name>');
+  console.log('Example: npx @manifest/create-starter MyProject');
   process.exit(1);
 }
 
@@ -27,7 +27,7 @@ if (fs.existsSync(projectPath)) {
   process.exit(1);
 }
 
-console.log(`Creating Indux project: ${projectName}`);
+console.log(`Creating Manifest project: ${projectName}`);
 
 try {
   // Create project directory
@@ -57,7 +57,7 @@ try {
   filesToCopy.forEach(file => {
     const srcPath = path.join(starterDir, file);
     const destPath = path.join(projectPath, file);
-    
+
     if (fs.existsSync(srcPath)) {
       if (fs.statSync(srcPath).isDirectory()) {
         copyDir(srcPath, destPath);
@@ -175,11 +175,11 @@ jspm_packages/
 function copyDir(src, dest) {
   fs.mkdirSync(dest, { recursive: true });
   const entries = fs.readdirSync(src, { withFileTypes: true });
-  
+
   for (const entry of entries) {
     const srcPath = path.join(src, entry.name);
     const destPath = path.join(dest, entry.name);
-    
+
     if (entry.isDirectory()) {
       copyDir(srcPath, destPath);
     } else {

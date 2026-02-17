@@ -1,16 +1,16 @@
-import { findInduxFiles, downloadFile, shouldPreserveFile } from './utils.js';
+import { findManifestFiles, downloadFile, shouldPreserveFile } from './utils.js';
 
 export async function runUpdate(directory = '.') {
-    console.log(`Scanning for Indux files in ${directory}...`);
+    console.log(`Scanning for Manifest files in ${directory}...`);
 
-    const files = await findInduxFiles(directory);
+    const files = await findManifestFiles(directory);
 
     if (files.length === 0) {
-        console.log('No Indux files found.');
+        console.log('No Manifest files found.');
         return;
     }
 
-    console.log(`Found ${files.length} Indux file(s):`);
+    console.log(`Found ${files.length} Manifest file(s):`);
     files.forEach(file => console.log(`  - ${file}`));
     console.log('');
 
@@ -19,13 +19,13 @@ export async function runUpdate(directory = '.') {
 
     for (const file of files) {
         const filename = file.split('/').pop();
-        
+
         if (shouldPreserveFile(file)) {
             console.log(`⚠ Skipped ${file} (preserved)`);
             skippedCount++;
             continue;
         }
-        
+
         try {
             // Pass the full file path to preserve directory structure
             await downloadFile(filename, file);

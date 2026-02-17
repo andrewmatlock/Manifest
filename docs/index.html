@@ -6,7 +6,7 @@
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-0264JWNS7L"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
+    function gtag() { dataLayer.push(arguments); }
     gtag('js', new Date());
 
     gtag('config', 'G-0264JWNS7L');
@@ -16,10 +16,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- Web -->
-  <title>Indux</title>
+  <title>Manifest</title>
   <meta name="description" content="Supercharge HTML for rapid, feature-rich website and web app development.">
   <meta name="author" content="Andrew Matlock">
-  <meta name="keywords" content="Indux, HTML, CSS, JS, JavaScript, Alpine JS, Tailwind CSS, website, web app, framework">
+  <meta name="keywords"
+    content="Manifest, HTML, CSS, JS, JavaScript, Alpine JS, Tailwind CSS, website, web app, framework">
   <meta name="robots" content="index, follow">
   <meta name="googlebot" content="index, follow">
   <meta name="google" content="notranslate">
@@ -31,39 +32,28 @@
   <link rel="manifest" href="/manifest.json">
 
   <!-- Styles -->
-  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400..900&family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=Lexend+Exa&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400..900&family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=Lexend+Exa&display=swap"></noscript>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@indux/indux@latest/dist/indux.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@indux/indux@latest/dist/indux.code.min.css">
-  <link rel="stylesheet" href="/styles/indux.theme.css">
+  <link rel="preload"
+    href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400..900&family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=Lexend+Exa&display=swap"
+    as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript>
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400..900&family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=Lexend+Exa&display=swap">
+  </noscript>
+  <link rel="stylesheet" href="/manifest.theme.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mnfst@0.5.25/dist/manifest.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mnfst@latest/dist/manifest.code.min.css">
 
   <!-- Scripts -->
-  <script defer src="https://cdn.jsdelivr.net/npm/@indux/indux@0.4.3/dist/indux.quickstart.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/appwrite@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mnfst@0.5.25/dist/manifest.min.js" data-tailwind
+    data-version="0.5.25"></script>
 
-  <!-- Auth test -->
-  <script src="/auth/indux.appwrite.auth.config.js"></script>
-  <script src="/auth/indux.appwrite.auth.store.js"></script>
-  <script src="/auth/indux.appwrite.auth.users.callbacks.js"></script>
-  <script src="/auth/indux.appwrite.auth.users.anonymous.js"></script>
-  <script src="/auth/indux.appwrite.auth.users.magic.js"></script>
-  <script src="/auth/indux.appwrite.auth.users.oauth.js"></script>
-  <script src="/auth/indux.appwrite.auth.teams.core.js"></script>
-  <script src="/auth/indux.appwrite.auth.teams.defaults.js"></script>
-  <script src="/auth/indux.appwrite.auth.teams.roles.js"></script>
-  <script src="/auth/indux.appwrite.auth.teams.roles.defaults.js"></script>
-  <script src="/auth/indux.appwrite.auth.teams.userRoles.js"></script>
-  <script src="/auth/indux.appwrite.auth.teams.members.js"></script>
-  <script src="/auth/indux.appwrite.auth.teams.convenience.js"></script>
-  <script src="/auth/indux.appwrite.auth.teams.callbacks.js"></script>
-  <script src="/auth/indux.appwrite.auth.frontend.js"></script>
-  <script src="/auth/indux.appwrite.auth.main.js"></script>
 
 </head>
 
 <body class="col min-h-screen" x-data="{ 
   init() { 
-    const savedDirection = localStorage.getItem('indux-direction') || 'auto';
+    const savedDirection = localStorage.getItem('manifest-direction') || 'auto';
     document.documentElement.setAttribute('dir', savedDirection);
   }
 }">
@@ -78,7 +68,7 @@
 
   <!-- Search dialog -->
   <!-- <x-search></x-search> -->
-  
+
 </body>
 
 </html>

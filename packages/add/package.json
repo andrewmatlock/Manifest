@@ -1,7 +1,7 @@
 {
-  "name": "@indux/add",
+  "name": "manifestjs-add",
   "version": "1.0.6",
-  "description": "Add and update Indux files in your project",
+  "description": "Add and update Manifest files in your project",
   "type": "module",
   "publishConfig": {
     "access": "public"
@@ -14,7 +14,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
-    "indux",
+    "manifest",
     "cli",
     "css",
     "javascript",

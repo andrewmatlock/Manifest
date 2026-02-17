@@ -1,4 +1,4 @@
-# Contributing to Indux
+# Contributing to Manifest
 
 ## How to Contribute
 
@@ -27,8 +27,8 @@
 
 ## Development Setup
 ```bash
-git clone https://github.com/YOUR_USERNAME/Indux.git
-cd Indux
+git clone https://github.com/YOUR_USERNAME/Manifest.git
+cd Manifest
 npm install
 npm run start:docs
 ```

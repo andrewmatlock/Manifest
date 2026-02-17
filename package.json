@@ -1,20 +1,20 @@
 {
-    "name": "@indux/indux",
-    "version": "0.5.14",
+    "name": "mnfst",
+    "version": "0.5.25",
     "private": false,
     "workspaces": [
         "templates/starter"
     ],
-    "main": "src/scripts/indux.js",
-    "style": "src/styles/indux.css",
+    "main": "dist/manifest.js",
+    "style": "dist/manifest.css",
     "files": [
         "dist",
         "README.md",
         "LICENSE"
     ],
     "scripts": {
-        "clean": "rimraf src/scripts/indux.js src/scripts/indux.quickstart.js src/styles/indux.css src/styles/indux.min.css src/styles/indux.code.min.css dist",
-        "build": "cd src && node scripts/build.js && rollup -c rollup.config.mjs",
+        "clean": "rimraf src/scripts/manifest.js src/styles/manifest.css src/styles/manifest.min.css src/styles/manifest.code.min.css dist",
+        "build": "cd src && node scripts/build.mjs",
         "build:docs": "echo 'Docs is a static website - no build needed'",
         "start:src": "cd src && browser-sync start --config bs-config.js",
         "start:docs": "cd docs && browser-sync start --config bs-config.js",
@@ -48,13 +48,13 @@
     "author": "Andrew Matlock",
     "license": "MIT",
     "description": "A modern, lightweight frontend framework with built-in components and utilities",
-    "homepage": "https://github.com/andrewmatlock/indux",
+    "homepage": "https://manifestjs.dev",
     "repository": {
         "type": "git",
-        "url": "https://github.com/andrewmatlock/indux.git"
+        "url": "https://github.com/andrewmatlock/manifest.git"
     },
     "bugs": {
-        "url": "https://github.com/andrewmatlock/indux/issues"
+        "url": "https://github.com/andrewmatlock/manifest/issues"
     },
     "dependencies": {
         "commander": "^14.0.1",

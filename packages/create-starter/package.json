@@ -1,17 +1,17 @@
 {
-  "name": "@indux/starter",
+  "name": "manifestjs-starter",
   "version": "1.5.34",
-  "description": "Create Indux starter application",
+  "description": "Create Manifest starter application",
   "main": "index.html",
   "bin": {
-    "indux-starter": "create-starter.js"
+    "manifest-starter": "create-starter.js"
   },
   "scripts": {
     "start": "browser-sync start --config bs-config.js",
     "build": "echo 'Starter template - no build needed'"
   },
   "keywords": [
-    "indux",
+    "manifest",
     "framework",
     "starter",
     "template",
@@ -23,7 +23,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/andrewmatlock/Indux.git",
+    "url": "git+https://github.com/andrewmatlock/Manifest.git",
     "directory": "packages/create-starter"
   },
   "files": [

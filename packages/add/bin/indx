@@ -6,32 +6,32 @@ import { downloadFile } from '../src/utils.js';
 const command = process.argv[2];
 
 if (!command) {
-  console.log('Indux CLI - Manage Indux files');
+  console.log('Manifest CLI - Manage Manifest files');
   console.log('');
-  console.log('Usage: npx @indux/add <command>');
+  console.log('Usage: npx manifestjs-add <command>');
   console.log('');
   console.log('Commands:');
-  console.log('  update                    Update all Indux files (except theme)');
-  console.log('  js                        Download indux.js');
-  console.log('  css                       Download indux.css');
-  console.log('  theme                     Download indux.theme.css');
-  console.log('  code                      Download indux.code.css');
-  console.log('  quickstart                Download indux.quickstart.js');
+  console.log('  update                    Update all Manifest files (except theme)');
+  console.log('  js                        Download manifest.js');
+  console.log('  css                       Download manifest.css');
+  console.log('  theme                     Download manifest.theme.css');
+  console.log('  code                      Download manifest.code.css');
+  console.log('  quickstart                Download manifest.quickstart.js');
   console.log('');
   console.log('Examples:');
-  console.log('  npx @indux/add update');
-  console.log('  npx @indux/add js');
-  console.log('  npx @indux/add css');
+  console.log('  npx manifestjs-add update');
+  console.log('  npx manifestjs-add js');
+  console.log('  npx manifestjs-add css');
   process.exit(1);
 }
 
 // Map commands to filenames
 const fileMap = {
-  'js': 'indux.js',
-  'css': 'indux.css',
-  'theme': 'indux.theme.css',
-  'code': 'indux.code.css',
-  'quickstart': 'indux.quickstart.js'
+  'js': 'manifest.js',
+  'css': 'manifest.css',
+  'theme': 'manifest.theme.css',
+  'code': 'manifest.code.css',
+  'quickstart': 'manifest.quickstart.js'
 };
 
 if (command === 'update') {
@@ -43,6 +43,6 @@ if (command === 'update') {
   await downloadFile(fileMap[command]);
 } else {
   console.error(`Unknown command: ${command}`);
-  console.log('Run "npx @indux/indx" to see available commands.');
+  console.log('Run "npx manifestjs-add" to see available commands.');
   process.exit(1);
 }

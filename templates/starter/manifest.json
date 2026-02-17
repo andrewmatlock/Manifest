@@ -10,30 +10,27 @@
   "orientation": "any",
   "background_color": "#FFFFFF",
   "icons": [
-        {
-            "src": "/icons/192x192.png",
-            "sizes": "192x192",
-            "type": "image/png"
-        },
-        {
-            "src": "/icons/512x512.png",
-            "sizes": "512x512",
-            "type": "image/png"
-        }
-    ],
-  "components": [
+    {
+      "src": "/icons/192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
   ],
+  "components": [],
   "preloadedComponents": [
-      "components/footer.html",
-      "components/header.html",
-      "components/logo.html"
+    "components/footer.html",
+    "components/header.html",
+    "components/logo.html"
   ],
   "data": {
     "manifest": "/manifest.json",
     "content": {
-        "ar": "/data/content.ar.yaml",
-        "en": "/data/content.en.yaml",
-        "zh": "/data/content.zh.yaml"
+      "locales": "/locales.csv"
     }
   }
 }

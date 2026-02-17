@@ -1,6 +1,6 @@
 {
-    "name": "Indux",
-    "short_name": "Indux",
+    "name": "Manifest",
+    "short_name": "Manifest",
     "description": "Supercharge HTML for rapid, feature-rich website and web app development.",
     "start_url": "/",
     "scope": "/",
@@ -9,12 +9,12 @@
     "theme_color": "#FFFFFF",
     "icons": [
         {
-            "src": "/assets/app-icons/192x192.png",
+            "src": "/icons/192x192.png",
             "sizes": "192x192",
             "type": "image/png"
         },
         {
-            "src": "/assets/app-icons/512x512.png",
+            "src": "/icons/512x512.png",
             "sizes": "512x512",
             "type": "image/png"
         }
@@ -24,12 +24,18 @@
         "components/examples/disclaimer.html",
         "components/examples/header-basic.html",
         "components/examples/header-nested.html",
-        "components/examples/header-modified.html"
+        "components/examples/header-modified.html",
+        "components/examples/appwrite-test.html",
+        "components/examples/appwrite-projects.html",
+        "components/examples/appwrite-storage.html",
+        "components/examples/appwrite-teams.html",
+        "components/examples/appwrite-users.html"
     ],
     "preloadedComponents": [
         "components/main/landing.html",
         "components/main/docs.html",
-        "components/main/header.html"
+        "components/main/header.html",
+        "components/main/logo.html"
     ],
     "data": {
         "docs": "/data/docs.yaml",
@@ -39,6 +45,24 @@
             "en": "/data/en.locale.yaml",
             "fr": "/data/fr.locale.yaml",
             "zh": "/data/zh.locale.yaml"
+        },
+        "projects": {
+            "appwriteTableId": "projects",
+            "appwriteDatabaseId": "69272017000296721b73",
+            "scope": [
+                "user",
+                "teams"
+            ],
+            "storage": {
+                "assets": "fileIds"
+            }
+        },
+        "assets": {
+            "appwriteBucketId": "69285cd300373b8ddb7f"
+        },
+        "presence": {
+            "appwriteTableId": "presence",
+            "appwriteDatabaseId": "69272017000296721b73"
         }
     },
     "appwrite": {
@@ -46,22 +70,39 @@
         "endpoint": "https://fra.cloud.appwrite.io/v1",
         "devKey": "b080a2dbcd5ab6867db7e9e965c20b92fed79015ee3b4071a6e66b16431463ad7f3a8a855cdffb03e6f87f31890721b9ab2c8fd6a893d190be35b6027b2cae6a4d15fb7caadbd87accfc946e17803d003cf716d6acf6b269a05576fab09485049f3e5720adfbc2d0a06613edd7196d561b09c31dbfb4e3db8f750ee2839b8cde",
         "auth": {
-            "methods":  ["guest-manual","magic", "oauth"],
+            "methods": [
+                "guest-manual",
+                "magic",
+                "oauth"
+            ],
             "teams": {
-                "permanent": ["Permanent Workspace"],
-                "template": ["Template Workspace", "Dream Team"]
+                "permanent": [
+                    "Permanent Workspace"
+                ],
+                "template": [
+                    "Template Workspace",
+                    "Dream Team"
+                ]
             },
             "roles": {
                 "permanent": {
-                    "Admin": ["inviteMembers", "updateMembers", "removeMembers", "manageRoles", "renameTeam", "deleteTeam"]
+                    "Admin": [
+                        "inviteMembers",
+                        "updateMembers",
+                        "removeMembers",
+                        "manageRoles",
+                        "renameTeam",
+                        "deleteTeam"
+                    ]
                 },
                 "template": {
-                    "Editor": ["inviteMembers"],
+                    "Editor": [
+                        "inviteMembers"
+                    ],
                     "Viewer": []
                 }
             },
             "creatorRole": "Admin"
-        },
-        "databases": []
+        }
     }
 }

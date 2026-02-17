@@ -1,247 +1,247 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-        <loc>https://indux.build</loc>
+        <loc>https://manifestjs.dev</loc>
         <lastmod>2025-09-30</lastmod>
         <changefreq>monthly</changefreq>
         <priority>1.0</priority>
     </url>
     <url>
-        <loc>https://indux.build/getting-started/introduction</loc>
+        <loc>https://manifestjs.dev/getting-started/introduction</loc>
         <lastmod>2025-01-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
-        <loc>https://indux.build/getting-started/setup</loc>
+        <loc>https://manifestjs.dev/getting-started/setup</loc>
         <lastmod>2025-01-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
-        <loc>https://indux.build/getting-started/starter-project</loc>
+        <loc>https://manifestjs.dev/getting-started/starter-project</loc>
         <lastmod>2025-01-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
-        <loc>https://indux.build/getting-started/compatability</loc>
+        <loc>https://manifestjs.dev/getting-started/compatability</loc>
         <lastmod>2025-01-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
-        <loc>https://indux.build/getting-started/accessibility</loc>
+        <loc>https://manifestjs.dev/getting-started/accessibility</loc>
         <lastmod>2025-01-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
-        <loc>https://indux.build/plugins/color-themes</loc>
+        <loc>https://manifestjs.dev/plugins/color-themes</loc>
         <lastmod>2025-01-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://indux.build/plugins/components</loc>
+        <loc>https://manifestjs.dev/plugins/components</loc>
         <lastmod>2025-01-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://indux.build/plugins/data-sources</loc>
+        <loc>https://manifestjs.dev/plugins/data-sources</loc>
         <lastmod>2025-01-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://indux.build/plugins/localization</loc>
+        <loc>https://manifestjs.dev/plugins/localization</loc>
         <lastmod>2025-01-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://indux.build/plugins/markdown</loc>
+        <loc>https://manifestjs.dev/plugins/markdown</loc>
         <lastmod>2025-01-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://indux.build/plugins/resize</loc>
+        <loc>https://manifestjs.dev/plugins/resize</loc>
         <lastmod>2025-01-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://indux.build/plugins/router</loc>
+        <loc>https://manifestjs.dev/plugins/router</loc>
         <lastmod>2025-01-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://indux.build/plugins/url-parameters</loc>
+        <loc>https://manifestjs.dev/plugins/url-parameters</loc>
         <lastmod>2025-01-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://indux.build/plugins/users-teams</loc>
+        <loc>https://manifestjs.dev/plugins/users-teams</loc>
         <lastmod>2025-01-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://indux.build/styles/reset</loc>
+        <loc>https://manifestjs.dev/styles/reset</loc>
         <lastmod>2025-01-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://indux.build/styles/theme</loc>
+        <loc>https://manifestjs.dev/styles/theme</loc>
         <lastmod>2025-01-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://indux.build/styles/utilities</loc>
+        <loc>https://manifestjs.dev/styles/utilities</loc>
         <lastmod>2025-01-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://indux.build/elements/accordions</loc>
+        <loc>https://manifestjs.dev/elements/accordions</loc>
         <lastmod>2025-01-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
-        <loc>https://indux.build/elements/avatars</loc>
+        <loc>https://manifestjs.dev/elements/avatars</loc>
         <lastmod>2025-01-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
-        <loc>https://indux.build/elements/badges</loc>
+        <loc>https://manifestjs.dev/elements/badges</loc>
         <lastmod>2025-01-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
-        <loc>https://indux.build/elements/buttons</loc>
+        <loc>https://manifestjs.dev/elements/buttons</loc>
         <lastmod>2025-01-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
-        <loc>https://indux.build/elements/checkboxes</loc>
+        <loc>https://manifestjs.dev/elements/checkboxes</loc>
         <lastmod>2025-01-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
-        <loc>https://indux.build/elements/code</loc>
+        <loc>https://manifestjs.dev/elements/code</loc>
         <lastmod>2025-01-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
-        <loc>https://indux.build/elements/dividers</loc>
+        <loc>https://manifestjs.dev/elements/dividers</loc>
         <lastmod>2025-01-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
-        <loc>https://indux.build/elements/dropdowns</loc>
+        <loc>https://manifestjs.dev/elements/dropdowns</loc>
         <lastmod>2025-01-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
-        <loc>https://indux.build/elements/icons</loc>
+        <loc>https://manifestjs.dev/elements/icons</loc>
         <lastmod>2025-01-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
-        <loc>https://indux.build/elements/inputs</loc>
+        <loc>https://manifestjs.dev/elements/inputs</loc>
         <lastmod>2025-01-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
-        <loc>https://indux.build/elements/dialogs</loc>
+        <loc>https://manifestjs.dev/elements/dialogs</loc>
         <lastmod>2025-01-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
-        <loc>https://indux.build/elements/radios</loc>
+        <loc>https://manifestjs.dev/elements/radios</loc>
         <lastmod>2025-01-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
-        <loc>https://indux.build/elements/selects</loc>
+        <loc>https://manifestjs.dev/elements/selects</loc>
         <lastmod>2025-01-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
-        <loc>https://indux.build/elements/sidebars</loc>
+        <loc>https://manifestjs.dev/elements/sidebars</loc>
         <lastmod>2025-01-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
-        <loc>https://indux.build/elements/switches</loc>
+        <loc>https://manifestjs.dev/elements/switches</loc>
         <lastmod>2025-01-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
-        <loc>https://indux.build/elements/tables</loc>
+        <loc>https://manifestjs.dev/elements/tables</loc>
         <lastmod>2025-01-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
-        <loc>https://indux.build/elements/tabs</loc>
+        <loc>https://manifestjs.dev/elements/tabs</loc>
         <lastmod>2025-01-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
-        <loc>https://indux.build/elements/toasts</loc>
+        <loc>https://manifestjs.dev/elements/toasts</loc>
         <lastmod>2025-01-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
-        <loc>https://indux.build/elements/tooltips</loc>
+        <loc>https://manifestjs.dev/elements/tooltips</loc>
         <lastmod>2025-01-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
-        <loc>https://indux.build/elements/textareas</loc>
+        <loc>https://manifestjs.dev/elements/textareas</loc>
         <lastmod>2025-01-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
-        <loc>https://indux.build/elements/typography</loc>
+        <loc>https://manifestjs.dev/elements/typography</loc>
         <lastmod>2025-01-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
-        <loc>https://indux.build/resources/license</loc>
+        <loc>https://manifestjs.dev/resources/license</loc>
         <lastmod>2025-01-01</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>https://indux.build/resources/privacy</loc>
+        <loc>https://manifestjs.dev/resources/privacy</loc>
         <lastmod>2025-01-01</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.5</priority>

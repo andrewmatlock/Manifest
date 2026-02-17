@@ -1,4 +1,4 @@
 User-agent: *
 Disallow:
 
-Sitemap: https://www.indux.build/sitemap.xml
+Sitemap: https://www.manifestjs.dev/sitemap.xml

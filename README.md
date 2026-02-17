@@ -1,11 +1,11 @@
-# Indux
+# Manifest
 
-Indux is a frontend framework extending HTML for rapid, feature-rich website and web app development, consisting of:
+Manifest is a frontend framework extending HTML for rapid, feature-rich website and web app development, consisting of:
 
 - A collection of plugins built on Alpine JS
 - A CSS library, compatible with Tailwind CSS
 
-**With Indux:**
+**With Manifest:**
 - Skip the build steps
 - Use only what you need
 - Stack with other frameworks & libraries
@@ -14,7 +14,7 @@ Indux is a frontend framework extending HTML for rapid, feature-rich website and
 
 ## 💾 Setup
 
-Get [CDN links](https://indux.build/getting-started/setup) for existing projects or try the [starter project](https://indux.build/getting-started/starter-project) for new ones.
+Get [CDN links](https://manifestjs.dev/getting-started/setup) for existing projects or try the [starter project](https://manifestjs.dev/getting-started/starter-project) for new ones.
 
 <br>
 
@@ -38,21 +38,10 @@ Get [CDN links](https://indux.build/getting-started/setup) for existing projects
 
 ## 📚 Documentation
 
-For full documentation visit [indux.build](https://indux.build).
+For full documentation visit [manifestjs.dev](https://manifestjs.dev).
 
 <br>
 
 ## 📄 License
 
-Indux is provided under MIT license.
-
-<br>
-
-## 🙏 Acknowledgments
-
-- [Alpine.js](https://alpinejs.dev) - Lightweight reactive framework, powering Indux plugins and bundled in `indux.quickstart.js`
-- [Tailwind CSS](https://tailwindcss.com) - Utility-first CSS framework, with its Play CDN script bundled in `indux.quickstart.js`
-- [Iconify](https://iconify.design) - Collection of all major icon libraries, bundled in Indux
-- [highlight.js](https://highlightjs.org) - Syntax highlighter, referenced as needed by Indux
-- [js-yaml](https://nodeca.github.io/js-yaml) - YAML parser, references as needed by Indux
-- [Marked JS](https://marked.js.org) - Markdown parser, referenced as needed by Indux
+Manifest is provided under MIT license.

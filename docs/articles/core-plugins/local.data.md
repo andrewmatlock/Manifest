@@ -101,6 +101,7 @@ CSV files support two parsing modes, automatically detected based on structure.
 - Supports dot notation for nesting (`contact.name` → `{ contact: { name: "..." } }`)
 - Returns a nested object structure
 - Use for structured configuration or hierarchical data
+- List-like (array of objects) use numeric path segments, e.g. `features.0.name`, `features.0.description`, `features.1.name`, `features.1.description`, interpreted as a real array and supporting `x-for="item in $x.sourceName.features"` in Alpine
 
 **Tabular Mode** (array of objects):
 - First column header is `id` (case-insensitive)

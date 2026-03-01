@@ -157,15 +157,23 @@ function deepMergeWithFallback(currentData, fallbackData) {
     return fallbackData;
 }
 
-// Set nested value in object using dot notation path
+// Set nested value in object using dot notation path.
+// Numeric path segments (e.g. cards.0.title) create real arrays so x-for="card in $x....cards" works.
 function setNestedValue(obj, path, value) {
     const keys = path.split('.');
     let current = obj;
 
     for (let i = 0; i < keys.length - 1; i++) {
         const key = keys[i];
+        const nextKey = keys[i + 1];
         if (!(key in current)) {
-            current[key] = {};
+            current[key] = /^\d+$/.test(nextKey) ? [] : {};
+        }
+        if (Array.isArray(current) && /^\d+$/.test(key)) {
+            const idx = parseInt(key, 10);
+            if (current[idx] == null || typeof current[idx] !== 'object') {
+                current[idx] = {};
+            }
         }
         current = current[key];
     }

@@ -170,6 +170,27 @@
             <td>-</td>
         </tr>
         
+        <!-- CSV-Specific: Array-like (numeric keys) — parsed as real array, same x-for as JSON/YAML -->
+        <tr class="bg-surface-1">
+            <td colspan="4" class="font-semibold p-2">CSV-Specific: Array-like list (featuresLocales — keys features.0.name, features.1.name, …)</td>
+        </tr>
+        <tr>
+            <td>featuresLocales.features (array)</td>
+            <td><span x-text="JSON.stringify($x.featuresLocales.features)"></span></td>
+            <td>-</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>x-for="feature in $x.featuresLocales.features"</td>
+            <td>
+                <template x-for="feature in $x.featuresLocales.features" :key="feature.name">
+                    <div class="text-sm"><span x-text="feature.name"></span>: <span x-text="feature.description"></span></div>
+                </template>
+            </td>
+            <td>-</td>
+            <td>-</td>
+        </tr>
+        
         <!-- Shared: Products array -->
         <tr class="bg-surface-1">
             <td colspan="4" class="font-semibold p-2">Shared: Products Array</td>

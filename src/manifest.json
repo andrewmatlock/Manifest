@@ -48,6 +48,9 @@
             "es": "/test/data/localization-es.csv"
         },
         "flatKeys": "/test/data/flat-keys.csv",
+        "featuresLocales": {
+            "locales": "/test/data/features-locales.csv"
+        },
         "products": "/test/data/products.csv",
         "json": "/test/data/test.json",
         "yaml": "/test/data/test.yaml",

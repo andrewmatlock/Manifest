@@ -103,9 +103,8 @@ function getLoadingBranch() {
 }
 
 // Create a simple fallback object that returns empty strings for all properties.
-// When propForPlaceholder === 'content', nested data keys use getLoadingBranchSafe() (primitives only)
-// so Alpine never gets a chainable proxy and $x.content.theme.light doesn't stack overflow.
-// For other props (json, yaml, etc.) use getLoadingBranch() (chainable) so $route and deep paths work.
+// Nested data keys use getLoadingBranch() (chainable) so $route, $search, $query and deep paths
+// don't throw while loading (e.g. $x.content.legal.$route('path')).
 function createSimpleFallback(propForPlaceholder) {
     const fallback = Object.create(null);
 
@@ -261,11 +260,11 @@ function createSimpleFallback(propForPlaceholder) {
                 }
             }
 
-            // For string keys that look like data: use safe placeholder for 'content' (primitives only,
-            // no re-entry/stack overflow); use chainable placeholder for other props ($route, deep paths).
+            // For string keys that look like data: use chainable placeholder so nested arrays (e.g. content.legal)
+            // have $route/$search/$query and expressions like $x.content.legal.$route('path') don't throw while loading.
             if (typeof key === 'string' && key.length > 0 && key.length < 64 &&
                 !key.startsWith('$') && key !== 'length') {
-                return propForPlaceholder === 'content' ? getLoadingBranchSafe() : getLoadingBranch();
+                return getLoadingBranch();
             }
 
             // For any other key, return chaining fallback — never return the loading proxy itself.

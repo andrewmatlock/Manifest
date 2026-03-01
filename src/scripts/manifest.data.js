@@ -2315,26 +2315,33 @@ function getLoadingBranchSafe() {
     return cachedLoadingBranchSafe;
 }
 
-// Chainable loading branch: return self for string keys, callable for $route. Used for
-// json/yaml/etc so $x.json.products.$route('path').name and deep paths don't throw.
-let cachedLoadingBranch = null;
-function getLoadingBranch() {
-    if (cachedLoadingBranch) return cachedLoadingBranch;
-    const returnSelf = function () { return cachedLoadingBranch; };
+// Max depth for loading placeholder chain; beyond this, string keys return '' to avoid stack overflow.
+const MAX_LOADING_BRANCH_DEPTH = 10;
+
+const loadingBranchByDepth = Object.create(null);
+function getLoadingBranch(depth) {
+    const d = depth == null ? 0 : Math.min(Math.max(0, depth), MAX_LOADING_BRANCH_DEPTH);
+    if (loadingBranchByDepth[d]) return loadingBranchByDepth[d];
     const emptyStr = function () { return ''; };
-    cachedLoadingBranch = new Proxy(Object.create(null), {
+    const nextDepth = d + 1;
+    const getReturnForStringKey = () =>
+        nextDepth <= MAX_LOADING_BRANCH_DEPTH ? getLoadingBranch(nextDepth) : '';
+    loadingBranchByDepth[d] = new Proxy(Object.create(null), {
         get(_, key) {
             if (key === Symbol.toPrimitive || key === 'valueOf' || key === 'toString') return emptyStr;
             if (key === 'then' || key === 'catch' || key === 'finally') return undefined;
             if (key === Symbol.iterator) return function* () { };
-            if (key === '$route' || key === '$search' || key === '$query') return returnSelf;
+            if (key === '$route' || key === '$search' || key === '$query') {
+                return function () { return getLoadingBranch(nextDepth <= MAX_LOADING_BRANCH_DEPTH ? nextDepth : MAX_LOADING_BRANCH_DEPTH); };
+            }
             if (key === 'length') return 0;
-            if (typeof key === 'string') return cachedLoadingBranch;
-            return undefined;
+            if (typeof key === 'string') return getReturnForStringKey();
+            if (typeof key === 'symbol') return undefined;
+            return getLoadingBranch(MAX_LOADING_BRANCH_DEPTH);
         },
         has() { return true; }
     });
-    return cachedLoadingBranch;
+    return loadingBranchByDepth[d];
 }
 
 // Create a simple fallback object that returns empty strings for all properties.

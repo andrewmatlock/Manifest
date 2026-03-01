@@ -51,6 +51,7 @@
         "featuresLocales": {
             "locales": "/test/data/features-locales.csv"
         },
+        "loadingPlaceholderTest": "/test/data/loading-placeholder-test.csv",
         "products": "/test/data/products.csv",
         "json": "/test/data/test.json",
         "yaml": "/test/data/test.yaml",

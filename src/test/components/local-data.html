@@ -191,6 +191,23 @@
             <td>-</td>
         </tr>
         
+        <!-- CSV: Deep paths + $route (loading placeholder: theme.light/dark/system + legal.$route) -->
+        <tr class="bg-surface-1">
+            <td colspan="4" class="font-semibold p-2">CSV: Deep paths + $route (loadingPlaceholderTest — no stack overflow)</td>
+        </tr>
+        <tr>
+            <td>theme.light / theme.dark / theme.system</td>
+            <td><span x-text="$x.loadingPlaceholderTest.theme.light"></span>, <span x-text="$x.loadingPlaceholderTest.theme.dark"></span>, <span x-text="$x.loadingPlaceholderTest.theme.system"></span></td>
+            <td>-</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>legal.$route('path')?.title</td>
+            <td><span x-text="$x.loadingPlaceholderTest.legal.$route('path')?.title || '(none)'"></span> <a href="/terms" class="text-sm">/terms</a> <a href="/privacy" class="text-sm">/privacy</a></td>
+            <td>-</td>
+            <td>-</td>
+        </tr>
+        
         <!-- Shared: Products array -->
         <tr class="bg-surface-1">
             <td colspan="4" class="font-semibold p-2">Shared: Products Array</td>

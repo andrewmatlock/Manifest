@@ -1324,6 +1324,20 @@ function setNestedValue(obj, path, value) {
     current[keys[keys.length - 1]] = value;
 }
 
+// If the key-value result has only numeric top-level keys (e.g. 0.path, 1.path), convert to array
+// so $route/$search/$query work and the shape matches YAML/JSON array sources.
+function numericKeyObjectToArray(obj) {
+    if (obj == null || Array.isArray(obj) || typeof obj !== 'object') {
+        return obj;
+    }
+    const keys = Object.keys(obj);
+    if (keys.length === 0) return obj;
+    const numericKeys = keys.filter(k => /^\d+$/.test(k));
+    if (numericKeys.length !== keys.length) return obj;
+    const sorted = numericKeys.map(k => parseInt(k, 10)).sort((a, b) => a - b);
+    return sorted.map(i => obj[String(i)]);
+}
+
 // Parse CSV text to nested object structure
 function parseCSVToNestedObject(csvText, options = {}) {
     const {
@@ -1427,7 +1441,7 @@ function parseCSVToNestedObject(csvText, options = {}) {
                 setNestedValue(result, key, value);
             }
 
-            return result;
+            return numericKeyObjectToArray(result);
         }
     } else {
         // Fallback simple parser (if PapaParse not loaded)
@@ -1539,7 +1553,7 @@ function parseCSVToNestedObject(csvText, options = {}) {
                 setNestedValue(result, key, value);
             }
 
-            return result;
+            return numericKeyObjectToArray(result);
         }
     }
 }

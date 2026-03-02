@@ -506,15 +506,16 @@ async function initializeMarkdownPlugin() {
                     }
                     lastProcessedContent = markdownContent;
 
-                    // Skip empty content
-                    if (!markdownContent || markdownContent.trim() === '') {
+                    // Ensure we have a string (e.g. $route('path')?.content can be a proxy while loading)
+                    const contentStr = typeof markdownContent === 'string' ? markdownContent : '';
+                    if (!contentStr || contentStr.trim() === '') {
                         el.style.opacity = '0';
                         hasContent = false;
                         return;
                     }
 
                     const marked = await loadMarkedJS();
-                    let html = marked.parse(markdownContent);
+                    let html = marked.parse(contentStr);
 
                     // Post-process HTML to enable checkboxes (remove disabled attribute)
                     html = enableCheckboxes(html);

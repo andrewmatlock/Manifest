@@ -208,6 +208,23 @@
             <td>-</td>
         </tr>
         
+        <!-- CSV: Root-level numeric keys → array (articlesRoot: 0.path, 1.path, … → $route works) -->
+        <tr class="bg-surface-1">
+            <td colspan="4" class="font-semibold p-2">CSV: Root-level numeric keys → array (articlesRoot — keys 0.path, 1.title, …)</td>
+        </tr>
+        <tr>
+            <td>articlesRoot (array)</td>
+            <td><span x-text="Array.isArray($x.articlesRoot) ? $x.articlesRoot.length + ' items' : typeof $x.articlesRoot"></span></td>
+            <td>-</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>articlesRoot.$route('path')?.title</td>
+            <td><span x-text="$x.articlesRoot.$route('path')?.title || '(none)'"></span> <a href="/first" class="text-sm">/first</a> <a href="/second" class="text-sm">/second</a> <a href="/third" class="text-sm">/third</a></td>
+            <td>-</td>
+            <td>-</td>
+        </tr>
+        
         <!-- Shared: Products array -->
         <tr class="bg-surface-1">
             <td colspan="4" class="font-semibold p-2">Shared: Products Array</td>

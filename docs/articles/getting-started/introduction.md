@@ -36,7 +36,7 @@ HTML is the scaffolding of the digital world. It's more written than any human l
 
 ## Acknowledgements
 
-Manifest was created by <a href="https://andrewmatlock.com" target="_blank">Andrew Matlock</a> with the vision to simplify and expedite website and app development for developers and AI. Special thanks goes to these bundled or referenced frameworks and libraries:
+Manifest was created by <a href="https://andrewmatlock.com" target="_blank">Andrew Matlock</a> with the vision to simplify and expedite website and app development for developers and AI. Special thanks goes to these supporting frameworks and libraries:
 
 - <a href="https://alpinejs.dev" target="_blank">Alpine JS</a> - Underlying reactive frontend framework
 - <a href="https://appwrite.io" target="_blank">Appwrite</a> - Backend infrastructure service

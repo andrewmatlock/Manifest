@@ -53,6 +53,9 @@
         },
         "loadingPlaceholderTest": "/test/data/loading-placeholder-test.csv",
         "articlesRoot": "/test/data/articles-root-keys.csv",
+        "sparseLocales": {
+            "locales": "/test/data/sparse-locales.csv"
+        },
         "products": "/test/data/products.csv",
         "json": "/test/data/test.json",
         "yaml": "/test/data/test.yaml",

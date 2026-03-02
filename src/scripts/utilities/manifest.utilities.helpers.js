@@ -972,6 +972,21 @@ TailwindCompiler.prototype.parseClassName = function (className) {
             }
         }
 
+        // Handle arbitrary nth variants: nth-[4n+1], nth-[2n], nth-last-[n+3], nth-of-type-[odd], etc.
+        const nthArbitraryMatch = variant.match(/^(nth|nth-last|nth-of-type|nth-last-of-type)-\[(.+)\]$/);
+        if (nthArbitraryMatch) {
+            const baseVariant = nthArbitraryMatch[1];
+            const param = nthArbitraryMatch[2];
+            const baseSelector = this.variants[baseVariant];
+            if (baseSelector) {
+                return {
+                    name: variant,
+                    selector: `${baseSelector}(${param})`,
+                    isArbitrary: false
+                };
+            }
+        }
+
         // Handle parameterized has/not variants: has-[>p], not-\[hidden\]
         const hasMatch = variant.match(/^has-\[(.+)\]$/);
         if (hasMatch) {

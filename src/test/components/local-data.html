@@ -225,6 +225,17 @@
             <td>-</td>
         </tr>
         
+        <!-- CSV: Sparse trailing columns (no trailing commas — TooFewFields not warned) -->
+        <tr class="bg-surface-1">
+            <td colspan="4" class="font-semibold p-2">CSV: Sparse locale columns (sparseLocales — rows omit trailing empty cells; no console warnings)</td>
+        </tr>
+        <tr>
+            <td>sparseLocales.sparse.a / .b / .c</td>
+            <td><span x-text="$x.sparseLocales.sparse.a"></span>, <span x-text="$x.sparseLocales.sparse.b"></span>, <span x-text="$x.sparseLocales.sparse.c"></span></td>
+            <td>-</td>
+            <td>-</td>
+        </tr>
+        
         <!-- Shared: Products array -->
         <tr class="bg-surface-1">
             <td colspan="4" class="font-semibold p-2">Shared: Products Array</td>

@@ -34,25 +34,23 @@ try {
   // Create project directory
   fs.mkdirSync(projectPath, { recursive: true });
 
-  // Copy all files from starter template
+  // Copy all files from starter template (must match templates/starter; exclude local-only e.g. bs-config.js)
   const starterDir = path.join(__dirname, 'templates');
   const filesToCopy = [
-    'index.html',
     'components',
-    'data',
-    'scripts',
-    'styles',
     'icons',
-    'manifest.json',
+    '_redirects',
     '.gitignore',
-    'robots.txt',
-    'sitemap.xml',
+    'favicon.ico',
+    'index.html',
     'LICENSE.md',
+    'locales.csv',
+    'manifest.json',
+    'manifest.theme.css',
     'privacy.md',
     'README.md',
-    'favicon.ico',
-    '_redirects',
-    '.htaccess'
+    'robots.txt',
+    'sitemap.xml'
   ];
 
   filesToCopy.forEach(file => {

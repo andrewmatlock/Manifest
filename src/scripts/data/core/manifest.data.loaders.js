@@ -211,7 +211,10 @@ function parseCSVToNestedObject(csvText, options = {}) {
         });
 
         if (parsed.errors && parsed.errors.length > 0) {
-            console.warn('[Manifest Data] CSV parsing warnings:', parsed.errors);
+            const serious = parsed.errors.filter(e => e.code !== 'TooFewFields');
+            if (serious.length > 0) {
+                console.warn('[Manifest Data] CSV parsing warnings:', serious);
+            }
         }
 
         if (!parsed.data || parsed.data.length === 0) {

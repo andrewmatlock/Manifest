@@ -18,6 +18,9 @@ function createUtilityGenerators() {
             addUtility('decoration', 'text-decoration-color', value);
             addUtility('accent', 'accent-color', value);
             addUtility('caret', 'caret-color', value);
+            utilities.push([`from-${suffix}`, `--tw-gradient-from: ${value}; --tw-gradient-stops: var(--tw-gradient-via-stops)`]);
+            utilities.push([`via-${suffix}`, `--tw-gradient-via: ${value}; --tw-gradient-stops: var(--tw-gradient-via-stops)`]);
+            utilities.push([`to-${suffix}`, `--tw-gradient-to: ${value}; --tw-gradient-stops: var(--tw-gradient-via-stops)`]);
             return utilities;
         },
         'font-': (suffix, value) => [
@@ -2157,6 +2160,21 @@ TailwindCompiler.prototype.parseClassName = function (className) {
         if (nthMatch) {
             const baseVariant = nthMatch[1];
             const param = nthMatch[2];
+            const baseSelector = this.variants[baseVariant];
+            if (baseSelector) {
+                return {
+                    name: variant,
+                    selector: `${baseSelector}(${param})`,
+                    isArbitrary: false
+                };
+            }
+        }
+
+        // Handle arbitrary nth variants: nth-[4n+1], nth-[2n], nth-last-[n+3], nth-of-type-[odd], etc.
+        const nthArbitraryMatch = variant.match(/^(nth|nth-last|nth-of-type|nth-last-of-type)-\[(.+)\]$/);
+        if (nthArbitraryMatch) {
+            const baseVariant = nthArbitraryMatch[1];
+            const param = nthArbitraryMatch[2];
             const baseSelector = this.variants[baseVariant];
             if (baseSelector) {
                 return {

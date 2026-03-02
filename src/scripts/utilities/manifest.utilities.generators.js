@@ -18,6 +18,9 @@ function createUtilityGenerators() {
             addUtility('decoration', 'text-decoration-color', value);
             addUtility('accent', 'accent-color', value);
             addUtility('caret', 'caret-color', value);
+            utilities.push([`from-${suffix}`, `--tw-gradient-from: ${value}; --tw-gradient-stops: var(--tw-gradient-via-stops)`]);
+            utilities.push([`via-${suffix}`, `--tw-gradient-via: ${value}; --tw-gradient-stops: var(--tw-gradient-via-stops)`]);
+            utilities.push([`to-${suffix}`, `--tw-gradient-to: ${value}; --tw-gradient-stops: var(--tw-gradient-via-stops)`]);
             return utilities;
         },
         'font-': (suffix, value) => [

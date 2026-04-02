@@ -772,5 +772,3 @@ Check data source loading state, errors, and readiness:
 ## Next Steps
 
 See [storage](/appwrite-plugins/storage) for managing file uploads and downloads.
-
-And consider adding realtime [presence](/appwrite-plugins/presence) detection for users to see each other's live cursors or edits in a shared interface.

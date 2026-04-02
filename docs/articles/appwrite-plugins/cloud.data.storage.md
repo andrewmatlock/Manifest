@@ -600,5 +600,3 @@ Image preview options:
 ## Next Steps
 
 See [databases](/appwrite-plugins/databases) for managing database entries and linking files to entries.
-
-And consider adding realtime [presence](/appwrite-plugins/presence) detection for users to see each other's live cursors or edits in shared UIs.

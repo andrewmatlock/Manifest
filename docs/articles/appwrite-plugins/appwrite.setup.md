@@ -6,7 +6,7 @@ Use <a href="https://appwrite.io/" target="_blank" rel="noopener">Appwrite</a> t
 
 ## Overview
 
-Appwrite provides turnkey backend infrastructure, available <a href="https://github.com/appwrite/appwrite" target="_blank">open source</a> or <a href="https://appwrite.io/" target="_blank">cloud hosted</a> with a generous free tier. Together with Manifest you can quickly generate feature-complete applications including user authentication, databases, storage, and realtime presence detection.
+Appwrite provides turnkey backend infrastructure, available <a href="https://github.com/appwrite/appwrite" target="_blank">open source</a> or <a href="https://appwrite.io/" target="_blank">cloud hosted</a> with a generous free tier. Together with Manifest you can quickly generate feature-complete applications including user authentication, databases, and storage.
 
 ---
 
@@ -120,4 +120,3 @@ After a successful setup above, your Manifest project should be paired with your
 
 - [Users](/appwrite-plugins/users) or [Teams](/appwrite-plugins/teams)
 - [Databases](/appwrite-plugins/databases) or [Storage](/appwrite-plugins/storage)
-- [Presence](/appwrite-plugins/presence) detection for live users

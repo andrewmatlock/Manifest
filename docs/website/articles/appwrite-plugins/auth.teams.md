@@ -631,5 +631,3 @@ For invitations/member editing.
 ## Next Steps
 
 See [cloud data](/appwrite-plugins/cloud-data) for giving users access to databases and stored files.
-
-And consider adding realtime [presence](/appwrite-plugins/presence) detection for users to see each other's live cursors or edits in shared UIs.

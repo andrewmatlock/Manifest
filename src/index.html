@@ -77,14 +77,15 @@
 
 </head>
 
-<body class="page bg-linear-to-br from-500 to-900">
+<body class="page bg-linear-to-br from-500 to-900" x-data="{ tab: 'local-data' }">
 
-  <main x-data="{ tab: 'local-data', editingId: null, editName: '', editType: '', newName: '', newType: '', queryType: '', projectsError: null, uploadFile: null, fileUrl: null, previewUrl: null, assetsError: null, selectedProjectId: null, paginationMode: 'cursor', paginationCursor: null, paginationPage: 1, paginationLimit: 5, paginationResults: null, paginationLoading: false, paginationError: null, presenceSubscribed: false, presenceCursors: [], presenceError: null }">
+  <main x-data="{ tab: 'styles', editingId: null, editName: '', editType: '', newName: '', newType: '', queryType: '', projectsError: null, uploadFile: null, fileUrl: null, previewUrl: null, assetsError: null, selectedProjectId: null, paginationMode: 'cursor', paginationCursor: null, paginationPage: 1, paginationLimit: 5, paginationResults: null, paginationLoading: false, paginationError: null, presenceSubscribed: false, presenceCursors: [], presenceError: null }">
 
     <x-header></x-header>
 
     <!-- Tab Panels -->
     <div class="col gap-4 pt-12 pb-40">
+      <x-styles x-show="tab === 'styles'"></x-styles>
       <x-core x-show="tab === 'core'"></x-core>
       <x-appwrite x-show="tab === 'appwrite'"></x-appwrite>
       <x-local-data x-show="tab === 'local-data'"></x-local-data>

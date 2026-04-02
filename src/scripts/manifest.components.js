@@ -1,5 +1,51 @@
 /* Manifest Components */
 
+// Base URL for manifest-relative paths (e.g. "../" when viewing dist/index.html). Used by component loader, data loaders, localization.
+window.getManifestBase = function getManifestBase() {
+    const href = (document.querySelector('link[rel="manifest"]')?.getAttribute('href')) || '/manifest.json';
+    const lastSlash = href.lastIndexOf('/');
+    return lastSlash >= 0 ? href.slice(0, lastSlash + 1) : '/';
+};
+
+// Absolute pathname prefix for the app root (e.g. "/src/dist"). Used by router for links and route matching.
+// Prerender injects <meta name="manifest:router-base" content="/path"> from manifest.prerender.routerBase or root+output. If present, use it; else fall back to depth or manifest link.
+window.getManifestBasePath = function getManifestBasePath() {
+    const baseMeta = document.querySelector('meta[name="manifest:router-base"]');
+    const content = baseMeta?.getAttribute('content');
+    if (content != null && content !== '') {
+        const base = '/' + String(content).replace(/^\/+|\/+$/g, '').trim();
+        return base || '';
+    }
+    const meta = document.querySelector('meta[name="manifest:router-base-depth"]');
+    const depth = meta ? parseInt(meta.getAttribute('content'), 10) : NaN;
+    if (!Number.isNaN(depth) && depth >= 0) {
+        const pathname = (window.location.pathname || '/').replace(/\/$/, '') || '/';
+        const segments = pathname.split('/').filter(Boolean);
+        if (depth === 0) {
+            try {
+                const link = document.querySelector('link[rel="manifest"]');
+                const href = (link?.getAttribute('href')) || '/manifest.json';
+                const url = new URL(href, window.location.href);
+                const basePath = url.pathname.replace(/\/[^/]*$/, '') || '/';
+                return basePath === '/' ? '' : basePath;
+            } catch {
+                return '';
+            }
+        }
+        const keep = Math.max(0, segments.length - depth);
+        return keep === 0 ? '' : '/' + segments.slice(0, keep).join('/');
+    }
+    try {
+        const link = document.querySelector('link[rel="manifest"]');
+        const href = (link?.getAttribute('href')) || '/manifest.json';
+        const url = new URL(href, window.location.href);
+        const pathname = url.pathname.replace(/\/[^/]*$/, '') || '/';
+        return pathname === '/' ? '' : pathname;
+    } catch {
+        return '';
+    }
+};
+
 // Components registry
 window.ManifestComponentsRegistry = {
     manifest: null,
@@ -78,9 +124,11 @@ window.ManifestComponentsLoader = {
             console.warn('[Manifest] Component', name, 'not found in manifest.');
             return null;
         }
+        const base = (typeof window.getManifestBase === 'function' ? window.getManifestBase() : '') || '/';
+        const url = path.startsWith('/') || path.startsWith('http') ? path : base + path;
         const promise = (async () => {
             try {
-                const response = await fetch('/' + path);
+                const response = await fetch(url);
                 if (!response.ok) {
                     console.warn('[Manifest] HTML file not found for component', name, 'at path:', path, '(HTTP', response.status + ')');
                     return null;

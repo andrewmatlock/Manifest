@@ -294,16 +294,11 @@ function ensureTooltipPluginInitialized() {
 
     tooltipPluginInitialized = true;
     initializeTooltipPlugin();
-
-    // If elements with x-tooltip already exist, process them
-    if (window.Alpine && typeof window.Alpine.initTree === 'function') {
-        const existingTooltipElements = document.querySelectorAll('[x-tooltip]');
-        existingTooltipElements.forEach(el => {
-            if (!el.__x) {
-                window.Alpine.initTree(el);
-            }
-        });
-    }
+    // Do not call Alpine.initTree() on [x-tooltip] elements here. That initializes
+    // them in isolation and breaks scope (e.g. "tab is not defined"). Alpine will
+    // process the full tree from the root, so [x-tooltip] elements get the correct
+    // scope. Dynamically loaded components are already initialized by the component
+    // processor with initTree on the swapped-in root.
 }
 
 // Expose on window for loader to call if needed

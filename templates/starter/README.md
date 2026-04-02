@@ -4,18 +4,7 @@
 
 ## 🚀 Quick Start
 
-Manifest projects include a built-in SPA router and require a local server to run.
-
-**Local Server Options (choose one):**
-
-1. **Python** (works on most systems): `python3 -m http.server 8000`
-
-2. **Node.js** (if you have it installed): `npx http-server`
-
-3. **Other options**:
-   - VS Code Live Server extension
-   - Browsersync (requires installation)
-   - Any other static file server
+Manifest projects include a built-in SPA router and require a local server like Live Server to run.
 
 ---
 
@@ -29,7 +18,8 @@ project-name/
 │   └── logo.html             # Inline SVG logo
 ├── icons/                    # Web app (PWA) icons referenced in manifest.json
 │   ├── 192x192.png           # Small icon variant
-│   └── 512x512.png           # Large icon variant
+│   ├── 512x512.png           # Large icon variant
+│   └── opengraph.png         # Link sharing image
 ├── _redirects                # SPA routing support for modern static hosts
 ├── favicon.ico               # Browser tab icon
 ├── index.html                # Rendering entry point / main page
@@ -37,10 +27,9 @@ project-name/
 ├── locales.csv               # Translated content in English, Arabic, and Chinese
 ├── manifest.json             # Project & web app manifest
 ├── manifest.theme.css        # Project theme variables
+├── prerender.mjs             # Build script for optimized websites
 ├── privacy.md                # Privacy policy template, required by most sites & apps
-├── README.md                 # This file
-├── robots.txt                # Website SEO asset
-└── sitemap.xml               # Website SEO asset
+└── README.md                 # This file
 ```
 
 ---
@@ -64,8 +53,7 @@ project-name/
 
 **Websites**
 - [ ] Replace `favicon.ico`
-- [ ] Update `robots.txt` and `sitemap.xml` for SEO
-- [ ] `_redirects` and `.htaccess` files are included for SPA routing support on most hosting services
+- [ ] Run `node prerender.mjs` to build optimized <a href="https://manifestjs.org/publishing/websites" target="_blank">websites</a>
 
 **Web apps**
 - [ ] Replace or remove `/icons` images referenced in manifest.json

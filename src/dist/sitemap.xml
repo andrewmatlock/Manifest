@@ -1,0 +1,507 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    <url>
+        <loc>https://test.com/</loc>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://test.com" />
+        <xhtml:link rel="alternate" hreflang="fr" href="https://test.com/fr" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://test.com/es" />
+        <lastmod>2026-03-26</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>1.0</priority>
+    </url>
+    <url>
+        <loc>https://test.com/terms</loc>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://test.com/terms" />
+        <xhtml:link rel="alternate" hreflang="fr" href="https://test.com/fr/terms" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://test.com/es/terms" />
+        <lastmod>2026-03-26</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://test.com/privacy</loc>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://test.com/privacy" />
+        <xhtml:link rel="alternate" hreflang="fr" href="https://test.com/fr/privacy" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://test.com/es/privacy" />
+        <lastmod>2026-03-26</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://test.com/first</loc>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://test.com/first" />
+        <xhtml:link rel="alternate" hreflang="fr" href="https://test.com/fr/first" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://test.com/es/first" />
+        <lastmod>2026-03-26</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://test.com/second</loc>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://test.com/second" />
+        <xhtml:link rel="alternate" hreflang="fr" href="https://test.com/fr/second" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://test.com/es/second" />
+        <lastmod>2026-03-26</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://test.com/third</loc>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://test.com/third" />
+        <xhtml:link rel="alternate" hreflang="fr" href="https://test.com/fr/third" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://test.com/es/third" />
+        <lastmod>2026-03-26</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://test.com/widget</loc>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://test.com/widget" />
+        <xhtml:link rel="alternate" hreflang="fr" href="https://test.com/fr/widget" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://test.com/es/widget" />
+        <lastmod>2026-03-26</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://test.com/gadget</loc>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://test.com/gadget" />
+        <xhtml:link rel="alternate" hreflang="fr" href="https://test.com/fr/gadget" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://test.com/es/gadget" />
+        <lastmod>2026-03-26</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://test.com/tool</loc>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://test.com/tool" />
+        <xhtml:link rel="alternate" hreflang="fr" href="https://test.com/fr/tool" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://test.com/es/tool" />
+        <lastmod>2026-03-26</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://test.com/device</loc>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://test.com/device" />
+        <xhtml:link rel="alternate" hreflang="fr" href="https://test.com/fr/device" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://test.com/es/device" />
+        <lastmod>2026-03-26</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://test.com/accessory</loc>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://test.com/accessory" />
+        <xhtml:link rel="alternate" hreflang="fr" href="https://test.com/fr/accessory" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://test.com/es/accessory" />
+        <lastmod>2026-03-26</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://test.com/thing-1</loc>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://test.com/thing-1" />
+        <xhtml:link rel="alternate" hreflang="fr" href="https://test.com/fr/thing-1" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://test.com/es/thing-1" />
+        <lastmod>2026-03-26</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://test.com/thing-2</loc>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://test.com/thing-2" />
+        <xhtml:link rel="alternate" hreflang="fr" href="https://test.com/fr/thing-2" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://test.com/es/thing-2" />
+        <lastmod>2026-03-26</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://test.com/thing-3</loc>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://test.com/thing-3" />
+        <xhtml:link rel="alternate" hreflang="fr" href="https://test.com/fr/thing-3" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://test.com/es/thing-3" />
+        <lastmod>2026-03-26</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://test.com/fr</loc>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://test.com" />
+        <xhtml:link rel="alternate" hreflang="fr" href="https://test.com/fr" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://test.com/es" />
+        <lastmod>2026-03-26</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://test.com/fr/terms</loc>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://test.com/terms" />
+        <xhtml:link rel="alternate" hreflang="fr" href="https://test.com/fr/terms" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://test.com/es/terms" />
+        <lastmod>2026-03-26</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://test.com/fr/privacy</loc>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://test.com/privacy" />
+        <xhtml:link rel="alternate" hreflang="fr" href="https://test.com/fr/privacy" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://test.com/es/privacy" />
+        <lastmod>2026-03-26</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://test.com/fr/first</loc>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://test.com/first" />
+        <xhtml:link rel="alternate" hreflang="fr" href="https://test.com/fr/first" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://test.com/es/first" />
+        <lastmod>2026-03-26</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://test.com/fr/second</loc>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://test.com/second" />
+        <xhtml:link rel="alternate" hreflang="fr" href="https://test.com/fr/second" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://test.com/es/second" />
+        <lastmod>2026-03-26</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://test.com/fr/third</loc>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://test.com/third" />
+        <xhtml:link rel="alternate" hreflang="fr" href="https://test.com/fr/third" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://test.com/es/third" />
+        <lastmod>2026-03-26</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://test.com/fr/widget</loc>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://test.com/widget" />
+        <xhtml:link rel="alternate" hreflang="fr" href="https://test.com/fr/widget" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://test.com/es/widget" />
+        <lastmod>2026-03-26</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://test.com/fr/gadget</loc>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://test.com/gadget" />
+        <xhtml:link rel="alternate" hreflang="fr" href="https://test.com/fr/gadget" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://test.com/es/gadget" />
+        <lastmod>2026-03-26</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://test.com/fr/tool</loc>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://test.com/tool" />
+        <xhtml:link rel="alternate" hreflang="fr" href="https://test.com/fr/tool" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://test.com/es/tool" />
+        <lastmod>2026-03-26</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://test.com/fr/device</loc>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://test.com/device" />
+        <xhtml:link rel="alternate" hreflang="fr" href="https://test.com/fr/device" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://test.com/es/device" />
+        <lastmod>2026-03-26</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://test.com/fr/accessory</loc>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://test.com/accessory" />
+        <xhtml:link rel="alternate" hreflang="fr" href="https://test.com/fr/accessory" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://test.com/es/accessory" />
+        <lastmod>2026-03-26</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://test.com/fr/thing-1</loc>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://test.com/thing-1" />
+        <xhtml:link rel="alternate" hreflang="fr" href="https://test.com/fr/thing-1" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://test.com/es/thing-1" />
+        <lastmod>2026-03-26</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://test.com/fr/thing-2</loc>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://test.com/thing-2" />
+        <xhtml:link rel="alternate" hreflang="fr" href="https://test.com/fr/thing-2" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://test.com/es/thing-2" />
+        <lastmod>2026-03-26</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://test.com/fr/thing-3</loc>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://test.com/thing-3" />
+        <xhtml:link rel="alternate" hreflang="fr" href="https://test.com/fr/thing-3" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://test.com/es/thing-3" />
+        <lastmod>2026-03-26</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://test.com/es</loc>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://test.com" />
+        <xhtml:link rel="alternate" hreflang="fr" href="https://test.com/fr" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://test.com/es" />
+        <lastmod>2026-03-26</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://test.com/es/terms</loc>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://test.com/terms" />
+        <xhtml:link rel="alternate" hreflang="fr" href="https://test.com/fr/terms" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://test.com/es/terms" />
+        <lastmod>2026-03-26</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://test.com/es/privacy</loc>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://test.com/privacy" />
+        <xhtml:link rel="alternate" hreflang="fr" href="https://test.com/fr/privacy" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://test.com/es/privacy" />
+        <lastmod>2026-03-26</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://test.com/es/first</loc>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://test.com/first" />
+        <xhtml:link rel="alternate" hreflang="fr" href="https://test.com/fr/first" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://test.com/es/first" />
+        <lastmod>2026-03-26</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://test.com/es/second</loc>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://test.com/second" />
+        <xhtml:link rel="alternate" hreflang="fr" href="https://test.com/fr/second" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://test.com/es/second" />
+        <lastmod>2026-03-26</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://test.com/es/third</loc>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://test.com/third" />
+        <xhtml:link rel="alternate" hreflang="fr" href="https://test.com/fr/third" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://test.com/es/third" />
+        <lastmod>2026-03-26</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://test.com/es/widget</loc>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://test.com/widget" />
+        <xhtml:link rel="alternate" hreflang="fr" href="https://test.com/fr/widget" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://test.com/es/widget" />
+        <lastmod>2026-03-26</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://test.com/es/gadget</loc>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://test.com/gadget" />
+        <xhtml:link rel="alternate" hreflang="fr" href="https://test.com/fr/gadget" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://test.com/es/gadget" />
+        <lastmod>2026-03-26</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://test.com/es/tool</loc>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://test.com/tool" />
+        <xhtml:link rel="alternate" hreflang="fr" href="https://test.com/fr/tool" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://test.com/es/tool" />
+        <lastmod>2026-03-26</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://test.com/es/device</loc>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://test.com/device" />
+        <xhtml:link rel="alternate" hreflang="fr" href="https://test.com/fr/device" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://test.com/es/device" />
+        <lastmod>2026-03-26</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://test.com/es/accessory</loc>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://test.com/accessory" />
+        <xhtml:link rel="alternate" hreflang="fr" href="https://test.com/fr/accessory" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://test.com/es/accessory" />
+        <lastmod>2026-03-26</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://test.com/es/thing-1</loc>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://test.com/thing-1" />
+        <xhtml:link rel="alternate" hreflang="fr" href="https://test.com/fr/thing-1" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://test.com/es/thing-1" />
+        <lastmod>2026-03-26</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://test.com/es/thing-2</loc>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://test.com/thing-2" />
+        <xhtml:link rel="alternate" hreflang="fr" href="https://test.com/fr/thing-2" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://test.com/es/thing-2" />
+        <lastmod>2026-03-26</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://test.com/es/thing-3</loc>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://test.com/thing-3" />
+        <xhtml:link rel="alternate" hreflang="fr" href="https://test.com/fr/thing-3" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://test.com/es/thing-3" />
+        <lastmod>2026-03-26</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://test.com/en</loc>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://test.com" />
+        <xhtml:link rel="alternate" hreflang="fr" href="https://test.com/fr" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://test.com/es" />
+        <lastmod>2026-03-26</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://test.com/en/terms</loc>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://test.com/terms" />
+        <xhtml:link rel="alternate" hreflang="fr" href="https://test.com/fr/terms" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://test.com/es/terms" />
+        <lastmod>2026-03-26</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://test.com/en/privacy</loc>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://test.com/privacy" />
+        <xhtml:link rel="alternate" hreflang="fr" href="https://test.com/fr/privacy" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://test.com/es/privacy" />
+        <lastmod>2026-03-26</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://test.com/en/first</loc>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://test.com/first" />
+        <xhtml:link rel="alternate" hreflang="fr" href="https://test.com/fr/first" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://test.com/es/first" />
+        <lastmod>2026-03-26</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://test.com/en/second</loc>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://test.com/second" />
+        <xhtml:link rel="alternate" hreflang="fr" href="https://test.com/fr/second" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://test.com/es/second" />
+        <lastmod>2026-03-26</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://test.com/en/third</loc>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://test.com/third" />
+        <xhtml:link rel="alternate" hreflang="fr" href="https://test.com/fr/third" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://test.com/es/third" />
+        <lastmod>2026-03-26</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://test.com/en/widget</loc>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://test.com/widget" />
+        <xhtml:link rel="alternate" hreflang="fr" href="https://test.com/fr/widget" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://test.com/es/widget" />
+        <lastmod>2026-03-26</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://test.com/en/gadget</loc>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://test.com/gadget" />
+        <xhtml:link rel="alternate" hreflang="fr" href="https://test.com/fr/gadget" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://test.com/es/gadget" />
+        <lastmod>2026-03-26</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://test.com/en/tool</loc>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://test.com/tool" />
+        <xhtml:link rel="alternate" hreflang="fr" href="https://test.com/fr/tool" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://test.com/es/tool" />
+        <lastmod>2026-03-26</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://test.com/en/device</loc>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://test.com/device" />
+        <xhtml:link rel="alternate" hreflang="fr" href="https://test.com/fr/device" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://test.com/es/device" />
+        <lastmod>2026-03-26</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://test.com/en/accessory</loc>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://test.com/accessory" />
+        <xhtml:link rel="alternate" hreflang="fr" href="https://test.com/fr/accessory" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://test.com/es/accessory" />
+        <lastmod>2026-03-26</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://test.com/en/thing-1</loc>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://test.com/thing-1" />
+        <xhtml:link rel="alternate" hreflang="fr" href="https://test.com/fr/thing-1" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://test.com/es/thing-1" />
+        <lastmod>2026-03-26</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://test.com/en/thing-2</loc>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://test.com/thing-2" />
+        <xhtml:link rel="alternate" hreflang="fr" href="https://test.com/fr/thing-2" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://test.com/es/thing-2" />
+        <lastmod>2026-03-26</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://test.com/en/thing-3</loc>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://test.com/thing-3" />
+        <xhtml:link rel="alternate" hreflang="fr" href="https://test.com/fr/thing-3" />
+        <xhtml:link rel="alternate" hreflang="es" href="https://test.com/es/thing-3" />
+        <lastmod>2026-03-26</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+</urlset>

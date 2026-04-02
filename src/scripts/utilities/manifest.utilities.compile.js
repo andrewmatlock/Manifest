@@ -745,6 +745,8 @@ TailwindCompiler.prototype.filterCriticalUtilities = function(criticalText, laye
 
 // Main compilation method
 TailwindCompiler.prototype.compile = async function () {
+    if (this.usesStaticPrerenderUtilities) return;
+
     const compileStart = performance.now();
 
     try {

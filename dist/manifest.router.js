@@ -159,15 +159,211 @@ window.ManifestRoutingPosition = {
 
 // Router navigation
 
-// Current route state
+// Current route state (logical path, e.g. /gadget; not full pathname when app is in a subpath)
 let currentRoute = '/';
 let isInternalNavigation = false;
 
+function isPrerenderedStaticBuild() {
+    // When prerendered HTML is served as static pages, prefer normal browser navigation (MPA)
+    // so each URL loads its own prerendered HTML rather than SPA toggling.
+    const prerendered = document.querySelector('meta[name="manifest:prerendered"]');
+    const val = (prerendered?.getAttribute('content') || '').trim().toLowerCase();
+    if (prerendered && val !== '0' && val !== 'false') return true;
+    // Backstop: prerender writes this per-page depth marker.
+    return !!document.querySelector('meta[name="manifest:router-base-depth"]');
+}
+
+function getBasePath() {
+    return (typeof window.getManifestBasePath === 'function' ? window.getManifestBasePath() : '') || '';
+}
+
+// Locale codes from manifest data (same idea as ManifestRouting.matchesCondition).
+function getLocalizationCodesFromManifest() {
+    const localizationCodes = [];
+    try {
+        const manifest = window.ManifestComponentsRegistry?.manifest || window.manifest;
+        if (manifest?.data && typeof manifest.data === 'object') {
+            Object.values(manifest.data).forEach((dataSource) => {
+                if (typeof dataSource === 'object' && dataSource !== null) {
+                    Object.keys(dataSource).forEach((key) => {
+                        if (key.match(/^[a-z]{2}(-[A-Z]{2})?$/)) {
+                            localizationCodes.push(key);
+                        }
+                    });
+                }
+            });
+        }
+    } catch {
+        /* ignore */
+    }
+    return [...new Set(localizationCodes)];
+}
+
+function logicalSegmentsFromPathname(pathname) {
+    const logical = pathnameToLogical(pathname);
+    const s = logical.replace(/^\/+|\/+$/g, '');
+    return s ? s.split('/') : [];
+}
+
+const STICKY_LOCALE_SKIP_FIRST_SEGMENTS = new Set([
+    'api',
+    'assets',
+    'static',
+    'public',
+    'dist',
+    'icons',
+    'fonts',
+    'media',
+    '.well-known',
+]);
+
+const STICKY_LOCALE_STATIC_FILE_EXT = new Set([
+    'js', 'mjs', 'cjs', 'css', 'map', 'png', 'jpg', 'jpeg', 'webp', 'gif', 'svg', 'ico',
+    'woff', 'woff2', 'ttf', 'eot', 'json', 'xml', 'txt', 'pdf', 'zip', 'wasm', 'avif',
+    'mp4', 'webm', 'mp3',
+]);
+
+function shouldSkipStickyLocaleForLogicalSegments(segments) {
+    if (!segments.length) return false;
+    if (STICKY_LOCALE_SKIP_FIRST_SEGMENTS.has(segments[0])) return true;
+    const last = segments[segments.length - 1];
+    if (!last || !last.includes('.')) return false;
+    const ext = last.slice(last.lastIndexOf('.') + 1).toLowerCase();
+    return STICKY_LOCALE_STATIC_FILE_EXT.has(ext);
+}
+
+// manifest.prerender.localeRouteExclude → JSON array in meta; logical path prefixes (after locale).
+function parseLocaleRouteExcludePatterns() {
+    const meta = document.querySelector('meta[name="manifest:locale-route-exclude"]');
+    const raw = meta?.getAttribute('content') || '';
+    if (raw.trim().startsWith('[')) {
+        try {
+            const parsed = JSON.parse(raw.replace(/&quot;/g, '"'));
+            if (Array.isArray(parsed)) {
+                return parsed.map((s) => String(s).trim()).filter(Boolean);
+            }
+        } catch {
+            /* fall through */
+        }
+    }
+    const legacy = document.querySelector('meta[name="manifest:locale-sticky-exclude"]');
+    const legacyRaw = legacy?.getAttribute('content') || '';
+    if (!legacyRaw.trim()) return [];
+    return legacyRaw.split(',').map((s) => s.trim().replace(/^\/+/, '').split('/')[0]).filter(Boolean);
+}
+
+function logicalPathMatchesLocaleRouteExclude(segments, patterns) {
+    if (!patterns.length || !segments.length) return false;
+    const lower = segments.map((s) => s.toLowerCase());
+    for (const pattern of patterns) {
+        const p = String(pattern)
+            .trim()
+            .replace(/^\/+/, '')
+            .split('/')
+            .filter(Boolean)
+            .map((x) => x.toLowerCase());
+        if (p.length === 0) continue;
+        if (lower.length < p.length) continue;
+        let match = true;
+        for (let i = 0; i < p.length; i++) {
+            if (lower[i] !== p[i]) {
+                match = false;
+                break;
+            }
+        }
+        if (match) return true;
+    }
+    return false;
+}
+
+// /fr/legal/terms → /legal/terms when patterns include "legal" or "legal/terms" (prefix match).
+function normalizeRedundantLocalePrefixInUrl() {
+    if (!isPrerenderedStaticBuild()) return false;
+    const codes = getLocalizationCodesFromManifest();
+    const patterns = parseLocaleRouteExcludePatterns();
+    if (!codes.length || !patterns.length) return false;
+
+    const segs = logicalSegmentsFromPathname(window.location.pathname);
+    if (segs.length < 2) return false;
+    if (!codes.includes(segs[0])) return false;
+    const rest = segs.slice(1);
+    if (!logicalPathMatchesLocaleRouteExclude(rest, patterns)) return false;
+
+    const newLogical = '/' + rest.join('/');
+    const base = getBasePath();
+    let newPathname = base ? base.replace(/\/+$/, '') + newLogical : newLogical;
+    newPathname = newPathname.replace(/\/{2,}/g, '/');
+    if (!newPathname.startsWith('/')) newPathname = '/' + newPathname;
+    if (newPathname === window.location.pathname) return false;
+
+    const prevLogical = pathnameToLogical(window.location.pathname);
+    const u = new URL(window.location.href);
+    u.pathname = newPathname;
+    history.replaceState(null, '', u.toString());
+    currentRoute = pathnameToLogical(newPathname);
+    const np = currentRoute === '/' ? '/' : String(currentRoute).replace(/^\/|\/$/g, '');
+    window.dispatchEvent(new CustomEvent('manifest:route-change', {
+        detail: { from: prevLogical, to: currentRoute, normalizedPath: np }
+    }));
+    return true;
+}
+
+// When the URL already has a locale prefix (e.g. /zh/pricing), keep it for same-origin links
+// that omit the prefix (/articles → /zh/articles). No-op on default-locale URLs (/pricing).
+function applyStickyLocaleToPathname(absolutePathname) {
+    const codes = getLocalizationCodesFromManifest();
+    if (!codes.length) return absolutePathname;
+
+    const currentSegs = logicalSegmentsFromPathname(window.location.pathname);
+    const sticky = currentSegs.length && codes.includes(currentSegs[0]) ? currentSegs[0] : null;
+    if (!sticky) return absolutePathname;
+
+    const targetSegs = logicalSegmentsFromPathname(absolutePathname);
+    if (targetSegs.length && codes.includes(targetSegs[0])) {
+        return absolutePathname;
+    }
+
+    const routeEx = parseLocaleRouteExcludePatterns();
+    if (routeEx.length && logicalPathMatchesLocaleRouteExclude(targetSegs, routeEx)) {
+        return absolutePathname;
+    }
+
+    if (shouldSkipStickyLocaleForLogicalSegments(targetSegs)) {
+        return absolutePathname;
+    }
+
+    const base = getBasePath();
+    const newLogical = targetSegs.length ? `/${sticky}/${targetSegs.join('/')}` : `/${sticky}`;
+    const normalizedLogical = newLogical.replace(/\/{2,}/g, '/') || '/';
+    if (!base) return normalizedLogical;
+    const combined = `${base}${normalizedLogical}`.replace(/([^:])\/{2,}/g, '$1/');
+    return combined.startsWith('/') ? combined : `/${combined}`;
+}
+
+function pathnameToLogical(pathname) {
+    const base = getBasePath();
+    if (!base) {
+        const p = (pathname || '/').replace(/\/$/, '') || '/';
+        if (p === '/' || p === '/index.html' || p === '/index') return '/';
+        return p.startsWith('/') ? p : '/' + p;
+    }
+    if (pathname === base || pathname === base + '/') return '/';
+    if (pathname.startsWith(base + '/')) {
+        let logical = pathname.slice(base.length) || '/';
+        if (logical === '/index.html' || logical === '/index') logical = '/';
+        return logical;
+    }
+    if (pathname === base + '/index.html' || pathname === base + '/index') return '/';
+    return pathname;
+}
+
 // Handle route changes
 async function handleRouteChange() {
-    const newRoute = window.location.pathname;
+    const pathname = window.location.pathname;
+    const newRoute = pathnameToLogical(pathname);
     if (newRoute === currentRoute) return;
 
+    const prevRoute = currentRoute;
     currentRoute = newRoute;
 
     // Handle scrolling based on whether this is an anchor link or route change
@@ -208,11 +404,93 @@ async function handleRouteChange() {
     // Emit route change event
     window.dispatchEvent(new CustomEvent('manifest:route-change', {
         detail: {
-            from: currentRoute,
+            from: prevRoute,
             to: newRoute,
             normalizedPath: newRoute === '/' ? '/' : newRoute.replace(/^\/|\/$/g, '')
         }
     }));
+}
+
+// Resolve internal link to absolute pathname for pushState. Relative hrefs (e.g. "gadget") are resolved against the app base, not the current URL, so we never get additive paths like /src/dist/widget/gadget/widget/...
+function resolveHref(href) {
+    if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) return href;
+    try {
+        const base = getBasePath();
+        const baseUrl = base ? (window.location.origin + base + '/') : (window.location.origin + '/');
+        const url = new URL(href, baseUrl);
+        if (url.origin !== window.location.origin) return href;
+        let path = url.pathname.replace(/\/$/, '') || '/';
+        let resolved;
+        if (!base) {
+            resolved = path.startsWith('/') ? path : '/' + path;
+        } else if (path === base || path.startsWith(base + '/')) {
+            resolved = path;
+        } else if (path.startsWith('/')) {
+            const pathSegs = path.split('/').filter(Boolean);
+            const baseSegs = base.split('/').filter(Boolean);
+            let i = 0;
+            while (i < baseSegs.length && i < pathSegs.length && baseSegs[i] === pathSegs[i]) i++;
+            const routeSegs = pathSegs.slice(i);
+            if (routeSegs.length) {
+                resolved = base + '/' + routeSegs.join('/');
+            } else {
+                const out = base + (path.startsWith('/') ? path : '/' + path);
+                resolved = out.startsWith('/') ? out : '/' + out;
+            }
+        } else {
+            const out = base + (path.startsWith('/') ? path : '/' + path);
+            resolved = out.startsWith('/') ? out : '/' + out;
+        }
+        return applyStickyLocaleToPathname(resolved);
+    } catch {
+        const base = getBasePath();
+        const safe = (href || '').trim();
+        if (!safe) return applyStickyLocaleToPathname(base || '/');
+        const raw = base ? (base + (safe.startsWith('/') ? safe : '/' + safe)) : (safe.startsWith('/') ? safe : '/' + safe);
+        return applyStickyLocaleToPathname(raw);
+    }
+}
+
+// Prerendered MPA: same-origin navigations use full page loads; rewrite targets so locale prefix sticks.
+function installMpaStickyLocaleLinks() {
+    document.addEventListener('click', (event) => {
+        if (event.defaultPrevented) return;
+        if (event.button !== 0) return;
+        if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+
+        const link = event.target.closest('a');
+        if (!link || link.closest('[data-manifest-skip-locale-sticky]')) return;
+        if (link.hasAttribute('download')) return;
+
+        const hrefAttr = link.getAttribute('href');
+        if (!hrefAttr || hrefAttr.startsWith('mailto:') || hrefAttr.startsWith('tel:') || hrefAttr.startsWith('javascript:')) return;
+        if (hrefAttr.startsWith('#')) return;
+
+        let url;
+        try {
+            url = new URL(hrefAttr, window.location.href);
+        } catch {
+            return;
+        }
+        if (url.origin !== window.location.origin) return;
+
+        const path = url.pathname.replace(/\/$/, '') || '/';
+        const adjusted = applyStickyLocaleToPathname(path);
+        event.preventDefault();
+        event.stopPropagation();
+        event.stopImmediatePropagation();
+        url.pathname = adjusted;
+
+        const dest = url.toString();
+        if (link.target === '_blank') {
+            const features = link.relList?.contains('noopener') || link.relList?.contains('noreferrer')
+                ? 'noopener,noreferrer'
+                : undefined;
+            window.open(dest, '_blank', features);
+        } else {
+            window.location.assign(dest);
+        }
+    }, true);
 }
 
 // Intercept link clicks to prevent page reloads
@@ -247,6 +525,7 @@ function interceptLinkClicks() {
         // Handle links with both route and anchor (e.g., /page#section)
         if (href.includes('#')) {
             const [path, hash] = href.split('#');
+            const fullHref = resolveHref(path) + (hash ? '#' + hash : '');
 
             event.preventDefault();
             event.stopPropagation();
@@ -255,8 +534,8 @@ function interceptLinkClicks() {
             // Set flag to prevent recursive calls
             isInternalNavigation = true;
 
-            // Update URL without page reload
-            history.pushState(null, '', href);
+            // Update URL without page reload (use base path when app is in a subpath)
+            history.pushState(null, '', fullHref);
 
             // Handle route change (but don't scroll to top since there's an anchor)
             handleRouteChange();
@@ -282,8 +561,9 @@ function interceptLinkClicks() {
         // Set flag to prevent recursive calls
         isInternalNavigation = true;
 
-        // Update URL without page reload
-        history.pushState(null, '', href);
+        // Update URL without page reload (use base path when app is in a subpath, e.g. /src/dist/gadget)
+        const fullHref = resolveHref(href);
+        history.pushState(null, '', fullHref);
 
         // Handle route change
         handleRouteChange();
@@ -296,22 +576,29 @@ function interceptLinkClicks() {
 
 // Initialize navigation
 function initializeNavigation() {
-    // Set initial route
-    currentRoute = window.location.pathname;
+    currentRoute = pathnameToLogical(window.location.pathname);
+    normalizeRedundantLocalePrefixInUrl();
 
-    // Intercept link clicks
-    interceptLinkClicks();
+    // In prerendered/static output, use default browser navigation (no SPA interception)
+    if (!isPrerenderedStaticBuild()) {
+        interceptLinkClicks();
 
-    // Listen for popstate events (browser back/forward)
-    window.addEventListener('popstate', () => {
-        if (!isInternalNavigation) {
-            handleRouteChange();
-        }
-    });
+        window.addEventListener('popstate', () => {
+            if (!isInternalNavigation) {
+                handleRouteChange();
+            }
+        });
+    } else {
+        installMpaStickyLocaleLinks();
+    }
 
     // Handle initial route
     handleRouteChange();
 }
+
+// Match the browser URL as soon as this module loads. Later chunks in the same bundle (e.g. router magic)
+// may initialize before DOMContentLoaded; getCurrentRoute() must not stay at '/' or $route breaks article pages.
+currentRoute = pathnameToLogical(window.location.pathname);
 
 // Run immediately if DOM is ready, otherwise wait
 if (document.readyState === 'loading') {
@@ -323,13 +610,28 @@ if (document.readyState === 'loading') {
 // Export navigation interface
 window.ManifestRoutingNavigation = {
     initialize: initializeNavigation,
-    getCurrentRoute: () => currentRoute
+    getCurrentRoute: () => currentRoute,
+    getBasePath,
+    resolveHref,
+    pathnameToLogical
 }; 
 
 // Router visibility
 
+function isPrerenderedStaticMPA() {
+    try {
+        return document.querySelector('meta[name="manifest:prerendered"][content="1"]') !== null;
+    } catch (e) {
+        return false;
+    }
+}
+
 // Process visibility for all elements with x-route
 function processRouteVisibility(normalizedPath) {
+    // Static prerender output already contains only this route's sections; x-cloak + toggling here
+    // causes a visible flash (content → hidden via x-cloak → shown when Alpine boots).
+    if (isPrerenderedStaticMPA()) return;
+
     const routeElements = document.querySelectorAll('[x-route]');
 
     // First pass: collect all defined routes (excluding !* and other negative conditions)
@@ -445,6 +747,7 @@ function processRouteVisibility(normalizedPath) {
 
 // Add x-cloak to route elements that don't have it
 function addXCloakToRouteElements() {
+    if (isPrerenderedStaticMPA()) return;
     const routeElements = document.querySelectorAll('[x-route]:not([x-cloak])');
     routeElements.forEach(element => {
         element.setAttribute('x-cloak', '');
@@ -456,22 +759,24 @@ function initializeVisibility() {
     // Add x-cloak to route elements to prevent flash
     addXCloakToRouteElements();
 
-    // Process initial visibility
-    const currentPath = window.location.pathname;
+    // Process initial visibility (use logical path when app is in a subpath)
+    const currentPath = window.ManifestRoutingNavigation?.getCurrentRoute() ?? window.location.pathname;
     const normalizedPath = currentPath === '/' ? '/' : currentPath.replace(/^\/|\/$/g, '');
     processRouteVisibility(normalizedPath);
 
     // Listen for route changes
     window.addEventListener('manifest:route-change', (event) => {
+        if (isPrerenderedStaticMPA()) return;
         processRouteVisibility(event.detail.normalizedPath);
     });
 
     // Listen for component processing to ensure visibility is applied after components load
     window.addEventListener('manifest:components-processed', () => {
+        if (isPrerenderedStaticMPA()) return;
         // Add x-cloak to any new route elements
         addXCloakToRouteElements();
 
-        const currentPath = window.location.pathname;
+        const currentPath = window.ManifestRoutingNavigation?.getCurrentRoute() ?? window.location.pathname;
         const normalizedPath = currentPath === '/' ? '/' : currentPath.replace(/^\/|\/$/g, '');
         processRouteVisibility(normalizedPath);
     });
@@ -493,10 +798,22 @@ if (document.readyState === 'loading') {
 // Export visibility interface
 window.ManifestRoutingVisibility = {
     initialize: initializeVisibility,
-    processRouteVisibility
+    processRouteVisibility,
+    isPrerenderedStaticMPA
 }; 
 
 // Router head
+
+function isPrerenderedStaticMPA() {
+    try {
+        if (window.ManifestRoutingVisibility && typeof window.ManifestRoutingVisibility.isPrerenderedStaticMPA === 'function') {
+            return window.ManifestRoutingVisibility.isPrerenderedStaticMPA();
+        }
+        return document.querySelector('meta[name="manifest:prerendered"][content="1"]') !== null;
+    } catch (e) {
+        return false;
+    }
+}
 
 // Track injected head content to prevent duplicates
 const injectedHeadContent = new Set();
@@ -540,6 +857,39 @@ function shouldElementBeVisible(element, normalizedPath) {
     return true;
 }
 
+// Resolve :attr and x-bind:attr whose value is $x.path so injected meta/link have real content (SPA + prerender).
+function resolveDataHeadBindings(element) {
+    const x = typeof window !== 'undefined' && window.$x;
+    if (!x) return;
+    const toResolve = [];
+    for (let i = 0; i < element.attributes.length; i++) {
+        const attr = element.attributes[i];
+        const name = attr.name;
+        let bindingAttr = null;
+        if (name.startsWith(':')) bindingAttr = name.slice(1);
+        else if (name.startsWith('x-bind:')) bindingAttr = name.slice(7);
+        if (!bindingAttr) continue;
+        const expr = (attr.value || '').trim();
+        if (!expr.startsWith('$x.')) continue;
+        const path = expr.slice(3).trim();
+        if (!path) continue;
+        toResolve.push({ bindingName: attr.name, attrName: bindingAttr, path });
+    }
+    for (const { bindingName, attrName, path } of toResolve) {
+        let value;
+        try {
+            value = path.split('.').reduce(function (obj, key) {
+                return obj != null && typeof obj === 'object' ? obj[key] : undefined;
+            }, x);
+        } catch (e) {
+            continue;
+        }
+        if (value === undefined) continue;
+        element.setAttribute(attrName, String(value));
+        element.removeAttribute(bindingName);
+    }
+}
+
 // Generate unique identifier for head content
 function generateHeadId(element) {
     const position = element.getAttribute('data-order');
@@ -575,8 +925,12 @@ function processElementHeadContent(element, normalizedPath) {
     const isVisible = shouldElementBeVisible(element, normalizedPath);
 
     if (isVisible) {
-        // Check if we've already injected this content
+        // Skip if already injected (in-memory) or already present in DOM (e.g. prerendered)
         if (injectedHeadContent.has(headId)) {
+            return;
+        }
+        if (document.head.querySelector(`[data-route-head="${headId}"]`)) {
+            injectedHeadContent.add(headId);
             return;
         }
 
@@ -589,8 +943,9 @@ function processElementHeadContent(element, normalizedPath) {
                 script.setAttribute('data-route-head', headId);
                 document.head.appendChild(script);
             } else {
-                // For other elements, clone and add
+                // For other elements, clone and add (resolve $x bindings so meta/link have real values in SPA)
                 const clonedChild = child.cloneNode(true);
+                resolveDataHeadBindings(clonedChild);
                 clonedChild.setAttribute('data-route-head', headId);
                 document.head.appendChild(clonedChild);
             }
@@ -609,6 +964,7 @@ function processElementHeadContent(element, normalizedPath) {
 
 // Process all head content in the DOM
 function processAllHeadContent(normalizedPath) {
+    if (isPrerenderedStaticMPA()) return;
 
     // Find all elements with head templates
     const elementsWithHead = document.querySelectorAll('template[data-head]');
@@ -687,7 +1043,8 @@ function initializeHeadContent() {
     function processHeadContentAfterComponentsReady() {
         // Process initial head content after a longer delay to let components settle
         setTimeout(() => {
-            const currentPath = window.location.pathname;
+            if (isPrerenderedStaticMPA()) return;
+            const currentPath = window.ManifestRoutingNavigation?.getCurrentRoute() ?? window.location.pathname;
             const normalizedPath = currentPath === '/' ? '/' : currentPath.replace(/^\/|\/$/g, '');
 
             // Debug: Check if about component exists
@@ -706,7 +1063,8 @@ function initializeHeadContent() {
 
     // Function to process head content immediately (for projects without components)
     function processHeadContentImmediately() {
-        const currentPath = window.location.pathname;
+        if (isPrerenderedStaticMPA()) return;
+        const currentPath = window.ManifestRoutingNavigation?.getCurrentRoute() ?? window.location.pathname;
         const normalizedPath = currentPath === '/' ? '/' : currentPath.replace(/^\/|\/$/g, '');
         processAllHeadContent(normalizedPath);
     }
@@ -739,8 +1097,9 @@ function initializeHeadContent() {
 
         // Wait a bit for components to settle after route change
         setTimeout(() => {
+            if (isPrerenderedStaticMPA()) return;
             // Process head content immediately to catch components before they're reverted
-            const currentPath = window.location.pathname;
+            const currentPath = window.ManifestRoutingNavigation?.getCurrentRoute() ?? window.location.pathname;
             const normalizedPath = currentPath === '/' ? '/' : currentPath.replace(/^\/|\/$/g, '');
 
             // Debug: Check if about component exists
@@ -774,6 +1133,29 @@ window.ManifestRoutingHead = {
 
 // Router anchors
 
+// Parse pipeline syntax: 'scope | targets' (shared for directive and route-change handler)
+function parseAnchorsExpression(expr) {
+    if (!expr || expr.trim() === '') {
+        return { scope: '', targets: 'h1, h2, h3, h4, h5, h6' };
+    }
+    if (expr.includes('|')) {
+        const parts = expr.split('|').map(p => p.trim());
+        return {
+            scope: parts[0] || '',
+            targets: parts[1] || 'h1, h2, h3, h4, h5, h6'
+        };
+    }
+    return { scope: '', targets: expr };
+}
+
+function isVisible(el) {
+    if (!el || !el.getBoundingClientRect) return false;
+    const rect = el.getBoundingClientRect();
+    if (rect.width === 0 && rect.height === 0) return false;
+    const style = window.getComputedStyle(el);
+    return style.display !== 'none' && style.visibility !== 'hidden' && style.opacity !== '0';
+}
+
 // Anchors functionality
 function initializeAnchors() {
 
@@ -782,24 +1164,9 @@ function initializeAnchors() {
 
 
         try {
-            // Parse pipeline syntax: 'scope | targets'
-            const parseExpression = (expr) => {
-                if (!expr || expr.trim() === '') {
-                    return { scope: '', targets: 'h1, h2, h3, h4, h5, h6' };
-                }
+            const parseExpression = parseAnchorsExpression;
 
-                if (expr.includes('|')) {
-                    const parts = expr.split('|').map(p => p.trim());
-                    return {
-                        scope: parts[0] || '',
-                        targets: parts[1] || 'h1, h2, h3, h4, h5, h6'
-                    };
-                } else {
-                    return { scope: '', targets: expr };
-                }
-            };
-
-            // Extract anchors function
+            // Extract anchors function (only from visible scope containers to avoid prior-route content)
             const extractAnchors = (expr) => {
                 const parsed = parseExpression(expr);
 
@@ -807,7 +1174,8 @@ function initializeAnchors() {
                 if (!parsed.scope) {
                     containers = [document.body];
                 } else {
-                    containers = Array.from(document.querySelectorAll(parsed.scope));
+                    const all = Array.from(document.querySelectorAll(parsed.scope));
+                    containers = all.filter(isVisible);
                 }
 
                 let elements = [];
@@ -1070,21 +1438,44 @@ document.addEventListener('alpine:init', () => {
     }
 });
 
-// Refresh anchors when route changes
+// Refresh anchors when route changes — wait for scope DOM to update (e.g. x-markdown) to avoid showing prior page's anchors
 window.addEventListener('manifest:route-change', () => {
-    // Immediately clear the store to hide the h5 element
     Alpine.store('anchors', { count: 0 });
 
-    // Wait longer for content to load after route change
-    setTimeout(() => {
-        const anchorElements = document.querySelectorAll('[x-anchors]');
-        anchorElements.forEach(el => {
-            const expression = el.getAttribute('x-anchors');
-            if (expression && el._x_anchorRefresh) {
-                el._x_anchorRefresh();
-            }
+    const runWhenScopeReady = (el) => {
+        const expression = el.getAttribute('x-anchors');
+        if (!expression || !el._x_anchorRefresh) return;
+        const { scope } = parseAnchorsExpression(expression);
+        if (!scope) {
+            setTimeout(() => el._x_anchorRefresh(), 400);
+            return;
+        }
+        const containers = Array.from(document.querySelectorAll(scope)).filter(isVisible);
+        const container = containers[0];
+        if (!container) {
+            el._x_anchorRefresh();
+            return;
+        }
+        let done = false;
+        const finish = () => {
+            if (done) return;
+            done = true;
+            observer?.disconnect();
+            clearTimeout(fallback);
+            el._x_anchorRefresh();
+        };
+        let t = 0;
+        const observer = new MutationObserver(() => {
+            clearTimeout(t);
+            t = setTimeout(finish, 50);
         });
-    }, 200);
+        observer.observe(container, { childList: true, subtree: true });
+        const fallback = setTimeout(finish, 800);
+    };
+
+    requestAnimationFrame(() => {
+        document.querySelectorAll('[x-anchors]').forEach(runWhenScopeReady);
+    });
 });
 
 // Refresh anchors when hash changes (for active state updates)
@@ -1125,10 +1516,12 @@ function initializeRouterMagic() {
         console.error('[Manifest Router Magic] Alpine is not available');
         return;
     }
+    if (window.__manifestRouterMagicInitialized) return;
+    window.__manifestRouterMagicInitialized = true;
 
-    // Create a reactive object for route data
+    // Create a reactive object for route data (use logical path when app is in a subpath)
     const route = Alpine.reactive({
-        current: window.location.pathname,
+        current: window.ManifestRoutingNavigation?.getCurrentRoute() || window.location.pathname,
         segments: [],
         params: {},
         matches: null
@@ -1136,7 +1529,7 @@ function initializeRouterMagic() {
 
     // Update route when route changes
     const updateRoute = () => {
-        const currentRoute = window.ManifestRoutingNavigation?.getCurrentRoute() || window.location.pathname;
+        const currentRoute = window.ManifestRoutingNavigation?.getCurrentRoute() ?? window.location.pathname;
 
         // Strip localization codes and other injected segments to get the logical route
         let logicalRoute = currentRoute;
@@ -1168,6 +1561,9 @@ function initializeRouterMagic() {
     // Listen for route changes
     window.addEventListener('manifest:route-change', updateRoute);
     window.addEventListener('popstate', updateRoute);
+
+    // Align with navigation + locale stripping; initial reactive value can be wrong if magic ran before DOMContentLoaded.
+    updateRoute();
 
     // Register $route magic property - return the route string directly
     Alpine.magic('route', () => route.current);

@@ -153,6 +153,7 @@ TailwindCompiler.prototype.setupComponentLoadListener = function () {
 
 // Start processing with initial compilation and observer setup
 TailwindCompiler.prototype.startProcessing = async function () {
+    if (this.usesStaticPrerenderUtilities) return;
     try {
         // Start initial compilation immediately
         const initialCompilation = this.compile();

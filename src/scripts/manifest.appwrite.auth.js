@@ -18,7 +18,8 @@ async function ensureManifest() {
     }
 
     try {
-        const response = await fetch('/manifest.json');
+        const manifestUrl = (document.querySelector('link[rel="manifest"]')?.getAttribute('href')) || '/manifest.json';
+        const response = await fetch(manifestUrl);
         return await response.json();
     } catch (error) {
         return null;
@@ -221,6 +222,16 @@ function initializeAuthStore() {
         _updatingTeam: null, // Team ID being updated (null when not updating)
         _deletingTeam: null, // Team ID being deleted (null when not deleting)
         _creatingTeam: false, // Boolean flag for team creation
+        // Stub team convenience methods (replaced by teams.convenience.js; prevent "is not a function" before init)
+        isCreatingTeam() { return this._creatingTeam === true; },
+        isUpdatingTeam() { return false; },
+        isDeletingTeam() { return false; },
+        isInvitingMember() { return false; },
+        isUpdatingMember() { return false; },
+        isDeletingMember() { return false; },
+        isUpdatingRole() { return false; },
+        isDeletingRole() { return false; },
+        isCreatingRole() { return false; },
         // Member operation-specific loading states
         _updatingMember: null, // Membership ID being updated (null when not updating)
         _deletingMember: null, // Membership ID being deleted (null when not deleting)

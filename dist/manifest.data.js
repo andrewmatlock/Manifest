@@ -10,7 +10,8 @@ async function ensureManifest() {
     }
 
     try {
-        const response = await fetch('/manifest.json');
+        const manifestUrl = (document.querySelector('link[rel="manifest"]')?.getAttribute('href')) || '/manifest.json';
+        const response = await fetch(manifestUrl);
         return await response.json();
     } catch (error) {
         console.error('[Manifest Data] Failed to load manifest:', error);
@@ -206,6 +207,10 @@ const rawDataStore = new Map();
 let isInitializing = false;
 let initializationComplete = false;
 
+// Render-ready: debounced timer used by checkAndDispatchRenderReady
+let _renderReadyTimer = null;
+const RENDER_READY_QUIET_MS = 150; // ms of quiet (no loading) before firing
+
 // Deep seal an object to prevent Alpine from making it reactive
 // This prevents double-proxying which causes recursion errors
 function deepSeal(obj) {
@@ -299,6 +304,12 @@ function updateStore(dataSourceName, data, options = {}) {
     };
 
     Alpine.store('data', updatedStore);
+
+    // When a source finishes loading (success or error), check if everything is settled.
+    // This is the primary trigger for manifest:render-ready.
+    if (!newState.loading) {
+        checkAndDispatchRenderReady();
+    }
 
     // Attach methods to array if it's an array (for new architecture)
     // This ensures methods are available on the new array reference
@@ -765,6 +776,49 @@ function setupTeamChangeListener() {
     }
 }
 
+// Dispatch manifest:render-ready when all tracked data sources have settled.
+// Uses a debounce so rapid sequential source completions coalesce into one event.
+// The render script listens for this event instead of polling internal store state.
+function checkAndDispatchRenderReady() {
+    if (_renderReadyTimer) {
+        clearTimeout(_renderReadyTimer);
+    }
+    _renderReadyTimer = setTimeout(() => {
+        _renderReadyTimer = null;
+        try {
+            if (typeof window === 'undefined' || typeof Alpine === 'undefined') return;
+            const store = Alpine.store('data');
+            if (!store) return;
+
+            // Don't fire while a locale change is still in progress
+            if (store._localeChanging) return;
+
+            // Don't fire if any source state still shows loading
+            for (const key of Object.keys(store)) {
+                if (key.startsWith('_') && key.endsWith('_state')) {
+                    if (store[key]?.loading) return;
+                }
+            }
+
+            // Don't fire if any fetch promises are still in flight
+            if (loadingPromises.size > 0) return;
+
+            // All settled — dispatch the authoritative prerender signal
+            const locale =
+                (typeof document !== 'undefined' && document.documentElement.lang) ||
+                Alpine.store('locale')?.current ||
+                'en';
+            const sources = Object.keys(store).filter(k => !k.startsWith('_') && k !== 'all');
+
+            window.dispatchEvent(new CustomEvent('manifest:render-ready', {
+                detail: { locale, sources }
+            }));
+        } catch {
+            // Silently fail — the render script has its own timeout fallback
+        }
+    }, RENDER_READY_QUIET_MS);
+}
+
 // Listen for locale changes to reload data
 function setupLocaleChangeListener() {
     window.addEventListener('localechange', async (event) => {
@@ -898,6 +952,10 @@ function setupLocaleChangeListener() {
                     localizedDataSources.map(name => loadDataSource(name, newLocale))
                 );
             }
+
+            // All localized sources have reloaded — check if everything is settled.
+            // This fires manifest:render-ready after a locale change completes end-to-end.
+            checkAndDispatchRenderReady();
 
         } catch (error) {
             console.error('[Manifest Data] Error handling locale change:', error);
@@ -1124,6 +1182,7 @@ window.ManifestDataStore = {
     initializeStore,
     setupLocaleChangeListener,
     setupTeamChangeListener,
+    checkAndDispatchRenderReady,
     // Operation-specific loading state helpers
     setCreatingEntry,
     clearCreatingEntry,
@@ -1309,15 +1368,31 @@ function setNestedValue(obj, path, value) {
     for (let i = 0; i < keys.length - 1; i++) {
         const key = keys[i];
         const nextKey = keys[i + 1];
+        const nextIsIndex = /^\d+$/.test(nextKey);
+
         if (!(key in current)) {
-            current[key] = /^\d+$/.test(nextKey) ? [] : {};
+            current[key] = nextIsIndex ? [] : {};
+        } else if (nextIsIndex && !Array.isArray(current[key]) && current[key] && typeof current[key] === 'object') {
+            // If we later discover this container should be an array, coerce numeric-key objects.
+            const existing = current[key];
+            const existingKeys = Object.keys(existing);
+            const numericOnly = existingKeys.every(k => /^\d+$/.test(k));
+            if (numericOnly) {
+                const arr = [];
+                existingKeys.forEach(k => {
+                    arr[parseInt(k, 10)] = existing[k];
+                });
+                current[key] = arr;
+            }
         }
+
         if (Array.isArray(current) && /^\d+$/.test(key)) {
             const idx = parseInt(key, 10);
             if (current[idx] == null || typeof current[idx] !== 'object') {
-                current[idx] = {};
+                current[idx] = nextIsIndex ? [] : {};
             }
         }
+
         current = current[key];
     }
 
@@ -1561,30 +1636,41 @@ function parseCSVToNestedObject(csvText, options = {}) {
     }
 }
 
+// Load a local file (JSON, YAML, CSV). Resolves manifest-relative paths when viewing from dist.
+function resolveDataPath(filePath) {
+    if (!filePath || typeof filePath !== 'string' || filePath.startsWith('http')) {
+        return filePath;
+    }
+    const base = typeof window.getManifestBase === 'function' ? window.getManifestBase() : '';
+    const pathOnly = filePath.startsWith('/') ? filePath.slice(1) : filePath;
+    return base ? base + pathOnly : filePath;
+}
+
 // Load a local file (JSON, YAML, CSV)
 async function loadLocalFile(filePath, options = {}) {
-    const response = await fetch(filePath);
+    const resolved = resolveDataPath(filePath);
+    const response = await fetch(resolved);
 
     // Check if file exists
     if (!response.ok) {
-        throw new Error(`[Manifest Data] File not found: ${filePath} (${response.status})`);
+        throw new Error(`[Manifest Data] File not found: ${resolved} (${response.status})`);
     }
 
     const contentType = response.headers.get('content-type');
 
     // Handle CSV files
-    if (filePath.endsWith('.csv') || contentType?.includes('text/csv')) {
+    if (resolved.endsWith('.csv') || contentType?.includes('text/csv')) {
         const text = await response.text();
         const csvParser = await loadCSVParser();
         // Pass currentLocale if provided in options
         return parseCSVToNestedObject(text, { currentLocale: options.currentLocale });
     }
     // Handle JSON files
-    else if (contentType?.includes('application/json') || filePath.endsWith('.json')) {
+    else if (contentType?.includes('application/json') || resolved.endsWith('.json')) {
         return await response.json();
     }
     // Handle YAML files
-    else if (contentType?.includes('text/yaml') || filePath.endsWith('.yaml') || filePath.endsWith('.yml')) {
+    else if (contentType?.includes('text/yaml') || resolved.endsWith('.yaml') || resolved.endsWith('.yml')) {
         const text = await response.text();
         const yamlLib = await loadYamlLibrary();
         return yamlLib.load(text);
@@ -1612,6 +1698,7 @@ window.ManifestDataLoaders = {
     loadCSVParser,
     deepMergeWithFallback,
     parseCSVToNestedObject,
+    resolveDataPath,
     loadLocalFile
 };
 
@@ -2340,6 +2427,9 @@ function getLoadingBranch(depth) {
     const d = depth == null ? 0 : Math.min(Math.max(0, depth), MAX_LOADING_BRANCH_DEPTH);
     if (loadingBranchByDepth[d]) return loadingBranchByDepth[d];
     const emptyStr = function () { return ''; };
+  const emptyArray = [];
+  const attachArrayMethods = window.ManifestDataProxies?.attachArrayMethods;
+  const arrayWithMethods = attachArrayMethods ? attachArrayMethods(emptyArray, '', null) : emptyArray;
     const nextDepth = d + 1;
     const getReturnForStringKey = () =>
         nextDepth <= MAX_LOADING_BRANCH_DEPTH ? getLoadingBranch(nextDepth) : '';
@@ -2350,6 +2440,12 @@ function getLoadingBranch(depth) {
             if (key === Symbol.iterator) return function* () { };
             if (key === '$route' || key === '$search' || key === '$query') {
                 return function () { return getLoadingBranch(nextDepth <= MAX_LOADING_BRANCH_DEPTH ? nextDepth : MAX_LOADING_BRANCH_DEPTH); };
+            }
+            if (typeof key === 'string' && typeof Array.prototype[key] === 'function') {
+                if (key in arrayWithMethods && typeof arrayWithMethods[key] === 'function') {
+                    return arrayWithMethods[key].bind(arrayWithMethods);
+                }
+                return Array.prototype[key].bind(arrayWithMethods);
             }
             if (key === 'length') return 0;
             if (typeof key === 'string') return getReturnForStringKey();
@@ -4868,18 +4964,24 @@ if (!window.ManifestDataRouteProxyUpdateQueue) {
 
             // Debounce all updates
             this.timeout = setTimeout(() => {
-                const proxiesToUpdate = Array.from(this.pending);
-                this.pending.clear();
-
-                // Update all pending proxies
-                proxiesToUpdate.forEach(updateFn => {
-                    try {
-                        updateFn();
-                    } catch (error) {
-                        console.error('[Manifest Data] Error updating route proxy:', error);
-                    }
-                });
+                this.flushSync();
             }, 0);
+        },
+        // Run all pending proxy updates immediately (e.g. on route change so content updates without refresh)
+        flushSync() {
+            if (this.timeout) {
+                clearTimeout(this.timeout);
+                this.timeout = null;
+            }
+            const proxiesToUpdate = Array.from(this.pending);
+            this.pending.clear();
+            proxiesToUpdate.forEach(updateFn => {
+                try {
+                    updateFn();
+                } catch (error) {
+                    console.error('[Manifest Data] Error updating route proxy:', error);
+                }
+            });
         }
     };
 }
@@ -11538,8 +11640,14 @@ function setupUrlChangeListeners() {
 
     // Listen to router's route change event (primary integration point)
     window.addEventListener('manifest:route-change', (event) => {
-        const newUrl = event.detail?.to || window.location.pathname;
+        const newUrl = event.detail?.to ?? window.ManifestRoutingNavigation?.getCurrentRoute?.() ?? window.location.pathname;
         updateCurrentUrl(newUrl);
+        // Flush route proxies after other listeners have queued their updates, so $x.*.$route('path') content updates without refresh
+        setTimeout(() => {
+            if (window.ManifestDataRouteProxyUpdateQueue?.flushSync) {
+                window.ManifestDataRouteProxyUpdateQueue.flushSync();
+            }
+        }, 0);
     });
 
     // Also listen for popstate (browser back/forward)
@@ -11682,6 +11790,9 @@ async function initializeDataSourcesPlugin() {
             if (typeof window !== 'undefined') {
                 window.dispatchEvent(new CustomEvent('manifest:data-ready'));
             }
+            // Check if all sources are settled and dispatch manifest:render-ready if so.
+            // Covers the initial-load path (no data sources, or only content pre-loaded).
+            window.ManifestDataStore?.checkAndDispatchRenderReady?.();
         };
         if (typeof Alpine !== 'undefined' && Alpine.nextTick) {
             Alpine.nextTick(flushThenDispatch);

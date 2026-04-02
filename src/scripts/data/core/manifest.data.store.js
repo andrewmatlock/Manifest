@@ -12,6 +12,10 @@ const rawDataStore = new Map();
 let isInitializing = false;
 let initializationComplete = false;
 
+// Render-ready: debounced timer used by checkAndDispatchRenderReady
+let _renderReadyTimer = null;
+const RENDER_READY_QUIET_MS = 150; // ms of quiet (no loading) before firing
+
 // Deep seal an object to prevent Alpine from making it reactive
 // This prevents double-proxying which causes recursion errors
 function deepSeal(obj) {
@@ -105,6 +109,12 @@ function updateStore(dataSourceName, data, options = {}) {
     };
 
     Alpine.store('data', updatedStore);
+
+    // When a source finishes loading (success or error), check if everything is settled.
+    // This is the primary trigger for manifest:render-ready.
+    if (!newState.loading) {
+        checkAndDispatchRenderReady();
+    }
 
     // Attach methods to array if it's an array (for new architecture)
     // This ensures methods are available on the new array reference
@@ -571,6 +581,49 @@ function setupTeamChangeListener() {
     }
 }
 
+// Dispatch manifest:render-ready when all tracked data sources have settled.
+// Uses a debounce so rapid sequential source completions coalesce into one event.
+// The render script listens for this event instead of polling internal store state.
+function checkAndDispatchRenderReady() {
+    if (_renderReadyTimer) {
+        clearTimeout(_renderReadyTimer);
+    }
+    _renderReadyTimer = setTimeout(() => {
+        _renderReadyTimer = null;
+        try {
+            if (typeof window === 'undefined' || typeof Alpine === 'undefined') return;
+            const store = Alpine.store('data');
+            if (!store) return;
+
+            // Don't fire while a locale change is still in progress
+            if (store._localeChanging) return;
+
+            // Don't fire if any source state still shows loading
+            for (const key of Object.keys(store)) {
+                if (key.startsWith('_') && key.endsWith('_state')) {
+                    if (store[key]?.loading) return;
+                }
+            }
+
+            // Don't fire if any fetch promises are still in flight
+            if (loadingPromises.size > 0) return;
+
+            // All settled — dispatch the authoritative prerender signal
+            const locale =
+                (typeof document !== 'undefined' && document.documentElement.lang) ||
+                Alpine.store('locale')?.current ||
+                'en';
+            const sources = Object.keys(store).filter(k => !k.startsWith('_') && k !== 'all');
+
+            window.dispatchEvent(new CustomEvent('manifest:render-ready', {
+                detail: { locale, sources }
+            }));
+        } catch {
+            // Silently fail — the render script has its own timeout fallback
+        }
+    }, RENDER_READY_QUIET_MS);
+}
+
 // Listen for locale changes to reload data
 function setupLocaleChangeListener() {
     window.addEventListener('localechange', async (event) => {
@@ -704,6 +757,10 @@ function setupLocaleChangeListener() {
                     localizedDataSources.map(name => loadDataSource(name, newLocale))
                 );
             }
+
+            // All localized sources have reloaded — check if everything is settled.
+            // This fires manifest:render-ready after a locale change completes end-to-end.
+            checkAndDispatchRenderReady();
 
         } catch (error) {
             console.error('[Manifest Data] Error handling locale change:', error);
@@ -930,6 +987,7 @@ window.ManifestDataStore = {
     initializeStore,
     setupLocaleChangeListener,
     setupTeamChangeListener,
+    checkAndDispatchRenderReady,
     // Operation-specific loading state helpers
     setCreatingEntry,
     clearCreatingEntry,

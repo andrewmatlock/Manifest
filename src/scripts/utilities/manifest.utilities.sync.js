@@ -269,6 +269,7 @@ TailwindCompiler.prototype.addCriticalBlockingStylesSync = function () {
 
 // Generate synchronous utilities (fallback method)
 TailwindCompiler.prototype.generateSynchronousUtilities = function () {
+    if (this.usesStaticPrerenderUtilities) return;
     try {
         // Always try to generate, even if cache exists, to catch any new classes
         const hasExistingStyles = this.styleElement.textContent && this.styleElement.textContent.trim();

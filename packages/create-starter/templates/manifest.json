@@ -1,9 +1,10 @@
 {
   "name": "My Project",
   "short_name": "Project name",
+  "description": "Lorem ipsum dolor sit amet.",
   "author": "Universal Exports",
   "email": "universal@exports.com",
-  "description": "Lorem ipsum dolor sit amet.",
+  "live_url": "https://example.com",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

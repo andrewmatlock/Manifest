@@ -7,10 +7,12 @@ function initializeRouterMagic() {
         console.error('[Manifest Router Magic] Alpine is not available');
         return;
     }
+    if (window.__manifestRouterMagicInitialized) return;
+    window.__manifestRouterMagicInitialized = true;
 
-    // Create a reactive object for route data
+    // Create a reactive object for route data (use logical path when app is in a subpath)
     const route = Alpine.reactive({
-        current: window.location.pathname,
+        current: window.ManifestRoutingNavigation?.getCurrentRoute() || window.location.pathname,
         segments: [],
         params: {},
         matches: null
@@ -18,7 +20,7 @@ function initializeRouterMagic() {
 
     // Update route when route changes
     const updateRoute = () => {
-        const currentRoute = window.ManifestRoutingNavigation?.getCurrentRoute() || window.location.pathname;
+        const currentRoute = window.ManifestRoutingNavigation?.getCurrentRoute() ?? window.location.pathname;
 
         // Strip localization codes and other injected segments to get the logical route
         let logicalRoute = currentRoute;
@@ -50,6 +52,9 @@ function initializeRouterMagic() {
     // Listen for route changes
     window.addEventListener('manifest:route-change', updateRoute);
     window.addEventListener('popstate', updateRoute);
+
+    // Align with navigation + locale stripping; initial reactive value can be wrong if magic ran before DOMContentLoaded.
+    updateRoute();
 
     // Register $route magic property - return the route string directly
     Alpine.magic('route', () => route.current);

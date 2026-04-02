@@ -1,0 +1,23 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "src",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "start:src"],
+      "port": 5001
+    },
+    {
+      "name": "docs",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "start:docs"],
+      "port": 5001
+    },
+    {
+      "name": "starter",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "start:starter"],
+      "port": 3001
+    }
+  ]
+}

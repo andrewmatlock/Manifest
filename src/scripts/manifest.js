@@ -117,10 +117,13 @@
 		return new Promise((resolve, reject) => {
 			const url = getPluginUrl(pluginName, version);
 
-			// Check if already loaded
+			// Skip if script with same src already in DOM (e.g. prerendered HTML or second loader run)
 			const existing = document.querySelector(`script[src="${url}"]`);
-			if (existing && existing.complete) {
-				return resolve();
+			if (existing) {
+				if (existing.complete) return resolve();
+				existing.addEventListener('load', () => resolve());
+				existing.addEventListener('error', () => reject(new Error(`Failed to load ${pluginName} from ${url}`)));
+				return;
 			}
 
 			const script = document.createElement('script');
@@ -297,6 +300,11 @@
 	detectAppwriteFromManifest();
 
 	if (config && config.plugins.length > 0) {
+		if (window.__manifestLoaderStarted) {
+			return;
+		}
+		window.__manifestLoaderStarted = true;
+
 		const MANIFEST_DEPENDENT_PLUGINS = [
 			'data', 'localization', 'components',
 			'appwrite-auth', 'appwrite-data', 'appwrite-presence'

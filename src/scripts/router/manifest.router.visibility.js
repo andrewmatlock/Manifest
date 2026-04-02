@@ -1,7 +1,19 @@
 // Router visibility
 
+function isPrerenderedStaticMPA() {
+    try {
+        return document.querySelector('meta[name="manifest:prerendered"][content="1"]') !== null;
+    } catch (e) {
+        return false;
+    }
+}
+
 // Process visibility for all elements with x-route
 function processRouteVisibility(normalizedPath) {
+    // Static prerender output already contains only this route's sections; x-cloak + toggling here
+    // causes a visible flash (content → hidden via x-cloak → shown when Alpine boots).
+    if (isPrerenderedStaticMPA()) return;
+
     const routeElements = document.querySelectorAll('[x-route]');
 
     // First pass: collect all defined routes (excluding !* and other negative conditions)
@@ -117,6 +129,7 @@ function processRouteVisibility(normalizedPath) {
 
 // Add x-cloak to route elements that don't have it
 function addXCloakToRouteElements() {
+    if (isPrerenderedStaticMPA()) return;
     const routeElements = document.querySelectorAll('[x-route]:not([x-cloak])');
     routeElements.forEach(element => {
         element.setAttribute('x-cloak', '');
@@ -128,22 +141,24 @@ function initializeVisibility() {
     // Add x-cloak to route elements to prevent flash
     addXCloakToRouteElements();
 
-    // Process initial visibility
-    const currentPath = window.location.pathname;
+    // Process initial visibility (use logical path when app is in a subpath)
+    const currentPath = window.ManifestRoutingNavigation?.getCurrentRoute() ?? window.location.pathname;
     const normalizedPath = currentPath === '/' ? '/' : currentPath.replace(/^\/|\/$/g, '');
     processRouteVisibility(normalizedPath);
 
     // Listen for route changes
     window.addEventListener('manifest:route-change', (event) => {
+        if (isPrerenderedStaticMPA()) return;
         processRouteVisibility(event.detail.normalizedPath);
     });
 
     // Listen for component processing to ensure visibility is applied after components load
     window.addEventListener('manifest:components-processed', () => {
+        if (isPrerenderedStaticMPA()) return;
         // Add x-cloak to any new route elements
         addXCloakToRouteElements();
 
-        const currentPath = window.location.pathname;
+        const currentPath = window.ManifestRoutingNavigation?.getCurrentRoute() ?? window.location.pathname;
         const normalizedPath = currentPath === '/' ? '/' : currentPath.replace(/^\/|\/$/g, '');
         processRouteVisibility(normalizedPath);
     });
@@ -165,5 +180,6 @@ if (document.readyState === 'loading') {
 // Export visibility interface
 window.ManifestRoutingVisibility = {
     initialize: initializeVisibility,
-    processRouteVisibility
+    processRouteVisibility,
+    isPrerenderedStaticMPA
 }; 

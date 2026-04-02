@@ -91,6 +91,12 @@ function initializeIconPlugin() {
         const iconValue = expression;
         if (!iconValue) return;
 
+        // Prerender (or static HTML) already inlined an Iconify SVG; leave it alone. Otherwise Alpine
+        // evaluates stale expressions like `module.icon` from templating and throws ReferenceError.
+        if (el.querySelector('svg[data-icon]')) {
+            return;
+        }
+
         // Check if it's a raw icon name (should contain a colon for icon format like 'lucide:house')
         const isRawIconName = iconValue.includes(':') &&
             !iconValue.includes("'") &&

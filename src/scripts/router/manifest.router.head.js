@@ -1,5 +1,16 @@
 // Router head
 
+function isPrerenderedStaticMPA() {
+    try {
+        if (window.ManifestRoutingVisibility && typeof window.ManifestRoutingVisibility.isPrerenderedStaticMPA === 'function') {
+            return window.ManifestRoutingVisibility.isPrerenderedStaticMPA();
+        }
+        return document.querySelector('meta[name="manifest:prerendered"][content="1"]') !== null;
+    } catch (e) {
+        return false;
+    }
+}
+
 // Track injected head content to prevent duplicates
 const injectedHeadContent = new Set();
 
@@ -42,6 +53,39 @@ function shouldElementBeVisible(element, normalizedPath) {
     return true;
 }
 
+// Resolve :attr and x-bind:attr whose value is $x.path so injected meta/link have real content (SPA + prerender).
+function resolveDataHeadBindings(element) {
+    const x = typeof window !== 'undefined' && window.$x;
+    if (!x) return;
+    const toResolve = [];
+    for (let i = 0; i < element.attributes.length; i++) {
+        const attr = element.attributes[i];
+        const name = attr.name;
+        let bindingAttr = null;
+        if (name.startsWith(':')) bindingAttr = name.slice(1);
+        else if (name.startsWith('x-bind:')) bindingAttr = name.slice(7);
+        if (!bindingAttr) continue;
+        const expr = (attr.value || '').trim();
+        if (!expr.startsWith('$x.')) continue;
+        const path = expr.slice(3).trim();
+        if (!path) continue;
+        toResolve.push({ bindingName: attr.name, attrName: bindingAttr, path });
+    }
+    for (const { bindingName, attrName, path } of toResolve) {
+        let value;
+        try {
+            value = path.split('.').reduce(function (obj, key) {
+                return obj != null && typeof obj === 'object' ? obj[key] : undefined;
+            }, x);
+        } catch (e) {
+            continue;
+        }
+        if (value === undefined) continue;
+        element.setAttribute(attrName, String(value));
+        element.removeAttribute(bindingName);
+    }
+}
+
 // Generate unique identifier for head content
 function generateHeadId(element) {
     const position = element.getAttribute('data-order');
@@ -77,8 +121,12 @@ function processElementHeadContent(element, normalizedPath) {
     const isVisible = shouldElementBeVisible(element, normalizedPath);
 
     if (isVisible) {
-        // Check if we've already injected this content
+        // Skip if already injected (in-memory) or already present in DOM (e.g. prerendered)
         if (injectedHeadContent.has(headId)) {
+            return;
+        }
+        if (document.head.querySelector(`[data-route-head="${headId}"]`)) {
+            injectedHeadContent.add(headId);
             return;
         }
 
@@ -91,8 +139,9 @@ function processElementHeadContent(element, normalizedPath) {
                 script.setAttribute('data-route-head', headId);
                 document.head.appendChild(script);
             } else {
-                // For other elements, clone and add
+                // For other elements, clone and add (resolve $x bindings so meta/link have real values in SPA)
                 const clonedChild = child.cloneNode(true);
+                resolveDataHeadBindings(clonedChild);
                 clonedChild.setAttribute('data-route-head', headId);
                 document.head.appendChild(clonedChild);
             }
@@ -111,6 +160,7 @@ function processElementHeadContent(element, normalizedPath) {
 
 // Process all head content in the DOM
 function processAllHeadContent(normalizedPath) {
+    if (isPrerenderedStaticMPA()) return;
 
     // Find all elements with head templates
     const elementsWithHead = document.querySelectorAll('template[data-head]');
@@ -189,7 +239,8 @@ function initializeHeadContent() {
     function processHeadContentAfterComponentsReady() {
         // Process initial head content after a longer delay to let components settle
         setTimeout(() => {
-            const currentPath = window.location.pathname;
+            if (isPrerenderedStaticMPA()) return;
+            const currentPath = window.ManifestRoutingNavigation?.getCurrentRoute() ?? window.location.pathname;
             const normalizedPath = currentPath === '/' ? '/' : currentPath.replace(/^\/|\/$/g, '');
 
             // Debug: Check if about component exists
@@ -208,7 +259,8 @@ function initializeHeadContent() {
 
     // Function to process head content immediately (for projects without components)
     function processHeadContentImmediately() {
-        const currentPath = window.location.pathname;
+        if (isPrerenderedStaticMPA()) return;
+        const currentPath = window.ManifestRoutingNavigation?.getCurrentRoute() ?? window.location.pathname;
         const normalizedPath = currentPath === '/' ? '/' : currentPath.replace(/^\/|\/$/g, '');
         processAllHeadContent(normalizedPath);
     }
@@ -241,8 +293,9 @@ function initializeHeadContent() {
 
         // Wait a bit for components to settle after route change
         setTimeout(() => {
+            if (isPrerenderedStaticMPA()) return;
             // Process head content immediately to catch components before they're reverted
-            const currentPath = window.location.pathname;
+            const currentPath = window.ManifestRoutingNavigation?.getCurrentRoute() ?? window.location.pathname;
             const normalizedPath = currentPath === '/' ? '/' : currentPath.replace(/^\/|\/$/g, '');
 
             // Debug: Check if about component exists

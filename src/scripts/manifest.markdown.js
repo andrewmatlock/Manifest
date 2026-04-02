@@ -466,12 +466,12 @@ async function initializeMarkdownPlugin() {
                     // If it's a file path, fetch the content (with caching)
                     if (isFilePath) {
                         try {
-                            // Ensure the path is absolute from project root
+                            // Resolve path: relative paths are relative to manifest base (project root), not document root
                             let resolvedPath = pathOrContent;
-
-                            // If it's a relative path (doesn't start with /), make it absolute from root
                             if (!pathOrContent.startsWith('/')) {
-                                resolvedPath = '/' + pathOrContent;
+                                const base = (typeof window.getManifestBase === 'function' ? window.getManifestBase() : '') || '';
+                                const basePath = base.replace(/\/$/, '') || '';
+                                resolvedPath = (basePath ? basePath + '/' : '/') + pathOrContent;
                             }
 
                             // Check cache first

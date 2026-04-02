@@ -31,7 +31,7 @@ if ('PerformanceObserver' in window) {
 
 // Also handle DOMContentLoaded for any elements that might be added later
 document.addEventListener('DOMContentLoaded', () => {
-    if (!compiler.isCompiling) {
+    if (!compiler.usesStaticPrerenderUtilities && !compiler.isCompiling) {
         compiler.compile();
     }
 });

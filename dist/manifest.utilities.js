@@ -411,9 +411,60 @@ function createVariantGroups() {
 
 /* Manifest Utilities */
 
+/** True when prerender wrote utilities to prerender.utilities.css — skip runtime #utility-styles generation. */
+function manifestPageUsesStaticPrerenderUtilities() {
+    if (typeof document === 'undefined') return false;
+    try {
+        if (!document.querySelector('meta[name="manifest:prerendered"][content="1"]')) return false;
+        for (const link of document.querySelectorAll('link[rel="stylesheet"][href]')) {
+            if ((link.getAttribute('href') || '').toLowerCase().includes('prerender.utilities.css')) {
+                return true;
+            }
+        }
+    } catch (e) {
+        return false;
+    }
+    return false;
+}
+
 // Browser runtime compiler
 class TailwindCompiler {
     constructor(options = {}) {
+        this.usesStaticPrerenderUtilities = manifestPageUsesStaticPrerenderUtilities();
+
+        // Prerender already emitted utility CSS; do not inject duplicate #utility-styles / observers.
+        if (this.usesStaticPrerenderUtilities) {
+            this.debug = options.debug === true;
+            this.startTime = performance.now();
+            this.options = {
+                rootSelector: options.rootSelector || ':root',
+                themeSelector: options.themeSelector || '@theme',
+                debounceTime: options.debounceTime || 50,
+                maxCacheAge: options.maxCacheAge || 24 * 60 * 60 * 1000,
+                debug: options.debug !== false,
+                ...options
+            };
+            this.criticalStyleElement = null;
+            this.styleElement = null;
+            this.tailwindLink = null;
+            this.observer = null;
+            this.isCompiling = false;
+            this.compileTimeout = null;
+            this.cache = new Map();
+            this.hasInitialized = true;
+            // manifest.code.js (and others) may still register ignore rules; mirror full constructor defaults.
+            this.ignoredClassPatterns = [
+                /^hljs/, /^language-/, /^copy$/, /^copied$/, /^lines$/, /^selected$/
+            ];
+            this.ignoredElementSelectors = [
+                'pre', 'code', 'x-code', 'x-code-group'
+            ];
+            this.significantChangeSelectors = [
+                '[data-component]', '[x-data]'
+            ];
+            return;
+        }
+
         this.debug = options.debug === true;
         this.startTime = performance.now();
 
@@ -559,6 +610,9 @@ class TailwindCompiler {
 
     // Public API for other plugins to configure behavior
     addIgnoredClassPattern(pattern) {
+        if (!Array.isArray(this.ignoredClassPatterns)) {
+            this.ignoredClassPatterns = [];
+        }
         if (pattern instanceof RegExp) {
             this.ignoredClassPatterns.push(pattern);
         } else if (typeof pattern === 'string') {
@@ -567,12 +621,18 @@ class TailwindCompiler {
     }
 
     addIgnoredElementSelector(selector) {
+        if (!Array.isArray(this.ignoredElementSelectors)) {
+            this.ignoredElementSelectors = [];
+        }
         if (typeof selector === 'string') {
             this.ignoredElementSelectors.push(selector);
         }
     }
 
     addSignificantChangeSelector(selector) {
+        if (!Array.isArray(this.significantChangeSelectors)) {
+            this.significantChangeSelectors = [];
+        }
         if (typeof selector === 'string') {
             this.significantChangeSelectors.push(selector);
         }
@@ -924,6 +984,7 @@ TailwindCompiler.prototype.addCriticalBlockingStylesSync = function () {
 
 // Generate synchronous utilities (fallback method)
 TailwindCompiler.prototype.generateSynchronousUtilities = function () {
+    if (this.usesStaticPrerenderUtilities) return;
     try {
         // Always try to generate, even if cache exists, to catch any new classes
         const hasExistingStyles = this.styleElement.textContent && this.styleElement.textContent.trim();
@@ -2975,6 +3036,8 @@ TailwindCompiler.prototype.filterCriticalUtilities = function(criticalText, laye
 
 // Main compilation method
 TailwindCompiler.prototype.compile = async function () {
+    if (this.usesStaticPrerenderUtilities) return;
+
     const compileStart = performance.now();
 
     try {
@@ -3311,6 +3374,7 @@ TailwindCompiler.prototype.setupComponentLoadListener = function () {
 
 // Start processing with initial compilation and observer setup
 TailwindCompiler.prototype.startProcessing = async function () {
+    if (this.usesStaticPrerenderUtilities) return;
     try {
         // Start initial compilation immediately
         const initialCompilation = this.compile();
@@ -3397,7 +3461,7 @@ if ('PerformanceObserver' in window) {
 
 // Also handle DOMContentLoaded for any elements that might be added later
 document.addEventListener('DOMContentLoaded', () => {
-    if (!compiler.isCompiling) {
+    if (!compiler.usesStaticPrerenderUtilities && !compiler.isCompiling) {
         compiler.compile();
     }
 });

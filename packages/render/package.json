@@ -1,0 +1,35 @@
+{
+  "name": "mnfst-render",
+  "version": "0.4.5",
+  "description": "Render Manifest sites to static HTML for SEO",
+  "type": "module",
+  "bin": {
+    "mnfst-render": "./bin/mnfst-render.js"
+  },
+  "files": [
+    "bin",
+    "manifest.render.mjs",
+    "README.md"
+  ],
+  "scripts": {
+    "prepare:source": "node ./scripts/sync-render.mjs",
+    "prepack": "npm run prepare:source"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "manifest",
+    "mnfst",
+    "prerender",
+    "render",
+    "seo"
+  ],
+  "author": "Andrew Matlock",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andrewmatlock/Manifest.git",
+    "directory": "packages/render"
+  }
+}

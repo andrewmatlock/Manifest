@@ -6,7 +6,7 @@ function initializeDropdownPlugin() {
     function ensureAlpineContext() {
         const body = document.body;
         if (!body.hasAttribute('x-data')) {
-            body.setAttribute('x-data', '{}');
+            body.setAttribute('x-data', '{ tab: \'local-data\' }');
         }
     }
 

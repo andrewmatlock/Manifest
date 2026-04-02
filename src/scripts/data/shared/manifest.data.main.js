@@ -1034,8 +1034,14 @@ function setupUrlChangeListeners() {
 
     // Listen to router's route change event (primary integration point)
     window.addEventListener('manifest:route-change', (event) => {
-        const newUrl = event.detail?.to || window.location.pathname;
+        const newUrl = event.detail?.to ?? window.ManifestRoutingNavigation?.getCurrentRoute?.() ?? window.location.pathname;
         updateCurrentUrl(newUrl);
+        // Flush route proxies after other listeners have queued their updates, so $x.*.$route('path') content updates without refresh
+        setTimeout(() => {
+            if (window.ManifestDataRouteProxyUpdateQueue?.flushSync) {
+                window.ManifestDataRouteProxyUpdateQueue.flushSync();
+            }
+        }, 0);
     });
 
     // Also listen for popstate (browser back/forward)
@@ -1178,6 +1184,9 @@ async function initializeDataSourcesPlugin() {
             if (typeof window !== 'undefined') {
                 window.dispatchEvent(new CustomEvent('manifest:data-ready'));
             }
+            // Check if all sources are settled and dispatch manifest:render-ready if so.
+            // Covers the initial-load path (no data sources, or only content pre-loaded).
+            window.ManifestDataStore?.checkAndDispatchRenderReady?.();
         };
         if (typeof Alpine !== 'undefined' && Alpine.nextTick) {
             Alpine.nextTick(flushThenDispatch);

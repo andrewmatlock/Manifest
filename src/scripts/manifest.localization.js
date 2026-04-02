@@ -89,6 +89,52 @@ function initializeLocalizationPlugin() {
         return rtlLanguages.has(lang);
     }
 
+    function isPrerenderedStaticBuild() {
+        return document.head?.querySelector('meta[name="manifest:prerendered"][content="1"]') !== null;
+    }
+
+    function buildLocaleNavigationUrl(newLang, availableLocales) {
+        const currentUrl = new URL(window.location.href);
+        const pathParts = currentUrl.pathname.split('/').filter(Boolean);
+        const hasLanguageInUrl = pathParts[0] && availableLocales.includes(pathParts[0]);
+
+        // Determine path segments without any current locale prefix, for exclude-pattern checking.
+        const pathWithoutLocale = hasLanguageInUrl ? pathParts.slice(1) : pathParts;
+
+        // If the current path matches a manifest:locale-route-exclude pattern, do NOT add or
+        // change the locale prefix — this prevents an infinite redirect loop on prerendered
+        // builds where normalizeRedundantLocalePrefixInUrl() strips the locale from the URL
+        // but the localization init would otherwise re-add it via window.location.assign().
+        const routeExcludeMeta = document.querySelector('meta[name="manifest:locale-route-exclude"]');
+        if (routeExcludeMeta) {
+            try {
+                const rawContent = (routeExcludeMeta.getAttribute('content') || '').replace(/&quot;/g, '"');
+                const patterns = JSON.parse(rawContent);
+                if (Array.isArray(patterns) && patterns.length > 0) {
+                    const lower = pathWithoutLocale.map(s => s.toLowerCase());
+                    for (const pattern of patterns) {
+                        const p = String(pattern).trim().replace(/^\/+/, '').split('/').filter(Boolean).map(x => x.toLowerCase());
+                        if (p.length === 0) continue;
+                        if (lower.length < p.length) continue;
+                        let match = true;
+                        for (let i = 0; i < p.length; i++) {
+                            if (lower[i] !== p[i]) { match = false; break; }
+                        }
+                        if (match) {
+                            // Path is locale-excluded — return URL unchanged so no navigation is triggered
+                            return currentUrl.toString();
+                        }
+                    }
+                }
+            } catch { /* ignore JSON parse errors */ }
+        }
+
+        if (hasLanguageInUrl) pathParts[0] = newLang;
+        else pathParts.unshift(newLang);
+        currentUrl.pathname = '/' + pathParts.join('/');
+        return currentUrl.toString();
+    }
+
     // Input validation for language codes
     function isValidLanguageCode(lang) {
         if (typeof lang !== 'string' || lang.length === 0) return false;
@@ -161,7 +207,10 @@ function initializeLocalizationPlugin() {
                         // Check for single-file multi-locale CSV (e.g., {"locales": "/path/to/file.csv"})
                         if (collection.locales && typeof collection.locales === 'string' && collection.locales.endsWith('.csv')) {
                             try {
-                                const csvResponse = await fetch(collection.locales);
+                                const base = typeof window.getManifestBase === 'function' ? window.getManifestBase() : '';
+                                const localesPath = collection.locales.startsWith('/') ? collection.locales.slice(1) : collection.locales;
+                                const localesUrl = (collection.locales.startsWith('http')) ? collection.locales : (base + localesPath);
+                                const csvResponse = await fetch(localesUrl);
                                 if (csvResponse.ok) {
                                     const csvText = await csvResponse.text();
                                     // Parse CSV header to get locale columns
@@ -195,7 +244,10 @@ function initializeLocalizationPlugin() {
                     } else if (typeof collection === 'string' && collection.endsWith('.csv')) {
                         // Simple CSV file path - check if it has locale columns
                         try {
-                            const csvResponse = await fetch(collection);
+                            const base = typeof window.getManifestBase === 'function' ? window.getManifestBase() : '';
+                            const csvPath = collection.startsWith('/') ? collection.slice(1) : collection;
+                            const csvUrl = collection.startsWith('http') ? collection : (base + csvPath);
+                            const csvResponse = await fetch(csvUrl);
                             if (csvResponse.ok) {
                                 const csvText = await csvResponse.text();
                                 const lines = csvText.split('\n').filter(line => line.trim());
@@ -307,6 +359,16 @@ function initializeLocalizationPlugin() {
 
 
         try {
+            // In prerendered static output, locale switching must navigate to a locale URL.
+            // Mutating Alpine store alone won't re-render baked static content.
+            if (isPrerenderedStaticBuild()) {
+                const targetUrl = buildLocaleNavigationUrl(newLang, store.available || []);
+                if (targetUrl !== window.location.href) {
+                    window.location.assign(targetUrl);
+                }
+                return true;
+            }
+
             // Update store
             store.current = newLang;
             store.direction = isRTL(newLang) ? 'rtl' : 'ltr';

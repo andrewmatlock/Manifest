@@ -54,7 +54,7 @@ Add the Appwrite SDK and `manifest.js` scripts to the HTML head. `manifest.json`
 
 <!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/appwrite@latest"></script>
-<script src="https://cdn.jsdelivr.net/npm/mnfst@latest/dist/manifest.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mnfst@latest/lib/manifest.min.js"></script>
 ```
 
 ```html "Selective"
@@ -63,7 +63,7 @@ Add the Appwrite SDK and `manifest.js` scripts to the HTML head. `manifest.json`
 
 <!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/appwrite@latest"></script>
-<script src="https://cdn.jsdelivr.net/npm/mnfst@latest/dist/manifest.min.js"
+<script src="https://cdn.jsdelivr.net/npm/mnfst@latest/lib/manifest.min.js"
     data-plugins="appwrite-auth,appwrite-data,appwrite-persistence"></script>
 ```
 

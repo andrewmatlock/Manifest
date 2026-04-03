@@ -41,7 +41,7 @@ Basic read-only API support is included in the core data plugin. No additional s
 When available, the `manifest.api.data.js` plugin will extend the core data plugin with full CRUD operations:
 
 ```html "Future Setup (Planned)"
-<script src="https://cdn.jsdelivr.net/npm/mnfst@latest/dist/manifest.min.js"
+<script src="https://cdn.jsdelivr.net/npm/mnfst@latest/lib/manifest.min.js"
     data-plugins="data"
     data-api="data"></script>
 ```

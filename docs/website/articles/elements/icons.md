@@ -9,11 +9,11 @@ Icons are included in `manifest.js` with all core plugins, or can be selectively
 <x-code-group copy>
 
 ```html "All Plugins (default)"
-<script src="https://cdn.jsdelivr.net/npm/mnfst@latest/dist/manifest.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mnfst@latest/lib/manifest.min.js"></script>
 ```
 
 ```html "Selective"
-<script src="https://cdn.jsdelivr.net/npm/mnfst@latest/dist/manifest.min.js"
+<script src="https://cdn.jsdelivr.net/npm/mnfst@latest/lib/manifest.min.js"
     data-plugins="icons"></script>
 ```
 

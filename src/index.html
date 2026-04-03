@@ -48,7 +48,7 @@
 
   <!-- Scripts -->
   <!-- Alpine & Tailwind -->
-  <script defer src="/scripts/alpine.v3.14.9.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3/dist/cdn.min.js"></script>
   <script src="/scripts/tailwind.v4.1.js"></script>
 
   <!-- Core plugins-->
@@ -79,7 +79,27 @@
 
 <body class="page bg-linear-to-br from-500 to-900" x-data="{ tab: 'local-data' }">
 
-  <main x-data="{ tab: 'styles', editingId: null, editName: '', editType: '', newName: '', newType: '', queryType: '', projectsError: null, uploadFile: null, fileUrl: null, previewUrl: null, assetsError: null, selectedProjectId: null, paginationMode: 'cursor', paginationCursor: null, paginationPage: 1, paginationLimit: 5, paginationResults: null, paginationLoading: false, paginationError: null, presenceSubscribed: false, presenceCursors: [], presenceError: null }">
+  <!-- Prerender test nav — no x-route, appears on every prerendered page -->
+  <nav class="row gap-3 p-2 text-sm border-b border-line" style="background: var(--color-surface-2, #f5f5f5); flex-wrap: wrap">
+    <strong style="opacity:0.5">en:</strong>
+    <a href="/">Home</a>
+    <a href="/about">About</a>
+    <a href="/products/widget">Widget</a>
+    <a href="/blog">Blog</a>
+    <span style="opacity:0.3">|</span>
+    <strong style="opacity:0.5">fr:</strong>
+    <a href="/fr/about">About</a>
+    <a href="/fr/products/widget">Widget</a>
+    <a href="/fr/blog">Blog</a>
+    <span style="opacity:0.3">|</span>
+    <strong style="opacity:0.5">es:</strong>
+    <a href="/es/about">About</a>
+    <a href="/es/products/widget">Widget</a>
+    <a href="/es/blog">Blog</a>
+  </nav>
+
+  <!-- Root route: full dev harness -->
+  <main x-data="{ tab: 'styles', editingId: null, editName: '', editType: '', newName: '', newType: '', queryType: '', projectsError: null, uploadFile: null, fileUrl: null, previewUrl: null, assetsError: null, selectedProjectId: null, paginationMode: 'cursor', paginationCursor: null, paginationPage: 1, paginationLimit: 5, paginationResults: null, paginationLoading: false, paginationError: null, presenceSubscribed: false, presenceCursors: [], presenceError: null }" x-route="/">
 
     <x-header></x-header>
 
@@ -93,6 +113,55 @@
     </div>
 
   </main>
+
+  <!-- About route: localized content + data-hydrate island -->
+  <section x-route="about" style="padding: 2rem; max-width: 640px; margin: 0 auto; display: flex; flex-direction: column; gap: 1.5rem">
+    <h1 x-text="$x.splitLocales.about.title">About Us</h1>
+    <p>Tests: localized baked content + <code>data-hydrate</code> island.</p>
+    <p>Baked: <strong x-text="$x.splitLocales.about.title">About Us</strong> (should be locale-correct after prerender)</p>
+    <p>Contact: <strong x-text="$x.splitLocales.contact.email">Email</strong> / <strong x-text="$x.splitLocales.contact.phone">Phone</strong></p>
+
+    <!-- data-hydrate: Alpine directives preserved in output, evaluated at runtime -->
+    <div data-hydrate x-data="{ count: 0 }" style="padding: 1rem; border: 1px solid var(--color-line, #ccc); border-radius: 4px; display: flex; flex-direction: column; gap: 0.5rem">
+      <p style="opacity: 0.5; font-size: 0.85em">data-hydrate island — not baked, evaluated at runtime</p>
+      <p>Current locale: <strong x-text="$locale.current">?</strong></p>
+      <p>Home title (live): <strong x-text="$x.splitLocales.home.title">?</strong></p>
+      <p>Counter: <strong x-text="count">0</strong> <button @click="count++" style="margin-left: 0.5rem; padding: 0.25rem 0.75rem; cursor: pointer">+1</button></p>
+    </div>
+
+    <a href="/">← Back to Home</a>
+  </section>
+
+  <!-- Products wildcard route: dynamic per-URL content via $route('path') -->
+  <section x-route="products/*" style="padding: 2rem; max-width: 640px; margin: 0 auto; display: flex; flex-direction: column; gap: 1.5rem">
+    <h1 x-text="$x.products.$route('path').name || 'Product'">Product</h1>
+    <p>Category: <strong x-text="$x.products.$route('path').category">-</strong></p>
+    <p>Price: <strong x-text="'$' + ($x.products.$route('path').price || '?')">$?</strong></p>
+    <p x-text="$x.products.$route('path').description">Description...</p>
+    <a href="/">← Back to Home</a>
+  </section>
+
+  <!-- Blog route: static x-for list (baked for SEO in prerender output) -->
+  <section x-route="blog" style="padding: 2rem; max-width: 640px; margin: 0 auto; display: flex; flex-direction: column; gap: 1.5rem">
+    <h1>Blog</h1>
+    <p>Tests static <code>x-for</code> list prerendering — items should be baked as static HTML for SEO.</p>
+    <ul style="display: flex; flex-direction: column; gap: 0.5rem; list-style: none; padding: 0">
+      <template x-for="post in $x.blogPosts">
+        <li style="padding: 0.75rem; border: 1px solid var(--color-line, #ccc); border-radius: 4px">
+          <a :href="'/blog/' + post.path" x-text="post.title">Post title</a>
+          <span style="opacity: 0.5; font-size: 0.85em" x-text="' — ' + post.category"></span>
+        </li>
+      </template>
+    </ul>
+    <a href="/">← Back to Home</a>
+  </section>
+
+  <!-- 404 route -->
+  <section x-route="!*" style="padding: 2rem; max-width: 640px; margin: 0 auto; display: flex; flex-direction: column; gap: 1rem">
+    <h1>404 — Page Not Found</h1>
+    <p>No route matches this URL.</p>
+    <a href="/">← Back to Home</a>
+  </section>
 
 </body>
 

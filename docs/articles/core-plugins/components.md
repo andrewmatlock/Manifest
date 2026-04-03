@@ -25,7 +25,7 @@ Components are included in `manifest.js` with all core plugins, or can be select
 <link rel="manifest" href="/manifest.json">
 
 <!-- Scripts -->
-<script src="https://cdn.jsdelivr.net/npm/mnfst@latest/dist/manifest.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mnfst@latest/lib/manifest.min.js"></script>
 ```
 
 ```html "Selective"
@@ -33,7 +33,7 @@ Components are included in `manifest.js` with all core plugins, or can be select
 <link rel="manifest" href="/manifest.json">
 
 <!-- Scripts -->
-<script src="https://cdn.jsdelivr.net/npm/mnfst@latest/dist/manifest.min.js"
+<script src="https://cdn.jsdelivr.net/npm/mnfst@latest/lib/manifest.min.js"
     data-plugins="components"></script>
 ```
 

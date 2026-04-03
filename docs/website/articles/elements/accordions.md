@@ -9,11 +9,11 @@ Accordion styles are included in Manifest CSS or a standalone stylesheet, both r
 <x-code-group copy>
 
 ```html "Manifest CSS"
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mnfst@latest/dist/manifest.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mnfst@latest/lib/manifest.min.css" />
 ```
 
 ```html "Standalone"
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mnfst@latest/dist/manifest.accordion.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mnfst@latest/lib/manifest.accordion.css" />
 ```
 
 </x-code-group>

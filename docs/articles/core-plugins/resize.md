@@ -17,11 +17,11 @@ Resize is included in `manifest.js` with all core plugins, or can be selectively
 <x-code-group copy>
 
 ```html "All Plugins (default)"
-<script src="https://cdn.jsdelivr.net/npm/mnfst@latest/dist/manifest.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mnfst@latest/lib/manifest.min.js"></script>
 ```
 
 ```html "Selective"
-<script src="https://cdn.jsdelivr.net/npm/mnfst@latest/dist/manifest.min.js"
+<script src="https://cdn.jsdelivr.net/npm/mnfst@latest/lib/manifest.min.js"
     data-plugins="resize"></script>
 ```
 
@@ -32,11 +32,11 @@ Resizable element styles are included in Manifest CSS or as a standalone stylesh
 <x-code-group copy>
 
 ```html "Manifest CSS"
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mnfst@latest/dist/manifest.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mnfst@latest/lib/manifest.min.css">
 ```
 
 ```html "Standalone"
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mnfst@latest/dist/manifest.resize.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mnfst@latest/lib/manifest.resize.css">
 ```
 
 </x-code-group>

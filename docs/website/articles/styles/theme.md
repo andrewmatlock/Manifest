@@ -21,25 +21,25 @@ Apply the theme alongside `manifest.css` or standalone sheets. The default versi
 
 ```html "Manifest CSS"
 <!-- Theme -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mnfst@latest/dist/manifest.theme.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mnfst@latest/lib/manifest.theme.css">
 
 <!-- manifest.css -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mnfst@latest/dist/manifest.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mnfst@latest/lib/manifest.min.css">
 ```
 
 ```html "Standalone"
 <!-- Theme -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mnfst@latest/dist/manifest.theme.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mnfst@latest/lib/manifest.theme.css">
 
 <!-- Examples of standalone styles with theme references -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mnfst@latest/dist/manifest.buttons.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mnfst@latest/dist/manifest.utilities.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mnfst@latest/dist/manifest.typography.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mnfst@latest/lib/manifest.buttons.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mnfst@latest/lib/manifest.utilities.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mnfst@latest/lib/manifest.typography.css">
 ```
 
 </x-code-group>
 
-Modify the theme by saving it as a local file from <a href="https://cdn.jsdelivr.net/npm/mnfst@latest/dist/manifest.theme.css" target="_blank">jsDelivr</a> or <a href="https://github.com/andrewmatlock/Manifest/tree/master/dist/manifest.theme.css" target="_blank">GitHub</a>, or copy it here:
+Modify the theme by saving it as a local file from <a href="https://cdn.jsdelivr.net/npm/mnfst@latest/lib/manifest.theme.css" target="_blank">jsDelivr</a> or <a href="https://github.com/andrewmatlock/Manifest/tree/master/lib/manifest.theme.css" target="_blank">GitHub</a>, or copy it here:
 
 ```css "manifest.theme.css" copy numbers
 :root,
@@ -259,11 +259,11 @@ Theme variables can be compiled into Tailwind-style custom utility classes using
 <x-code-group copy>
 
 ```html "All Plugins (default)"
-<script src="https://cdn.jsdelivr.net/npm/mnfst@latest/dist/manifest.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mnfst@latest/lib/manifest.min.js"></script>
 ```
 
 ```html "Selective"
-<script src="https://cdn.jsdelivr.net/npm/mnfst@latest/dist/manifest.min.js"
+<script src="https://cdn.jsdelivr.net/npm/mnfst@latest/lib/manifest.min.js"
     data-plugins="utilities"></script>
 ```
 
@@ -305,7 +305,7 @@ While it's not advertised for production use, Play CDN aligns with Manifest's et
 <x-code-group copy>
 
 ```html "With Manifest"
-<script src="https://cdn.jsdelivr.net/npm/mnfst@latest/dist/manifest.min.js"
+<script src="https://cdn.jsdelivr.net/npm/mnfst@latest/lib/manifest.min.js"
     data-tailwind></script>
 ```
 
@@ -314,7 +314,7 @@ While it's not advertised for production use, Play CDN aligns with Manifest's et
 <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
 <!-- Manifest -->
-<script src="https://cdn.jsdelivr.net/npm/mnfst@latest/dist/manifest.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mnfst@latest/lib/manifest.min.js"></script>
 ```
 
 </x-code-group>

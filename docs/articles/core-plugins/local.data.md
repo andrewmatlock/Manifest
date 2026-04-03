@@ -24,7 +24,7 @@ Data support is included in `manifest.js` with all core plugins, or can be selec
 <link rel="manifest" href="/manifest.json">
 
 <!-- Scripts -->
-<script src="https://cdn.jsdelivr.net/npm/mnfst@latest/dist/manifest.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mnfst@latest/lib/manifest.min.js"></script>
 ```
 
 ```html "Selective"
@@ -32,7 +32,7 @@ Data support is included in `manifest.js` with all core plugins, or can be selec
 <link rel="manifest" href="/manifest.json">
 
 <!-- Scripts -->
-<script src="https://cdn.jsdelivr.net/npm/mnfst@latest/dist/manifest.min.js"
+<script src="https://cdn.jsdelivr.net/npm/mnfst@latest/lib/manifest.min.js"
     data-plugins="data"></script>
 ```
 
@@ -134,7 +134,7 @@ Data sources are accessed in HTML using our `$x` magic method with dot notation.
 `$x.sourceName.property.subProperty`
 
 **Structure breakdown:**
-- `$x` - Magic method prefix
+- `$x` - Magic method prefix (named `$x` to mirror Alpine's `x-` directive namespace, keeping the data layer visually consistent with the rest of the framework)
 - `sourceName` - Data source name from `manifest.json` (e.g., `team`, `features`, `pricing`)
 - `property` - Object property or array name
 - `subProperty` - Nested property (optional at any level)

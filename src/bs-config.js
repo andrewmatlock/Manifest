@@ -57,7 +57,7 @@ module.exports = {
     files: ["**/*.html", "**/*.js", "**/*.css", "**/*.json", "**/*.yaml", "**/*.md"],
     open: true,
     notify: false,
-    port: 5001,
+    port: process.env.PORT || 5001,
     single: true,
     ghostMode: false
 };

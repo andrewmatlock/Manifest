@@ -1,6 +1,6 @@
 # Setup
 
-Get Manifest with CDN links or copied from <a href="https://github.com/andrewmatlock/Manifest/tree/master/dist" target="_blank">GitHub</a>.
+Get Manifest with CDN links or copied from <a href="https://github.com/andrewmatlock/Manifest/tree/master/lib" target="_blank">GitHub</a>.
 
 ---
 
@@ -19,10 +19,10 @@ The script and stylesheets are modular, designed to work alone or together to be
 <link rel="manifest" href="/manifest.json">
 
 <!-- Scripts -->
-<script src="https://cdn.jsdelivr.net/npm/mnfst@latest/dist/manifest.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mnfst@latest/lib/manifest.min.js"></script>
 
 <!-- Styles -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mnfst@latest/dist/manifest.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mnfst@latest/lib/manifest.min.css">
 <link rel="stylesheet" href="/manifest.theme.css">
 ```
 
@@ -80,24 +80,24 @@ If your project is not a downloadable web app, and does not include HTML compone
 <x-code-group copy>
 
 ```html "All Plugins (default)"
-<script src="https://cdn.jsdelivr.net/npm/mnfst@latest/dist/manifest.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mnfst@latest/lib/manifest.min.js"></script>
 ```
 
 ```html "Select Plugins"
 <!-- Load only specified plugins -->
-<script src="https://cdn.jsdelivr.net/npm/mnfst@latest/dist/manifest.min.js" 
+<script src="https://cdn.jsdelivr.net/npm/mnfst@latest/lib/manifest.min.js" 
 		  data-plugins="components,router,utilities"></script>
 ```
 
 ```html "Omit Plugins"
 <!-- Load all core plugins except ommitted ones -->
-<script src="https://cdn.jsdelivr.net/npm/mnfst@latest/dist/manifest.min.js" 
+<script src="https://cdn.jsdelivr.net/npm/mnfst@latest/lib/manifest.min.js" 
 		  data-omit="markdown,resize"></script>
 ```
 
 ```html "Include Tailwind CSS"
 <!-- Include Tailwind CSS -->
-<script src="https://cdn.jsdelivr.net/npm/mnfst@latest/dist/manifest.min.js" 
+<script src="https://cdn.jsdelivr.net/npm/mnfst@latest/lib/manifest.min.js" 
 		  data-tailwind></script>
 ```
 
@@ -112,7 +112,7 @@ The script loads:
 Scripts load the latest version from CDN by default. Load a specified version by referencing it in the URL and with a `data-version` attribute for plugins:
 
 ```html copy
-<script src="https://cdn.jsdelivr.net/npm/mnfst@0.5.17/dist/manifest.min.js"
+<script src="https://cdn.jsdelivr.net/npm/mnfst@0.5.17/lib/manifest.min.js"
 	data-version="0.5.17"></script>
 ```
 
@@ -121,7 +121,7 @@ Scripts load the latest version from CDN by default. Load a specified version by
 ## Styles
 Stylesheets are divided by UI category, available individually or bundled in `manifest.css`.
 
-A separate `manifest.theme.css` can be <a target="_blank" href="https://github.com/andrewmatlock/Manifest/tree/master/dist/manifest.theme.css">downloaded from GitHub</a> for local modification. It maintains CSS variables referenced by the other sheets if present, centralizing your project's visual identity. See [theme](/styles/theme) for more.
+A separate `manifest.theme.css` can be <a target="_blank" href="https://github.com/andrewmatlock/Manifest/tree/master/lib/manifest.theme.css">downloaded from GitHub</a> for local modification. It maintains CSS variables referenced by the other sheets if present, centralizing your project's visual identity. See [theme](/styles/theme) for more.
 
 Add the desired Manifest CSS files to the HTML head (within `index.html` if [routing](/core-plugins/router)). 
 
@@ -129,14 +129,14 @@ Add the desired Manifest CSS files to the HTML head (within `index.html` if [rou
 
 ```html "Bundled (47kb)"
   <link rel="stylesheet" href="/manifest.theme.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mnfst@latest/dist/manifest.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mnfst@latest/lib/manifest.min.css">
 ```
 
 ```html "Individual (<10kb)"
   <link rel="stylesheet" href="/manifest.theme.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mnfst@latest/dist/manifest.reset.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mnfst@latest/dist/manifest.buttons.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mnfst@latest/dist/manifest.utilities.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mnfst@latest/lib/manifest.reset.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mnfst@latest/lib/manifest.buttons.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mnfst@latest/lib/manifest.utilities.css">
 ```
 
 </x-code-group>

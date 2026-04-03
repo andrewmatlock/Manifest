@@ -1,25 +1,26 @@
 {
     "name": "mnfst",
-    "version": "0.5.48",
+    "version": "0.5.51",
     "private": false,
     "workspaces": [
         "templates/starter",
         "packages/render"
     ],
-    "main": "dist/manifest.js",
-    "style": "dist/manifest.css",
+    "main": "lib/manifest.js",
+    "style": "lib/manifest.css",
     "files": [
-        "dist",
+        "lib",
         "README.md",
         "LICENSE"
     ],
     "scripts": {
-        "clean": "rimraf src/scripts/manifest.js src/scripts/manifest.render.mjs src/styles/manifest.css src/styles/manifest.min.css src/styles/manifest.code.min.css dist",
+        "clean": "rimraf src/scripts/manifest.js src/scripts/manifest.render.mjs src/styles/manifest.css src/styles/manifest.min.css src/styles/manifest.code.min.css lib",
         "build": "cd src && node scripts/build.mjs",
         "build:docs": "echo 'Docs is a static website - no build needed'",
         "start:src": "cd src && browser-sync start --config bs-config.js",
         "start:docs": "cd docs && browser-sync start --config bs-config.js",
         "start:starter": "cd templates/starter && browser-sync start --config bs-config.js --port 3001",
+        "start:dist": "cd src && browser-sync start --config dist-bs-config.js --port 5003",
         "prerender": "node src/scripts/manifest.render.mjs --root src",
         "prerender:docs": "node src/scripts/manifest.render.mjs --root docs",
         "prerender:starter": "node src/scripts/manifest.render.mjs --root templates/starter",
@@ -27,7 +28,7 @@
         "publish:starter": "cd packages/create-starter && npm publish --auth-type=web",
         "publish:render": "cd packages/render && npm publish --auth-type=web",
         "prepublishOnly": "npm run build",
-        "test": "echo 'No tests configured'",
+        "test": "vitest run",
         "lint": "echo 'No linting configured'"
     },
     "devDependencies": {
@@ -39,7 +40,8 @@
         "glob": "^11.0.2",
         "puppeteer": "^24.15.0",
         "rimraf": "^5.0.0",
-        "rollup": "^4.24.2"
+        "rollup": "^4.24.2",
+        "vitest": "^4.1.2"
     },
     "keywords": [
         "frontend",

@@ -6,7 +6,7 @@ Maintain visual consistency with common utility classes.
 
 ## Setup
 
-Utilities are available in the full Manifest CSS library, or as a standalone stylesheet. Both reference [theme](/styles/theme) variables.
+Utilities are available in the full Manifest CSS library, or as a standalone stylesheet. Both reference [theme](/docs/styles/theme) variables.
 
 <x-code-group copy>
 
@@ -22,7 +22,7 @@ Utilities are available in the full Manifest CSS library, or as a standalone sty
 
 This provides a curated set of utility classes for HTML elements encountering common use cases, particularly layouts and colors.
 
-See [custom utilities](/styles/theme#custom-utilities) for classes generated from your CSS variables.
+See [custom utilities](/docs/styles/theme#custom-utilities) for classes generated from your CSS variables.
 
 ---
 

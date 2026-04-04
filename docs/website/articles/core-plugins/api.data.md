@@ -1,6 +1,6 @@
 # API Data Sources
 
-Connect to external REST and GraphQL APIs to load data into your Manifest project using the same `$x` magic method pattern as [local data](/core-plugins/local-data) sources.
+Connect to external REST and GraphQL APIs to load data into your Manifest project using the same `$x` magic method pattern as [local data](/docs/core-plugins/local-data) sources.
 
 ---
 
@@ -26,7 +26,7 @@ API data sources extend the core data plugin to fetch data from external HTTP en
 - **No Real-Time Updates**: Data loads once on access (no automatic refresh)
 - **No Authentication Refresh**: Tokens must be managed manually
 
-For full CRUD operations and real-time updates with built-in security, consider [Appwrite databases](/appwrite-plugins/cloud.data.databases).
+For full CRUD operations and real-time updates with built-in security, consider [Appwrite databases](/docs/appwrite-plugins/cloud.data.databases).
 
 ---
 
@@ -34,7 +34,7 @@ For full CRUD operations and real-time updates with built-in security, consider 
 
 ### Current: Basic API Support
 
-Basic read-only API support is included in the core data plugin. No additional setup is required beyond the standard [data plugin setup](/core-plugins/local-data#setup).
+Basic read-only API support is included in the core data plugin. No additional setup is required beyond the standard [data plugin setup](/docs/core-plugins/local-data#setup).
 
 ### Future: Full API Plugin
 
@@ -224,7 +224,7 @@ API data sources work identically to local data sources. Access them using the `
 </template>
 ```
 
-See [local data display content](/core-plugins/local-data#display-content) for more examples of displaying data in your UI.
+See [local data display content](/docs/core-plugins/local-data#display-content) for more examples of displaying data in your UI.
 
 ---
 
@@ -326,7 +326,7 @@ For APIs that require custom logic (e.g., OAuth flows, WebSocket connections, co
 
 5. **Consider caching**: API data sources cache responses in memory. For frequently changing data, you may need to implement custom refresh logic.
 
-6. **For production use**: Consider [Appwrite databases](/appwrite-plugins/cloud.data.databases) for full CRUD operations, real-time updates, and built-in security. The `manifest.api.data.js` plugin (planned) will provide similar capabilities for third-party APIs.
+6. **For production use**: Consider [Appwrite databases](/docs/appwrite-plugins/cloud.data.databases) for full CRUD operations, real-time updates, and built-in security. The `manifest.api.data.js` plugin (planned) will provide similar capabilities for third-party APIs.
 
 ---
 
@@ -344,6 +344,6 @@ This modular architecture allows the core plugin to remain lightweight while ena
 
 ## Next Steps
 
-- Learn about [local data sources](/core-plugins/local-data) for static content
-- Explore [Appwrite databases](/appwrite-plugins/cloud.data.databases) for full cloud data management
-- See [localization](/core-plugins/localization) for multilingual API data
+- Learn about [local data sources](/docs/core-plugins/local-data) for static content
+- Explore [Appwrite databases](/docs/appwrite-plugins/cloud.data.databases) for full cloud data management
+- See [localization](/docs/core-plugins/localization) for multilingual API data

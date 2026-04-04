@@ -4,7 +4,7 @@
 
 ## Setup
 
-Typography styles are included in Manifest CSS or a standalone stylesheet, both referencing [theme](/styles/theme) variables.
+Typography styles are included in Manifest CSS or a standalone stylesheet, both referencing [theme](/docs/styles/theme) variables.
 
 <x-code-group copy>
 
@@ -65,7 +65,7 @@ Typography styles are included in Manifest CSS or a standalone stylesheet, both 
 <blockquote>Blockquote. Lorem ipsum dolar sit amet.</blockquote>
 ```
 
-See [code blocks](/core-plugins/code) for use of the `<pre>` element.
+See [code blocks](/docs/core-plugins/code) for use of the `<pre>` element.
 
 ---
 
@@ -84,7 +84,7 @@ See [code blocks](/core-plugins/code) for use of the `<pre>` element.
 <p>Inline <code>code</code> and keyboard tags like <kbd>SHIFT</kbd><kbd>⌘</kbd><kbd>Z</kbd> are handy.</p>
 ```
 
-See [badges](/elements/badges) for use of the `<mark>` tag.
+See [badges](/docs/elements/badges) for use of the `<mark>` tag.
 
 ---
 
@@ -127,7 +127,7 @@ List styles are carefully styled to keep markers aligned with content above and 
 
 ### Icon Markers
 
-List markers can be overwritten with inline [icons](/core-plugins/icons) using the `x-icon` attribute. The generated SVG is placed directly before any text content.
+List markers can be overwritten with inline [icons](/docs/core-plugins/icons) using the `x-icon` attribute. The generated SVG is placed directly before any text content.
 
 ::: frame
 <ul>
@@ -172,7 +172,7 @@ Depending on your icon library's baked-in padding, you may wish to adjust marker
 
 ## Utilities
 
-Text elements accept [utility](/styles/utilities) classes, which can be stacked in any combination.
+Text elements accept [utility](/docs/styles/utilities) classes, which can be stacked in any combination.
 
 ### Elements
 
@@ -325,7 +325,7 @@ All text elements accept Manifest color utility classes, either directly or inhe
 
 ### Theme
 
-Default text elements use the following [theme](/styles/theme) variables:
+Default text elements use the following [theme](/docs/styles/theme) variables:
 
 | Variable | Purpose |
 |----------|---------|
@@ -342,9 +342,9 @@ Default text elements use the following [theme](/styles/theme) variables:
 
 ### Fonts
 
-The global font and text color is set in the [theme](/styles/theme), with the default value being the user's system UI font or fallbacks. To apply a different font to individual text elements, use custom CSS to modify its `font-family` property (like in the Customization example below).
+The global font and text color is set in the [theme](/docs/styles/theme), with the default value being the user's system UI font or fallbacks. To apply a different font to individual text elements, use custom CSS to modify its `font-family` property (like in the Customization example below).
 
-`<pre>` and `<code>` elements have a specialty font set by separate [code styles](/core-plugins/code#styles), and otherwise use the user's system monospace font or other fallbacks.
+`<pre>` and `<code>` elements have a specialty font set by separate [code styles](/docs/core-plugins/code#styles), and otherwise use the user's system monospace font or other fallbacks.
 
 ---
 

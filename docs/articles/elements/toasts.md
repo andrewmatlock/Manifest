@@ -4,7 +4,7 @@
 
 ## Setup
 
-Toast styles are included in Manifest CSS or a standalone stylesheet, both referencing [theme](/styles/theme) variables.
+Toast styles are included in Manifest CSS or a standalone stylesheet, both referencing [theme](/docs/styles/theme) variables.
 
 Toast functionality is included in `manifest.js` with all core plugins, or it can be selectively loaded.
 
@@ -163,7 +163,7 @@ Use the `$toast` magic method for programmatic toast creation.
 
 ## Rich Content
 
-Rich content supports HTML including [icons](/elements/icons) for enhanced formatting.
+Rich content supports HTML including [icons](/docs/elements/icons) for enhanced formatting.
 
 ::: frame
 <button x-toast.fixed="<span x-icon='lucide:info'></span>Hello <b>bold</b> and <em>italic</em> world">Rich Content</button>
@@ -204,7 +204,7 @@ Toast content can include dynamic expressions and variables.
 
 ## Dynamic Data
 
-Toasts can retrieve content from [data sources](/core-plugins/local-data) using the `$x` syntax.
+Toasts can retrieve content from [data sources](/docs/core-plugins/local-data) using the `$x` syntax.
 
 ::: frame
 <button x-toast="$x.example.toast">Data Source Toast</button>
@@ -230,7 +230,7 @@ Toasts can retrieve content from [data sources](/core-plugins/local-data) using 
 
 ### Theme
 
-Default toasts use the following [theme](/styles/theme) variables:
+Default toasts use the following [theme](/docs/styles/theme) variables:
 
 | Variable | Purpose |
 |----------|----------|

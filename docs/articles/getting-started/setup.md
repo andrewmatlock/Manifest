@@ -75,7 +75,7 @@ If your project is not a downloadable web app, and does not include HTML compone
 
 ## Script
 
-`manifest.js` dynamically loads <a href="https://alpinejs.dev" target="_blank">Alpine JS</a> and our plugins to make your project functional. Add the `<script>` tag anywhere in the HTML head or body (within `index.html` if [routing](/core-plugins/router)).
+`manifest.js` dynamically loads <a href="https://alpinejs.dev" target="_blank">Alpine JS</a> and our plugins to make your project functional. Add the `<script>` tag anywhere in the HTML head or body (within `index.html` if [routing](/docs/core-plugins/router)).
 
 <x-code-group copy>
 
@@ -121,9 +121,9 @@ Scripts load the latest version from CDN by default. Load a specified version by
 ## Styles
 Stylesheets are divided by UI category, available individually or bundled in `manifest.css`.
 
-A separate `manifest.theme.css` can be <a target="_blank" href="https://github.com/andrewmatlock/Manifest/tree/master/lib/manifest.theme.css">downloaded from GitHub</a> for local modification. It maintains CSS variables referenced by the other sheets if present, centralizing your project's visual identity. See [theme](/styles/theme) for more.
+A separate `manifest.theme.css` can be <a target="_blank" href="https://github.com/andrewmatlock/Manifest/tree/master/lib/manifest.theme.css">downloaded from GitHub</a> for local modification. It maintains CSS variables referenced by the other sheets if present, centralizing your project's visual identity. See [theme](/docs/styles/theme) for more.
 
-Add the desired Manifest CSS files to the HTML head (within `index.html` if [routing](/core-plugins/router)). 
+Add the desired Manifest CSS files to the HTML head (within `index.html` if [routing](/docs/core-plugins/router)). 
 
 <x-code-group copy>
 

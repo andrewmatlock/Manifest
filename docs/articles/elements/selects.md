@@ -4,7 +4,7 @@
 
 ## Setup
 
-Selects styles are included in Manifest CSS or the standalone [buttons](/elements/buttons) stylesheet. Both reference [theme](/styles/theme) variables.
+Selects styles are included in Manifest CSS or the standalone [buttons](/docs/elements/buttons) stylesheet. Both reference [theme](/docs/styles/theme) variables.
 
 <x-code-group copy>
 
@@ -42,7 +42,7 @@ Selects styles are included in Manifest CSS or the standalone [buttons](/element
 
 ## Utilities
 
-Selects accept Manifest [utility](/styles/utilities) classes, which can be stacked in any combination.
+Selects accept Manifest [utility](/docs/styles/utilities) classes, which can be stacked in any combination.
 
 ### Colors
 ::: frame
@@ -282,7 +282,7 @@ When these elements are grouped, only the outer elements' outer corners retain t
 
 ### Theme
 
-Default selects use the following [theme](/styles/theme) variables:
+Default selects use the following [theme](/docs/styles/theme) variables:
 
 | Variable | Purpose |
 |----------|---------|

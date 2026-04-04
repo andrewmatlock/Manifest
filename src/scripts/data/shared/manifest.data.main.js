@@ -1112,6 +1112,30 @@ async function initializeDataSourcesPlugin() {
         filterFilesByScope // Export for use by getFilesForEntry
     };
 
+    // Listen for manifest:dev-reload (fired by mnfst-run when a data file changes).
+    // Re-fetches all local data sources and updates the Alpine store reactively.
+    window.addEventListener('manifest:dev-reload', async () => {
+        const manifest = await window.ManifestDataConfig.ensureManifest();
+        if (!manifest?.data) return;
+
+        const locale = document.documentElement.lang ||
+            (typeof Alpine !== 'undefined' && Alpine.store('locale')?.current) || 'en';
+
+        const { dataSourceCache, loadingPromises } = window.ManifestDataStore;
+        const isAppwriteCollection = window.ManifestDataConfig.isAppwriteCollection;
+
+        for (const [name, source] of Object.entries(manifest.data)) {
+            if (isAppwriteCollection(source)) continue;
+            if (source && typeof source === 'object' && source.url) continue;
+
+            const cacheKey = `${name}:${locale}`;
+            dataSourceCache.delete(cacheKey);
+            loadingPromises.delete(cacheKey);
+
+            try { await loadDataSource(name, locale); } catch { /* skip failed sources */ }
+        }
+    });
+
     // Initialize dataSources after magic method is registered
     if (window.ManifestDataStore.isInitializing || window.ManifestDataStore.initializationComplete) return;
     setIsInitializing(true);

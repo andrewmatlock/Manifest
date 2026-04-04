@@ -4,7 +4,7 @@
 
 ## Setup
 
-Buttons styles are included in Manifest CSS or a standalone stylesheet, both referencing [theme](/styles/theme) variables.
+Buttons styles are included in Manifest CSS or a standalone stylesheet, both referencing [theme](/docs/styles/theme) variables.
 
 <x-code-group copy>
 
@@ -60,7 +60,7 @@ The buttons appearance is determined by these top-level factors:
 
 ## Utilities
 
-Buttons accept Manifest [utility](/styles/utilities) classes, which can be stacked in any combination.
+Buttons accept Manifest [utility](/docs/styles/utilities) classes, which can be stacked in any combination.
 
 ### Colors
 ::: frame
@@ -136,7 +136,7 @@ Buttons accept Manifest [utility](/styles/utilities) classes, which can be stack
 
 ### Solo Icon
 
-Buttons containing a single [icon](/elements/icons) are automatically squared.
+Buttons containing a single [icon](/docs/elements/icons) are automatically squared.
 
 ::: frame
 <button x-icon="ph:house"></button>
@@ -270,7 +270,7 @@ When these elements are grouped, only the outer elements' outer corners retain t
 
 ### Theme
 
-Default buttons use the following [theme](/styles/theme) variables:
+Default buttons use the following [theme](/docs/styles/theme) variables:
 
 | Variable | Purpose |
 |----------|---------|

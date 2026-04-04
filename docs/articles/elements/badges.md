@@ -4,7 +4,7 @@
 
 ## Setup
 
-Badge styles are included in Manifest CSS or the standalone [typography](/elements/typography) stylesheet. Both reference [theme](/styles/theme) variables.
+Badge styles are included in Manifest CSS or the standalone [typography](/docs/elements/typography) stylesheet. Both reference [theme](/docs/styles/theme) variables.
 
 <x-code-group copy>
 
@@ -36,7 +36,7 @@ Badges use the `<mark>` tag for styling without a class required.
 
 ## Utilities
 
-Badges accept Manifest [utility](/styles/utilities) classes, which can be stacked in any combination.
+Badges accept Manifest [utility](/docs/styles/utilities) classes, which can be stacked in any combination.
 
 ### Colors
 ::: frame
@@ -108,7 +108,7 @@ Badges accept Manifest [utility](/styles/utilities) classes, which can be stacke
 
 ### Solo Icon
 
-Badges containing a single [icon](/core-plugins/icons) are automatically squared.
+Badges containing a single [icon](/docs/core-plugins/icons) are automatically squared.
 
 ::: frame
 <mark x-icon="lucide:heart"></mark>
@@ -140,7 +140,7 @@ Any number of icons and text can be nested in any order. Place icons in `<span>`
 
 ### Theme
 
-Default badges use the following [theme](/styles/theme) variables:
+Default badges use the following [theme](/docs/styles/theme) variables:
 
 | Variable | Purpose |
 |----------|---------|

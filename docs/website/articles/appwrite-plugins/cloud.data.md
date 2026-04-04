@@ -1,12 +1,12 @@
 # Cloud Data
 
-Access Appwrite databases and storage buckets using the same `$x` magic method pattern as [local data](/core-plugins/local-data) sources.
+Access Appwrite databases and storage buckets using the same `$x` magic method pattern as [local data](/docs/core-plugins/local-data) sources.
 
 ---
 
 ## Setup
 
-Complete the [Appwrite setup](/appwrite-plugins/appwrite-setup) steps to connect your Appwrite and Manifest projects.
+Complete the [Appwrite setup](/docs/appwrite-plugins/appwrite-setup) steps to connect your Appwrite and Manifest projects.
 
 Add the Appwrite SDK and `manifest.js` scripts to the HTML head. `manifest.json` is also required for Appwrite credentials and register database tables or storage buckets.
 
@@ -56,5 +56,5 @@ Appwrite's cloud data sources work identically to local data sources in the fron
 
 Complete cloud data support using the guides for:
 
-- [Databases](/appwrite-plugins/databases) of cloud-hosted content
-- [Storage](/appwrite-plugins/storage) of cloud-hosted files
+- [Databases](/docs/appwrite-plugins/databases) of cloud-hosted content
+- [Storage](/docs/appwrite-plugins/storage) of cloud-hosted files

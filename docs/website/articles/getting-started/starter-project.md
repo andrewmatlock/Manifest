@@ -71,9 +71,9 @@ The only mandatory file required is `index.html`. All other files and folders ar
 This main HTML file serves as the router's single-page application (SPA) entry point. It includes:
 
 - **Head tags** for Manifest framework loading (from CDN), SEO, and web app configuration.
-- **Component placeholders** (`<x-header>`, `<x-footer>`) of [HTML templates](/core-plugins/components).
-- **Routing views** (`x-route="..."`) for [URL-specific content](/core-plugins/router).
-- **Dynamic references** (`x-text="$x.content.page1"`) to localized [data source](/core-plugins/local-data) values.
+- **Component placeholders** (`<x-header>`, `<x-footer>`) of [HTML templates](/docs/core-plugins/components).
+- **Routing views** (`x-route="..."`) for [URL-specific content](/docs/core-plugins/router).
+- **Dynamic references** (`x-text="$x.content.page1"`) to localized [data source](/docs/core-plugins/local-data) values.
 
 ---
 
@@ -81,4 +81,4 @@ This main HTML file serves as the router's single-page application (SPA) entry p
 
 This <a href="https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Manifest" target="_blank">web application manifest</a> allows browsers to identify and export the website as an app to mobile and desktop devices. As a progressive web apps (PWA), your project is often more portable, scalable, and popular than traditional native apps, and can be packaged for app store distribution.
 
-This project also uses the manifest to register its [components](/core-plugins/components) and [localized](/core-plugins/localiation) content, and to define `author` and `email` fields referenced by the Privacy Policy.
+This project also uses the manifest to register its [components](/docs/core-plugins/components) and [localized](/docs/core-plugins/localiation) content, and to define `author` and `email` fields referenced by the Privacy Policy.

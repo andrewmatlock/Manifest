@@ -4,7 +4,7 @@
 
 ## Setup
 
-Code blocks style have their own stylesheet (independent of `manifest.css`) and reference [theme](/styles/theme) variables.
+Code blocks style have their own stylesheet (independent of `manifest.css`) and reference [theme](/docs/styles/theme) variables.
 
 Code block functionality is included in `manifest.js` with all core plugins, or it can be selectively loaded.
 
@@ -55,7 +55,7 @@ function hello() {
 
 The code block plugin uses <a href="https://highlightjs.org" target="_blank">highlight.js</a>, which is automatically loaded from its CDN when an `x-code` directive is encountered in the current view.
 
-See the [markdown](/core-plugins/markdown) plugin for how ``` represents `x-code` tags in markdown files.
+See the [markdown](/docs/core-plugins/markdown) plugin for how ``` represents `x-code` tags in markdown files.
 
 ---
 
@@ -167,7 +167,7 @@ The `numbers` and `copy` attributes can be added to the `x-code-group` tag and w
 
 ### Theme
 
-Default code blocks use the following [theme](/styles/theme) variables:
+Default code blocks use the following [theme](/docs/styles/theme) variables:
 
 | Variable | Purpose |
 |----------|---------|

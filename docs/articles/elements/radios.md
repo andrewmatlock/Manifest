@@ -4,7 +4,7 @@
 
 ## Setup
 
-Radios styles are included in Manifest CSS or a standalone stylesheet, both referencing [theme](/styles/theme) variables.
+Radios styles are included in Manifest CSS or a standalone stylesheet, both referencing [theme](/docs/styles/theme) variables.
 
 <x-code-group copy>
 
@@ -36,7 +36,7 @@ Radios styles are included in Manifest CSS or a standalone stylesheet, both refe
 
 ## Utilities
 
-Radios accept Manifest [utility](/styles/utilities) classes, which can be stacked in any combination.
+Radios accept Manifest [utility](/docs/styles/utilities) classes, which can be stacked in any combination.
 
 ### Colors
 
@@ -181,7 +181,7 @@ Placing labelled radios inside a `<fieldset>` automatically arranges them in a c
 
 ### Theme
 
-Default radios use the following [theme](/styles/theme) variables:
+Default radios use the following [theme](/docs/styles/theme) variables:
 
 | Variable | Purpose |
 |----------|---------|

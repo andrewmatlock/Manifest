@@ -630,4 +630,4 @@ For invitations/member editing.
 
 ## Next Steps
 
-See [cloud data](/appwrite-plugins/cloud-data) for giving users access to databases and stored files.
+See [cloud data](/docs/appwrite-plugins/cloud-data) for giving users access to databases and stored files.

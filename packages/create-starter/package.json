@@ -7,7 +7,7 @@
     "mnfst-starter": "create-starter.js"
   },
   "scripts": {
-    "start": "browser-sync start --config bs-config.js",
+    "start": "npx mnfst-serve",
     "build": "echo 'Starter template - no build needed'"
   },
   "keywords": [

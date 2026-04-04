@@ -207,6 +207,9 @@
 .text-code-char { color: var(--color-code-char) }
 .bg-code-char { background-color: var(--color-code-char) }
 .border-code-char { border-color: var(--color-code-char) }
+
+.bg-page { background-color: var(--color-page) }
+.border-line { border-color: var(--color-line) }
 /* manifest utilities */
 
 @layer utilities {

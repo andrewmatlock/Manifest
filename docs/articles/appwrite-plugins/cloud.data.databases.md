@@ -28,7 +28,7 @@ In a table's **Settings** tab, ensure any permissions required by your frontend 
 
 ## Register Database Tables
 
-Register database tables in your `manifest.json` under the `data` property, same as [local data files](/core-plugins/local-data). Include the `appwriteDatabaseId` and `appwriteTableId` values provided by Appwrite.
+Register database tables in your `manifest.json` under the `data` property, same as [local data files](/docs/core-plugins/local-data). Include the `appwriteDatabaseId` and `appwriteTableId` values provided by Appwrite.
 
 
 ```json "manifest.json" copy
@@ -93,7 +93,7 @@ Scope queries are always prepended to user queries, ensuring scope restrictions 
 When using `["user", "team"]` scope, projects are shown for the current user OR the current team. If no team is selected (`$auth.currentTeam`), only user-scoped projects will display. Use `"teams"` (plural) instead of `"team"` (singular) to query all teams the user belongs to, not just the current team.
 
 ::: brand icon="lucide:info"
-All interactive examples below require you to be logged into an dummy account via the [users](/appwrite-plugins/users) article. The data entries you generate below use the `team` scope.
+All interactive examples below require you to be logged into an dummy account via the [users](/docs/appwrite-plugins/users) article. The data entries you generate below use the `team` scope.
 :::
 
 ---
@@ -558,7 +558,7 @@ Use the `$files` property to access files linked to an entry:
 </small>
 ```
 
-See [storage](/appwrite-plugins/storage) for more details on file management.
+See [storage](/docs/appwrite-plugins/storage) for more details on file management.
 
 ---
 
@@ -771,4 +771,4 @@ Check data source loading state, errors, and readiness:
 
 ## Next Steps
 
-See [storage](/appwrite-plugins/storage) for managing file uploads and downloads.
+See [storage](/docs/appwrite-plugins/storage) for managing file uploads and downloads.

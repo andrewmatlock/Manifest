@@ -4,7 +4,7 @@
 
 ## Setup
 
-Dropdown styles are included in Manifest CSS or a standalone stylesheet, both referencing [theme](/styles/theme) variables.
+Dropdown styles are included in Manifest CSS or a standalone stylesheet, both referencing [theme](/docs/styles/theme) variables.
 
 Dropdown functionality is included in `manifest.js` with all core plugins, or it can be selectively loaded.
 
@@ -33,7 +33,7 @@ Dropdown functionality is included in `manifest.js` with all core plugins, or it
 Older browser versions require polyfills like Oddbird's <a href="https://github.com/oddbird/popover-polyfill" target="_blank">popover</a> and <a href="https://github.com/oddbird/popover-polyfill" target="_blank">position-area</a> scripts, which mimic the HTML and CSS abilities required for dropdowns.
 :::
 
-For OS dropdowns, see [selects](/elements/selects).
+For OS dropdowns, see [selects](/docs/elements/selects).
 
 ---
 
@@ -445,7 +445,7 @@ And use `<span>` within applicable elements above for icons, truncating text wit
 
 ### Theme
 
-Default dropdowns use the following [theme](/styles/theme) variables:
+Default dropdowns use the following [theme](/docs/styles/theme) variables:
 
 | Variable | Purpose |
 |----------|----------|

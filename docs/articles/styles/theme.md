@@ -171,7 +171,7 @@ In the default theme, a color palette of variables is referenced by most other p
 ---
 
 ### Theme Colors
-See [color themes](/core-plugins/color-themes) for more information on setting up light and dark themes. Light/default color variables are established in a `:root`, while equivalent dark variable values go in a standalone  `.dark` style.
+See [color themes](/docs/core-plugins/color-themes) for more information on setting up light and dark themes. Light/default color variables are established in a `:root`, while equivalent dark variable values go in a standalone  `.dark` style.
 
 | Variable | Purpose | Ex. Tailwind Utilities |
 |----------|---------|-------------------|
@@ -191,7 +191,7 @@ See [color themes](/core-plugins/color-themes) for more information on setting u
 ---
 
 ### Semantic Colors
-These semantic colors are easily applied to text, backgrounds, and certain form elements using the Manifest [utility](/styles/utilities) classes `brand`, `accent`, `positive`, and `negative`.
+These semantic colors are easily applied to text, backgrounds, and certain form elements using the Manifest [utility](/docs/styles/utilities) classes `brand`, `accent`, `positive`, and `negative`.
 
 | Variable | Purpose | Ex. Tailwind Utilities |
 |----------|---------|-------------------|
@@ -219,12 +219,12 @@ These semantic colors are easily applied to text, backgrounds, and certain form 
 |----------|---------|-------------------|
 | `--radius` | Default border radius | — |
 | `--spacing` | Base spacing unit | `p-1` `m-1` `gap-1` |
-| `--spacing-content-width` | Maximum content width in [utility](/styles/utilities) styles | `max-w-content-width` |
+| `--spacing-content-width` | Maximum content width in [utility](/docs/styles/utilities) styles | `max-w-content-width` |
 | `--spacing-field-padding` | Form field padding | `p-field-padding` |
 | `--spacing-field-height` | Form field height | `h-field-height` |
 | `--spacing-popover-offset` | Dropdown & tooltip positioning offset | `mt-dropdown-offset` |
 | `--spacing-resize-handle` | [Resize](/plugin/resize) handle width | `w-resize-handle` |
-| `--spacing-viewport-padding` | Viewport padding for responsive design  in [utility](/styles/utilities) styles | `px-viewport-padding` |
+| `--spacing-viewport-padding` | Viewport padding for responsive design  in [utility](/docs/styles/utilities) styles | `px-viewport-padding` |
 
 ---
 
@@ -232,7 +232,7 @@ These semantic colors are easily applied to text, backgrounds, and certain form 
 | Variable | Purpose | Ex. Tailwind Utilities |
 |----------|---------|-------------------|
 | `--transition` | Default form element transition timing | — |
-| `--tooltip-hover-delay` | [Tooltip](/styles/tooltips) hover delay timing | — |
+| `--tooltip-hover-delay` | [Tooltip](/docs/styles/tooltips) hover delay timing | — |
 
 ---
 
@@ -246,9 +246,9 @@ These semantic colors are easily applied to text, backgrounds, and certain form 
 ### Icons
 | Variable | Purpose | Ex. Tailwind Utilities |
 |----------|---------|-------------------|
-| `--icon-accordion` | [Accordion](/styles/accordions) expand/collapse icon | — |
-| `--icon-checkbox` | [Checkbox](/styles/checkboxes) checked state icon | — |
-| `--icon-toast-dismiss` | [Toast](/styles/toasts) notification dismiss icon | — |
+| `--icon-accordion` | [Accordion](/docs/styles/accordions) expand/collapse icon | — |
+| `--icon-checkbox` | [Checkbox](/docs/styles/checkboxes) checked state icon | — |
+| `--icon-toast-dismiss` | [Toast](/docs/styles/toasts) notification dismiss icon | — |
 
 ---
 
@@ -300,7 +300,7 @@ The utility plugin operates independently, but follows Tailwind naming patterns 
 
 While it's not advertised for production use, Play CDN aligns with Manifest's ethos of being plug-and-play with no build steps, and has a typically nelgible performance impact.
 
-`manifest.js` can load a modifed version of Play CDN that removes Tailwind's Preflight styles in favour of our [reset](/styles/reset) styles. It also removes a console warning about using Play CDN in production. Add the `data-tailwind` attribute to access it.
+`manifest.js` can load a modifed version of Play CDN that removes Tailwind's Preflight styles in favour of our [reset](/docs/styles/reset) styles. It also removes a console warning about using Play CDN in production. Add the `data-tailwind` attribute to access it.
 
 <x-code-group copy>
 

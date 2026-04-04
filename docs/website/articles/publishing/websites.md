@@ -11,7 +11,7 @@ Manifest projects function as a single page application (SPA) by default, requir
 [] Set the root to `./` if applicable
 [] Set the entry point to `./index.html` if applicable
 
-The [starter project](/getting-started/starter-project) includes a `_redirects` file for a host's routing assistance.
+The [starter project](/docs/getting-started/starter-project) includes a `_redirects` file for a host's routing assistance.
 
 ---
 

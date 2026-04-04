@@ -229,23 +229,18 @@ function resolveConfig() {
     locales: pre.locales,
     redirects: Array.isArray(pre.redirects) ? pre.redirects : [],
     wait: cli.wait ?? pre.wait ?? null,
-    waitAfterIdle: Math.max(0, cli.waitAfterIdle ?? pre.waitAfterIdle ?? 0),
+    waitAfterIdle: 0,
     concurrency: Math.max(1, cli.concurrency ?? pre.concurrency ?? Math.max(4, cpus().length - 1)),
-    /** Default: generate locale variant pages via Node.js text substitution rather than Puppeteer.
-     *  Set manifest.prerender.localeSubstitution=false to always use Puppeteer for every locale. */
-    localeSubstitution: pre.localeSubstitution !== false,
-    /** Locales to always render with Puppeteer even when localeSubstitution is enabled (e.g. RTL). */
-    localeSubstitutionExclude: Array.isArray(pre.localeSubstitutionExclude)
-      ? pre.localeSubstitutionExclude.map(String)
-      : [],
+    localeSubstitution: true,
+    localeSubstitutionExclude: [],
     /** Explicit locale-neutral paths to render in addition to those discovered automatically.
      *  Each entry is expanded to all locale variants (e.g. "legal/privacy" → "cs/legal/privacy", ...) */
     paths: Array.isArray(pre.paths)
       ? pre.paths.map((p) => String(p).replace(/^\/+|\/+$/g, '')).filter(Boolean)
       : [],
     dryRun: !!cli.dryRun,
-    debugPrerender: !!(cli.debugPrerender ?? pre.debugPrerender),
-    pipelineTimeout: Math.max(3000, Number(pre.pipelineTimeout) || 25000),
+    debugPrerender: !!cli.debugPrerender,
+    pipelineTimeout: 25000,
   };
 }
 
@@ -694,13 +689,11 @@ function promptContinueWithRuntimeTailwind(rootDir) {
 
 /**
  * Build a static Tailwind stylesheet via @tailwindcss/cli (v4+), scanning project sources.
- * Only runs when the project opts in (data-tailwind on manifest script) or manifest.prerender.tailwind === true.
+ * Only runs when the project uses data-tailwind on the manifest script tag (auto-detected).
+ * Set manifest.prerender.tailwindInput to a custom CSS entry file if needed.
  */
 function runTailwindCliForPrerender(rootDir, outputDir, pre) {
-  const explicit = pre?.tailwind;
-  if (explicit === false) return false;
-  const usesTailwind = explicit === true || indexHtmlUsesTailwind(rootDir);
-  if (!usesTailwind) return false;
+  if (!indexHtmlUsesTailwind(rootDir)) return false;
 
   const outCss = join(outputDir, 'prerender.tailwind.css');
   try {
@@ -708,7 +701,7 @@ function runTailwindCliForPrerender(rootDir, outputDir, pre) {
   } catch {
     const proceed = promptContinueWithRuntimeTailwind(rootDir);
     if (!proceed) {
-      throw new Error('prerender aborted: install tailwindcss/@tailwindcss/cli or disable prerender.tailwind.');
+      throw new Error('prerender aborted: install tailwindcss/@tailwindcss/cli or remove data-tailwind from your manifest script tag.');
     }
     process.stdout.write('prerender: continuing with runtime data-tailwind behavior.\n');
     return false;
@@ -726,15 +719,12 @@ function runTailwindCliForPrerender(rootDir, outputDir, pre) {
   }
 
   const outputBasename = basename(outputDir);
-  const defaultContent = [
+  const contentGlobs = [
     '**/*.html',
     '!**/node_modules/**',
     '!**/dist/**',
     `!**/${outputBasename}/**`,
   ];
-  const contentGlobs = Array.isArray(pre?.tailwindContent) && pre.tailwindContent.length > 0
-    ? pre.tailwindContent
-    : defaultContent;
 
   const args = [
     '--yes',
@@ -762,7 +752,7 @@ function runTailwindCliForPrerender(rootDir, outputDir, pre) {
     }
   }
   if (r.status !== 0) {
-    console.error('prerender: Tailwind CLI failed; install with `npm i -D tailwindcss @tailwindcss/cli` or fix tailwindInput/tailwindContent in manifest.prerender.');
+    console.error('prerender: Tailwind CLI failed; install with `npm i -D tailwindcss @tailwindcss/cli` or check tailwindInput in manifest.prerender.');
     if (r.stderr) console.error(r.stderr);
     if (r.stdout) console.error(r.stdout);
     return false;
@@ -1144,6 +1134,9 @@ function loadAllLocaleContentData(manifest, rootDir, locales) {
         target[key] = (target[key] && typeof target[key] === 'object') ? target[key] : {};
         deepMerge(target[key], source[key]);
       } else {
+        // Don't overwrite an existing nested object with a primitive — that creates
+        // type asymmetry across locales and causes '[object Object]' in substitution pairs
+        if (target[key] && typeof target[key] === 'object') continue;
         target[key] = source[key];
       }
     }
@@ -1152,12 +1145,25 @@ function loadAllLocaleContentData(manifest, rootDir, locales) {
   const result = new Map();
   for (const locale of locales) result.set(locale, {});
 
+  // Read just the header row of a CSV to check which locale columns it contains.
+  function csvLocaleColumns(csvPath) {
+    if (!existsSync(csvPath)) return new Set();
+    try {
+      const firstLine = readFileSync(csvPath, 'utf8').split(/\r?\n/)[0] || '';
+      return new Set(splitCsvLine(firstLine).slice(1)); // skip key column
+    } catch { return new Set(); }
+  }
+
   for (const [, value] of Object.entries(data)) {
     if (typeof value === 'string') {
       // Single CSV with locale columns (all locales in one file)
       if (value.endsWith('.csv')) {
         const csvPath = join(rootDir, value.startsWith('/') ? value.slice(1) : value);
+        const cols = csvLocaleColumns(csvPath);
         for (const locale of locales) {
+          // Only include locales the CSV actually declares; falling back to the English
+          // column for a missing locale silently poisons substitution pairs with English values.
+          if (!cols.has(locale)) continue;
           deepMerge(result.get(locale), parseCsvToKeyValue(csvPath, locale));
         }
       }
@@ -1168,7 +1174,9 @@ function loadAllLocaleContentData(manifest, rootDir, locales) {
         for (const ref of refs) {
           if (typeof ref !== 'string' || !ref.endsWith('.csv')) continue;
           const csvPath = join(rootDir, ref.startsWith('/') ? ref.slice(1) : ref);
+          const cols = csvLocaleColumns(csvPath);
           for (const locale of locales) {
+            if (!cols.has(locale)) continue;
             deepMerge(result.get(locale), parseCsvToKeyValue(csvPath, locale));
           }
         }
@@ -1215,6 +1223,8 @@ function buildSubstitutionPairs(defaultLocaleData, targetLocaleData) {
         // Recurse into nested objects (produced by setNestedKey for dotted CSV keys)
         collectPairs(defaultVal, targetVal && typeof targetVal === 'object' ? targetVal : {});
       } else {
+        // Skip if target is a non-primitive — String(obj) === '[object Object]' is never useful
+        if (targetVal !== null && typeof targetVal === 'object') continue;
         const from = String(defaultVal ?? '').trim();
         const to = String(targetVal ?? '').trim();
         if (!from || from === to) continue;

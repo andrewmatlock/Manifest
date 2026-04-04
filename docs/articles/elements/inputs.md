@@ -4,7 +4,7 @@
 
 ## Setup
 
-Inputs styles are included in Manifest CSS or a standalone stylesheet, both referencing [theme](/styles/theme) variables.
+Inputs styles are included in Manifest CSS or a standalone stylesheet, both referencing [theme](/docs/styles/theme) variables.
 
 <x-code-group copy>
 
@@ -34,7 +34,7 @@ Inputs styles are included in Manifest CSS or a standalone stylesheet, both refe
 
 ## Utilities
 
-Inputs accept Manifest [utility](/styles/utilities) classes, which can be stacked in any combination.
+Inputs accept Manifest [utility](/docs/styles/utilities) classes, which can be stacked in any combination.
 
 ### Colors
 
@@ -209,7 +209,7 @@ When these elements are grouped, only the outer elements' outer corners retain t
 
 ### Theme
 
-Default inputs use the following [theme](/styles/theme) variables:
+Default inputs use the following [theme](/docs/styles/theme) variables:
 
 | Variable | Purpose |
 |----------|---------|

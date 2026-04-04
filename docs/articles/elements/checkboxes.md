@@ -4,7 +4,7 @@
 
 ## Setup
 
-Checkboxes styles are included in Manifest CSS or a standalone stylesheet, both referencing [theme](/styles/theme) variables.
+Checkboxes styles are included in Manifest CSS or a standalone stylesheet, both referencing [theme](/docs/styles/theme) variables.
 
 <x-code-group copy>
 
@@ -38,7 +38,7 @@ Checkboxes styles are included in Manifest CSS or a standalone stylesheet, both 
 
 ## Utilities
 
-Checkboxes accept Manifest [utility](/styles/utilities) classes, which can be stacked in any combination.
+Checkboxes accept Manifest [utility](/docs/styles/utilities) classes, which can be stacked in any combination.
 
 ### Colors
 
@@ -175,7 +175,7 @@ Placing labelled checkboxes inside a `<fieldset>` automatically arranges them in
 
 ### Theme
 
-Default checkboxes use the following [theme](/styles/theme) variables:
+Default checkboxes use the following [theme](/docs/styles/theme) variables:
 
 | Variable | Purpose |
 |----------|---------|

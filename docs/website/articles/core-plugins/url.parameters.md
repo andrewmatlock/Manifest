@@ -146,7 +146,7 @@ Remove a parameter entirely from the URL.
 
 ## Data Sources
 
-Content from a [data source](/core-plugins/local-data) can be the subject of a URL parameter.
+Content from a [data source](/docs/core-plugins/local-data) can be the subject of a URL parameter.
 
 ::: frame col
 <!-- Filter -->

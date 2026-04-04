@@ -27,7 +27,7 @@ Resize is included in `manifest.js` with all core plugins, or can be selectively
 
 </x-code-group>
 
-Resizable element styles are included in Manifest CSS or as a standalone stylesheet, both referencing [theme](/styles/theme) variables.
+Resizable element styles are included in Manifest CSS or as a standalone stylesheet, both referencing [theme](/docs/styles/theme) variables.
 
 <x-code-group copy>
 
@@ -197,7 +197,7 @@ Sibling elements of a resizable panel will be affected depending on its own styl
 
 ## Theme
 
-Default resize handles use the following [theme](/styles/theme) variables:
+Default resize handles use the following [theme](/docs/styles/theme) variables:
 
 | Variable | Purpose |
 |----------|---------|

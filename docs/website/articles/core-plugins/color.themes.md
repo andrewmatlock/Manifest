@@ -49,7 +49,7 @@ The light theme is the default color mode, picking up all variable and static co
 
 </x-code-group>
 
-See [theme](/styles/theme) styles for Manifest's suggested color variables.
+See [theme](/docs/styles/theme) styles for Manifest's suggested color variables.
 
 ---
 
@@ -126,7 +126,7 @@ Allow users to toggle color themes with the `x-theme` directive, using the follo
 <button x-theme="'system'"><span x-icon="lucide:sun-moon"></span><span>System</span></button>
 ```
 
-See [buttons](/elements/buttons) for details on the element.
+See [buttons](/docs/elements/buttons) for details on the element.
 
 ---
 
@@ -140,7 +140,7 @@ See [buttons](/elements/buttons) for details on the element.
 <button x-theme="'toggle'" x-icon="$theme.current === 'light' ? 'ph:moon' : 'ph:sun'" aria-label="Toggle Theme"></button>
 ```
 
-See [icons](/elements/icons) for details on conditional icons.
+See [icons](/docs/elements/icons) for details on conditional icons.
 
 ---
 
@@ -164,7 +164,7 @@ See [icons](/elements/icons) for details on conditional icons.
 </menu>
 ```
 
-See [dropdowns](/elements/dropdowns) for details on the menu element.
+See [dropdowns](/docs/elements/dropdowns) for details on the menu element.
 
 ---
 

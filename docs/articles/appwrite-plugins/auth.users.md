@@ -376,4 +376,4 @@ Current session details (null if not authenticated). The session object comes di
 
 ## Next Steps
 
-See [teams](/appwrite-plugins/teams) to enable shared workspaces between users, including roles and permissions.
+See [teams](/docs/appwrite-plugins/teams) to enable shared workspaces between users, including roles and permissions.

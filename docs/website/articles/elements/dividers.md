@@ -4,7 +4,7 @@
 
 ## Setup
 
-Divider styles are included in Manifest CSS or a standalone stylesheet, both referencing [theme](/styles/theme) variables.
+Divider styles are included in Manifest CSS or a standalone stylesheet, both referencing [theme](/docs/styles/theme) variables.
 
 <x-code-group copy>
 
@@ -50,7 +50,7 @@ All other divider configurations use the `divider` class, which automatically cr
 <div class="divider">Default Divider</div>
 ```
 
-Dividers can include [icons](/core-plugins/icons) for enhanced visual separation.
+Dividers can include [icons](/docs/core-plugins/icons) for enhanced visual separation.
 
 ::: frame col gap-4
 <div class="divider"><span x-icon="lucide:star"></span></div>
@@ -124,7 +124,7 @@ The `vertical` class changes the axis, and can be stacked with alignment classes
 
 ### Theme
 
-Default dividers use the following [theme](/styles/theme) variables:
+Default dividers use the following [theme](/docs/styles/theme) variables:
 
 | Variable | Purpose |
 |----------|----------|

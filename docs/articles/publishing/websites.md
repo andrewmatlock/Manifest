@@ -11,7 +11,7 @@ Manifest projects function as a single page application (SPA) by default, using 
 - Set the root to `./` if applicable
 - Set the fallback file to `./index.html` if applicable
 
-The [starter project](/getting-started/starter-project) includes a `_redirects` file to assist the host with SPA routing.
+The [starter project](/docs/getting-started/starter-project) includes a `_redirects` file to assist the host with SPA routing.
 
 ---
 
@@ -32,7 +32,7 @@ By default, output is generated in a `/website` folder which includes:
 - Copies of all folders and assets from the project, preserving path references.
 - Folders for each route containing its compiled `index.html` page.
 - Folders for each locale (e.g. `/fr`, `/zh`), and page sub-folder as applicable.
-- Canonical and hreflang links aded to each page.
+- Canonical and hreflang links added to each page.
 - `og:locale`/`og:locale:alternate` for localized builds when Open Graph tags exist.
 - `sitemap.xml` and `robots.txt` files.
 
@@ -40,10 +40,7 @@ By default, output is generated in a `/website` folder which includes:
 
 ### Configuration
 
-Use `manifest.json` to optionally customize the MPA build.
-
-- `live_url` is the domain the generated `sitemap.xml` and `robots.txt` files reference.
-- `prefender` contains further sub-options:
+Use `manifest.json` to optionally customize the MPA build. The `live_url` top-level key sets the domain used in `sitemap.xml`, `robots.txt`, and canonical link tags.
 
 ```json "manifest.json" copy
 {
@@ -52,15 +49,27 @@ Use `manifest.json` to optionally customize the MPA build.
     "output": "website",
     "routerBase": "",
     "locales": ["en", "fr", "zh"],
+    "paths": ["legal/privacy", "legal/terms"],
     "redirects": [
       { "from": "/old", "to": "/new", "status": 301 }
     ],
     "wait": 15000,
-    "waitAfterIdle": 0,
-    "concurrency": 6
+    "concurrency": 6,
+    "tailwindInput": "styles/tailwind.css"
   }
 }
 ```
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `output` | `string` | `"website"` | Output folder name relative to the project root. |
+| `routerBase` | `string` | `""` | Base path baked into asset references in prerendered HTML. Leave empty when the output is deployed as the site root. |
+| `locales` | `string[]` | auto-discovered | Locale codes to build (e.g. `["en", "fr", "zh"]`). When omitted, locales are inferred from your data source CSV column headers. |
+| `paths` | `string[]` | `[]` | Additional paths to render beyond those auto-discovered from `x-route` attributes (e.g. `["legal/privacy"]`). Each entry is expanded to all locale variants. |
+| `redirects` | `object[]` | `[]` | Redirect rules written to the output. Each entry is `{ "from": "/old", "to": "/new", "status": 301 }`. |
+| `wait` | `number` | auto | Milliseconds to wait for a page to finish rendering before snapshot. When omitted the renderer waits for a `manifest:render-ready` signal from the data plugin. |
+| `concurrency` | `number` | `max(4, cpus−1)` | Number of pages rendered in parallel. Increase for faster builds on high-core machines; decrease if memory is constrained. |
+| `tailwindInput` | `string` | — | Path to a custom Tailwind CSS entry file relative to the project root. Tailwind compilation is otherwise auto-detected via the `data-tailwind` attribute on the manifest script tag. |
 
 ---
 
@@ -78,7 +87,7 @@ The prerendering build process makes all HTML/Alpine content static. To hide an 
 ```
 
 ```html "Default/Static"
-/* Uses static value from prendered snapshot */
+/* Uses static value from prerendered snapshot */
 <div x-data="{ counter: 0 }">
   <button @click="counter++">0</button>
 </div>

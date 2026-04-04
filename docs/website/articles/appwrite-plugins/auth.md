@@ -6,7 +6,7 @@ Implement a complete authentication solution for your app with a connected <a hr
 
 ## Setup
 
-Complete the [Appwrite setup](/appwrite-plugins/appwrite-setup) steps to connect your Appwrite and Manifest projects.
+Complete the [Appwrite setup](/docs/appwrite-plugins/appwrite-setup) steps to connect your Appwrite and Manifest projects.
 
 Add the Appwrite SDK and `manifest.js` scripts to the HTML head. `manifest.json` is also required for Appwrite credentials and configuring auth details.
 
@@ -39,5 +39,5 @@ Add the Appwrite SDK and `manifest.js` scripts to the HTML head. `manifest.json`
 
 Complete authentication support using the guides for:
 
-- [Users](/appwrite-plugins/users)
-- [Teams](/appwrite-plugins/teams) (optional)
+- [Users](/docs/appwrite-plugins/users)
+- [Teams](/docs/appwrite-plugins/teams) (optional)

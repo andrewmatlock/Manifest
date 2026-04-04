@@ -4,7 +4,7 @@
 
 ## Setup
 
-Avatar styles are included in Manifest CSS or a standalone stylesheet, both referencing [theme](/styles/theme) variables.
+Avatar styles are included in Manifest CSS or a standalone stylesheet, both referencing [theme](/docs/styles/theme) variables.
 
 <x-code-group copy>
 
@@ -62,7 +62,7 @@ To display text or an icon by default while supporting an optional profile pic, 
 
 ## Interactive
 
-Buttons accept the `avatar` class and can be used to trigger an action like opening a [dropdown](/elements/dropdowns) or [dialog](/elements/dialogs).
+Buttons accept the `avatar` class and can be used to trigger an action like opening a [dropdown](/docs/elements/dropdowns) or [dialog](/docs/elements/dialogs).
 
 ::: frame
 <button class="avatar" x-icon="lucide:user"></button>
@@ -186,7 +186,7 @@ Within the `avatar-wide` container, all elements besides `avatar` are completely
 
 ## Utilities
 
-Avatars accept Manifest [utility](/styles/utilities) classes, which can be stacked in any combination.
+Avatars accept Manifest [utility](/docs/styles/utilities) classes, which can be stacked in any combination.
 
 ### Colors
 ::: frame
@@ -329,7 +329,7 @@ Grouped avatars are given a bunching effect with negative margins.
 
 ### Theme
 
-Default avatars use the following [theme](/styles/theme) variables:
+Default avatars use the following [theme](/docs/styles/theme) variables:
 
 | Variable | Purpose |
 |----------|---------|

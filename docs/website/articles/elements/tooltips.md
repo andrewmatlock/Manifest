@@ -4,7 +4,7 @@
 
 ## Setup
 
-Tooltip styles are included in Manifest CSS or a standalone stylesheet, both referencing [theme](/styles/theme) variables.
+Tooltip styles are included in Manifest CSS or a standalone stylesheet, both referencing [theme](/docs/styles/theme) variables.
 
 Tooltip functionality is included in `manifest.js` with all core plugins, or it can be selectively loaded.
 
@@ -118,7 +118,7 @@ Regardless of a set modifier, tooltips overflowing the viewport will attempt to 
 
 ## Rich Content
 
-Tooltip content supports HTML including [icons](/elements/icons) for enhanced formatting.
+Tooltip content supports HTML including [icons](/docs/elements/icons) for enhanced formatting.
 
 ::: frame
 <button x-tooltip="<span x-icon='lucide:info'></span>Hello <b>bold</b> and <em>italic</em> world">Rich Content</button>
@@ -180,7 +180,7 @@ list:
 
 ## Data Sources
 
-Tooltips can retrieve content from [data sources](/core-plugins/local-data) using the `$x` syntax.
+Tooltips can retrieve content from [data sources](/docs/core-plugins/local-data) using the `$x` syntax.
 
 ::: frame
 <button x-tooltip="$x.example.tooltip">Data Source Tooltip</button>
@@ -204,7 +204,7 @@ Tooltips can retrieve content from [data sources](/core-plugins/local-data) usin
 
 ## Other Popovers
 
-Although tooltips are popovers, they can coexist in buttons that trigger other popovers—like Manifest's [dropdowns](/elements/dropdowns) and [dialogs](/elements/dialogs), or your custom popovers.
+Although tooltips are popovers, they can coexist in buttons that trigger other popovers—like Manifest's [dropdowns](/docs/elements/dropdowns) and [dialogs](/docs/elements/dialogs), or your custom popovers.
 
 ::: frame
 <button x-tooltip="Tooltip" x-dropdown="dropdown">Dropdown</button>
@@ -233,7 +233,7 @@ Avoid mixing `x-dropdown.hover` and `x-tooltip` on the same trigger button, sinc
 
 ### Theme
 
-Default tooltips use the following [theme](/styles/theme) variables:
+Default tooltips use the following [theme](/docs/styles/theme) variables:
 
 | Variable | Purpose |
 |----------|----------|
@@ -245,7 +245,7 @@ Default tooltips use the following [theme](/styles/theme) variables:
 
 ### Delay
 
-Tooltips appear after a default 500ms hover delay, and disappear immediately when the mouse leaves the trigger element. They're automatically dismissed when the trigger is clicked or pressed. Change the duration in the [theme](/styles/theme) or with custom CSS that overwrites the `--tooltip-hover-delay` value:
+Tooltips appear after a default 500ms hover delay, and disappear immediately when the mouse leaves the trigger element. They're automatically dismissed when the trigger is clicked or pressed. Change the duration in the [theme](/docs/styles/theme) or with custom CSS that overwrites the `--tooltip-hover-delay` value:
 
 ```css copy
 :root {

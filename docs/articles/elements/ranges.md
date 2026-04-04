@@ -4,7 +4,7 @@
 
 ## Setup
 
-Range styles are included in Manifest CSS or a standalone stylesheet, both referencing [theme](/styles/theme) variables.
+Range styles are included in Manifest CSS or a standalone stylesheet, both referencing [theme](/docs/styles/theme) variables.
 
 <x-code-group copy>
 
@@ -34,7 +34,7 @@ Range styles are included in Manifest CSS or a standalone stylesheet, both refer
 
 ## Utilities
 
-Ranges accept Manifest [utility](/styles/utilities) classes, which can be stacked in any combination.
+Ranges accept Manifest [utility](/docs/styles/utilities) classes, which can be stacked in any combination.
 
 ### Colors
 
@@ -154,7 +154,7 @@ To horizontally inline the label text with the range, place the text in a `<data
 
 ### Theme
 
-Default ranges use the following [theme](/styles/theme) variables:
+Default ranges use the following [theme](/docs/styles/theme) variables:
 
 | Variable | Purpose |
 |----------|---------|

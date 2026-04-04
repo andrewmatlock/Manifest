@@ -89,7 +89,7 @@ Add the Appwrite project credentials detailed [above](#credentials) to `manifest
 }
 ```
 
-Alternatively, credentials can be added directly into specific [database](/core-plugins/appwrite-plugins/databases) or [storage](/core-plugins/appwrite-plugins/storage) sources, declared within the `data` object.
+Alternatively, credentials can be added directly into specific [database](/docs/core-plugins/appwrite-plugins/databases) or [storage](/docs/core-plugins/appwrite-plugins/storage) sources, declared within the `data` object.
 
 ```json "manifest.json" numbers copy
 {
@@ -118,5 +118,5 @@ If credentials are declared in both `appwrite` and `data` objects, the `data` cr
 
 After a successful setup above, your Manifest project should be paired with your Appwrite project(s). Proceed to configuring:
 
-- [Users](/appwrite-plugins/users) or [Teams](/appwrite-plugins/teams)
-- [Databases](/appwrite-plugins/databases) or [Storage](/appwrite-plugins/storage)
+- [Users](/docs/appwrite-plugins/users) or [Teams](/docs/appwrite-plugins/teams)
+- [Databases](/docs/appwrite-plugins/databases) or [Storage](/docs/appwrite-plugins/storage)

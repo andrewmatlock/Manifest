@@ -26,7 +26,7 @@ In a bucket's **Settings** tab, ensure any permissions required by your frontend
 
 ## Register Storage Buckets
 
-Register storage buckets in your `manifest.json` under the `data` property, same as [local data files](/core-plugins/local-data) and [database tables](/appwrite-plugins/databases). Include the `appwriteBucketId` value provided by Appwrite.
+Register storage buckets in your `manifest.json` under the `data` property, same as [local data files](/docs/core-plugins/local-data) and [database tables](/docs/appwrite-plugins/databases). Include the `appwriteBucketId` value provided by Appwrite.
 
 ```json "manifest.json" copy
 {
@@ -88,7 +88,7 @@ Scope filters are applied when listing files, ensuring users only see files they
 When using `["user", "team"]` scope, files are shown for the current user OR the current team. If no team is selected (`$auth.currentTeam`), only user-scoped files will display. Use `"teams"` (plural) instead of `"team"` (singular) to query all teams the user belongs to, not just the current team.
 
 ::: brand icon="lucide:info"
-All interactive examples below require you to be logged into a dummy account via the [users](/appwrite-plugins/users) article. The files you generate below use the `team` scope.
+All interactive examples below require you to be logged into a dummy account via the [users](/docs/appwrite-plugins/users) article. The files you generate below use the `team` scope.
 :::
 
 ---
@@ -343,7 +343,7 @@ Alternatively, link files manually after upload:
 </button>
 ```
 
-See [databases](/appwrite-plugins/databases#storage-file-references) for more details on file references.
+See [databases](/docs/appwrite-plugins/databases#storage-file-references) for more details on file references.
 
 ---
 
@@ -599,4 +599,4 @@ Image preview options:
 
 ## Next Steps
 
-See [databases](/appwrite-plugins/databases) for managing database entries and linking files to entries.
+See [databases](/docs/appwrite-plugins/databases) for managing database entries and linking files to entries.

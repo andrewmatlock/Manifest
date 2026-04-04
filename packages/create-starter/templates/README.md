@@ -4,7 +4,7 @@
 
 ## 🚀 Quick Start
 
-Manifest projects include a built-in SPA router and require a local server like Live Server to run.
+Run this project locally from the project root with `npx mnfst-run`, or any local server solution.
 
 ---
 
@@ -53,7 +53,7 @@ project-name/
 
 **Websites**
 - [ ] Replace `favicon.ico`
-- [ ] Run `node prerender.mjs` to build optimized <a href="https://manifestjs.org/publishing/websites" target="_blank">websites</a>
+- [ ] Run `npx mnfst-render` to build optimized <a href="https://manifestjs.org/publishing/websites" target="_blank">websites</a>
 
 **Web apps**
 - [ ] Replace or remove `/icons` images referenced in manifest.json

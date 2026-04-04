@@ -6,7 +6,7 @@ Manifest is a frontend framework extending HTML for rapid, feature-rich website 
 - A CSS library, compatible with Tailwind CSS
 
 **With Manifest:**
-- Skip the build steps
+- Build steps optional
 - Use only what you need
 - Stack with other frameworks & libraries
 

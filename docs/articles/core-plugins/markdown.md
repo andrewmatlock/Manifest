@@ -98,7 +98,7 @@ Load markdown content from external `.md` files by providing a file path like `x
 
 ### From Data Source
 
-The markdown file's path can also be populated from a [data source](/core-plugins/local-data).
+The markdown file's path can also be populated from a [data source](/docs/core-plugins/local-data).
 
 ::: frame col p-10
 <span class="h3">Burn Book</span>
@@ -163,7 +163,7 @@ See this <a href="https://www.markdownguide.org/basic-syntax/" target="_blank">M
 
 ### Components
 
-A [component tag](/core-plugins/components) placed in a markdown file will render the component in position.
+A [component tag](/docs/core-plugins/components) placed in a markdown file will render the component in position.
 
 
 ::: frame col p-10
@@ -192,9 +192,9 @@ Col. Jessup: YOU CAN'T HANDLE THE TRUTH!
 
 ### Callouts
 
-Callouts highlight specific text in a long form article. They require [utility](/styles/utilities) styles and a parent element with the `prose` class applied.
+Callouts highlight specific text in a long form article. They require [utility](/docs/styles/utilities) styles and a parent element with the `prose` class applied.
 
-Use `:::` markers to open and close the callout. Text added to the opening marker's line are treated as CSS classes, useful for adding styles like Manifest utility colors. A leading [icon](/elements/icons) can also be added with `icon="..."` anywhere in the same line.
+Use `:::` markers to open and close the callout. Text added to the opening marker's line are treated as CSS classes, useful for adding styles like Manifest utility colors. A leading [icon](/docs/elements/icons) can also be added with `icon="..."` anywhere in the same line.
 
 ::: frame col !gap-0
 <aside class="m-0">Default callout</aside>
@@ -321,7 +321,7 @@ The `frame` class provides frame styles, which can be modified with custom CSS:
 
 ### Code Blocks
 
-If the project includes [code block](/elements/code) support, markdown automatically converts <code>```</code> markers to Manifest `<x-code>` elements, with syntax highlighting support.
+If the project includes [code block](/docs/elements/code) support, markdown automatically converts <code>```</code> markers to Manifest `<x-code>` elements, with syntax highlighting support.
 
 ::: frame
 <x-code language="javascript" name="Example">function greet(name) {

@@ -35,7 +35,8 @@
         "components/main/landing.html",
         "components/main/docs.html",
         "components/main/header.html",
-        "components/main/logo.html"
+        "components/main/logo.html",
+        "components/main/theme.html"
     ],
     "data": {
         "docs": "/data/docs.yaml",

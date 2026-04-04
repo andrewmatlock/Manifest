@@ -6,9 +6,9 @@ Set page navigation paths in your project.
 
 ## Overview
 
-With the router plugin, Manifest turns your project into a single-page application (SPA), where URL paths can be used to show or hide any element, including [components](/core-plugins/components).
+With the router plugin, Manifest turns your project into a single-page application (SPA), where URL paths can be used to show or hide any element, including [components](/docs/core-plugins/components).
 
-See [website publishing](/publishing/websites) for generating static sites that are optimized for search engines and AI crawlers, also supported by this router.
+See [website publishing](/docs/publishing/websites) for generating static sites that are optimized for search engines and AI crawlers, also supported by this router.
 
 ::: brand icon="lucide:info"
 If applied, this router should be used independent of other routing systems or frameworks with routers.
@@ -143,7 +143,7 @@ When using the prerender script, the 404 view is captured at build time and writ
 
 ### Other Paths
 
-The router supports non-navigation paths. See [data](/core-plugins/local-data), [localization](/core-plugins/localization), and [URL parameters](/core-plugins/url-parameters) for plugins that apply additional path segments to the URL for content purposes.
+The router supports non-navigation paths. See [data](/docs/core-plugins/local-data), [localization](/docs/core-plugins/localization), and [URL parameters](/docs/core-plugins/url-parameters) for plugins that apply additional path segments to the URL for content purposes.
 
 ---
 

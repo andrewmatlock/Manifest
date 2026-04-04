@@ -4,7 +4,7 @@
 
 ## Setup
 
-Form styles are included in Manifest CSS or a standalone stylesheet, both referencing [theme](/styles/theme) variables.
+Form styles are included in Manifest CSS or a standalone stylesheet, both referencing [theme](/docs/styles/theme) variables.
 
 <x-code-group copy>
 

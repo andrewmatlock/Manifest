@@ -4,7 +4,7 @@
 
 ## Setup
 
-Switches styles are included in Manifest CSS or a standalone stylesheet, both referencing [theme](/styles/theme) variables.
+Switches styles are included in Manifest CSS or a standalone stylesheet, both referencing [theme](/docs/styles/theme) variables.
 
 <x-code-group copy>
 
@@ -34,7 +34,7 @@ Switches styles are included in Manifest CSS or a standalone stylesheet, both re
 
 ## Utilities
 
-Switches accept Manifest [utility](/styles/utilities) classes, which can be stacked in any combination.
+Switches accept Manifest [utility](/docs/styles/utilities) classes, which can be stacked in any combination.
 
 ### Colors
 
@@ -164,7 +164,7 @@ Placing labelled switches inside a `<fieldset>` automatically arranges them in a
 
 ### Theme
 
-Default switches use the following [theme](/styles/theme) variables:
+Default switches use the following [theme](/docs/styles/theme) variables:
 
 | Variable | Purpose |
 |----------|---------|

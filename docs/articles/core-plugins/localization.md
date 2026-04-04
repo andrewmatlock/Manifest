@@ -6,7 +6,7 @@ Localize your project to different languages and regions.
 
 ## Overview
 
-The localization plugin provides automatic language detection, URL-based locale switching, and seamless integration with [local data](/core-plugins/local-data) for multilingual content.
+The localization plugin provides automatic language detection, URL-based locale switching, and seamless integration with [local data](/docs/core-plugins/local-data) for multilingual content.
 
 ---
 
@@ -36,7 +36,7 @@ Localization is included in `manifest.js` with all core plugins, or can be selec
 </x-code-group>
 
 ::: brand icon="lucide:info"
-Localization requires the Manifest [router](/core-plugins/router) and [data](/core-plugins/local-data) plugins to operate.
+Localization requires the Manifest [router](/docs/core-plugins/router) and [data](/docs/core-plugins/local-data) plugins to operate.
 :::
 
 ---
@@ -217,7 +217,7 @@ Manifest has no build steps and is not a translation engine. To translate your c
 
 ## Display Content
 
-Like regular [local data](/core-plugins/local-data#display-content), localizations are accessed using the `$x` magic method with dot notation. The structure follows this pattern:
+Like regular [local data](/docs/core-plugins/local-data#display-content), localizations are accessed using the `$x` magic method with dot notation. The structure follows this pattern:
 
 `$x.sourceName.property.subProperty`
 
@@ -258,7 +258,7 @@ Like regular [local data](/core-plugins/local-data#display-content), localizatio
 </template>
 ```
 
-See [local data](/core-plugins/local-data#display-content) for specifics on how to inject content as text, HTML, or attribute values like links and images.
+See [local data](/docs/core-plugins/local-data#display-content) for specifics on how to inject content as text, HTML, or attribute values like links and images.
 
 ---
 

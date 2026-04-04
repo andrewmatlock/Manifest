@@ -4,7 +4,7 @@
 
 ## Setup
 
-Dialog styles are included in Manifest CSS or a standalone stylesheet, both referencing [theme](/styles/theme) variables.
+Dialog styles are included in Manifest CSS or a standalone stylesheet, both referencing [theme](/docs/styles/theme) variables.
 
 <x-code-group copy>
 
@@ -114,7 +114,7 @@ The layout containers have default styles for padding, and the header will sprea
 
 ## Nesting
 
-Dialogs can open or close from each other in a visual stack. [Dropdowns](/core-plugins/dropdowns) are also popovers that can control dialogs and exist within them.
+Dialogs can open or close from each other in a visual stack. [Dropdowns](/docs/core-plugins/dropdowns) are also popovers that can control dialogs and exist within them.
 
 ::: frame
 <button popovertarget="dialog-first">Open First Dialog</button>
@@ -321,7 +321,7 @@ The `dialog` utility class will apply a dialog element's styles to other element
 
 ### Theme
 
-Default dialogs use the following [theme](/styles/theme) variables:
+Default dialogs use the following [theme](/docs/styles/theme) variables:
 
 | Variable | Purpose |
 |----------|----------|
@@ -370,7 +370,7 @@ dialog[popover]::backdrop {
 
 ### Transitions
 
-Default open/close transitions for all popovers—including dialogs—are defined in [reset](/styles/reset) styles. Override them with custom CSS.
+Default open/close transitions for all popovers—including dialogs—are defined in [reset](/docs/styles/reset) styles. Override them with custom CSS.
 
 <x-code-group numbers copy>
 

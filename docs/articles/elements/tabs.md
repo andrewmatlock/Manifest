@@ -19,7 +19,7 @@ Tabs are included in `manifest.js` with all core plugins, or can be selectively 
 
 </x-code-group>
 
-Tabs draw their styles from any respective elements used, like [buttons](/elements/buttons).
+Tabs draw their styles from any respective elements used, like [buttons](/docs/elements/buttons).
 
 ---
 

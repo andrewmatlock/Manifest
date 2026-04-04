@@ -4,7 +4,7 @@
 
 ## Setup
 
-Textareas styles are included in Manifest CSS or the standalone [inputs](/elements/inputs) stylesheet. Both reference [theme](/styles/theme) variables.
+Textareas styles are included in Manifest CSS or the standalone [inputs](/docs/elements/inputs) stylesheet. Both reference [theme](/docs/styles/theme) variables.
 
 <x-code-group copy>
 
@@ -35,7 +35,7 @@ Textareas styles are included in Manifest CSS or the standalone [inputs](/elemen
 
 ## Utilities
 
-Textareas accept Manifest [utility](/styles/utilities) classes, which can be stacked in any combination.
+Textareas accept Manifest [utility](/docs/styles/utilities) classes, which can be stacked in any combination.
 
 ### Colors
 
@@ -176,7 +176,7 @@ To horizontally inline the label text with the textarea, place the text in a `<d
 
 ### Theme
 
-Default textareas use the following [theme](/styles/theme) variables:
+Default textareas use the following [theme](/docs/styles/theme) variables:
 
 | Variable | Purpose |
 |----------|---------|

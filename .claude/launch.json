@@ -4,28 +4,34 @@
     {
       "name": "src",
       "runtimeExecutable": "/usr/local/bin/node",
-      "runtimeArgs": ["../node_modules/browser-sync/dist/bin.js", "start", "--config", "bs-config.js"],
-      "cwd": "/Users/andrewmatlock/Desktop/local-server/Manifest/src",
+      "runtimeArgs": ["packages/run/serve.mjs", "src"],
+      "cwd": "/Users/andrewmatlock/Desktop/local-server/Manifest",
       "port": 5001,
       "autoPort": true
     },
     {
       "name": "docs",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "start:docs"],
-      "port": 5002
+      "runtimeExecutable": "/usr/local/bin/node",
+      "runtimeArgs": ["packages/run/serve.mjs", "docs"],
+      "cwd": "/Users/andrewmatlock/Desktop/local-server/Manifest",
+      "port": 5002,
+      "autoPort": true
     },
     {
       "name": "starter",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "start:starter"],
-      "port": 3001
+      "runtimeExecutable": "/usr/local/bin/node",
+      "runtimeArgs": ["packages/run/serve.mjs", "templates/starter", "--port", "3001"],
+      "cwd": "/Users/andrewmatlock/Desktop/local-server/Manifest",
+      "port": 3001,
+      "autoPort": true
     },
     {
       "name": "dist",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "start:dist"],
-      "port": 5003
+      "runtimeExecutable": "/usr/local/bin/node",
+      "runtimeArgs": ["packages/run/serve.mjs", "src/test-prerender", "--port", "5003"],
+      "cwd": "/Users/andrewmatlock/Desktop/local-server/Manifest",
+      "port": 5003,
+      "autoPort": true
     }
   ]
 }

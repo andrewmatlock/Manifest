@@ -8,7 +8,7 @@ Locally store dynamic content.
 Local data consists of CSV, JSON, or YAML files in your project directory. Their content can be used to organize and populate UI content. Files are loaded on-demand and cached in memory until the page reloads.
 
 ::: brand icon="lucide:info"
-Local files are maintained client-side and should not contain sensitive data. See [cloud data](/appwrite-plugins/cloud-data) for a securely hosted equivalent.
+Local files are maintained client-side and should not contain sensitive data. See [cloud data](/docs/appwrite-plugins/cloud-data) for a securely hosted equivalent.
 :::
 
 ---
@@ -86,7 +86,7 @@ id,name,role,image
 
 </x-code-group>
 
-Local files can use any structure - arrays, objects, or nested combinations. See [localization](/core-plugins/localization) for details on language-specific data sources.
+Local files can use any structure - arrays, objects, or nested combinations. See [localization](/docs/core-plugins/localization) for details on language-specific data sources.
 
 ::: brand icon="lucide:info"
 Syntax errors will prevent usability. Use validators like <a href="https://jsonlint.com/" target="_blank">JSON Lint</a> or <a href="https://yamlchecker.com/" target="_blank">YAML Checker</a> to check your files.
@@ -108,7 +108,7 @@ CSV files support two parsing modes, automatically detected based on structure.
 - Returns an array of objects, one per row
 - Use for lists of similar items (team members, products, etc.)
 
-CSV files can also include locale columns for multilingual content. See [localization](/core-plugins/localization) for details.
+CSV files can also include locale columns for multilingual content. See [localization](/docs/core-plugins/localization) for details.
 
 ---
 
@@ -347,7 +347,7 @@ Both `$search` and `$query` operate **client-side** (in the browser) for local d
 - **`$search(term, ...attributes)`**: Real-time text filtering across specified attributes. Returns filtered array immediately.
 - **`$query(queries)`**: Advanced filtering, sorting, and pagination using query arrays. Processes data in browser.
 
-For cloud-hosted data with backend filtering, see [Appwrite databases](/appwrite-plugins/cloud.data.databases).
+For cloud-hosted data with backend filtering, see [Appwrite databases](/docs/appwrite-plugins/cloud.data.databases).
 
 #### Query Syntax
 

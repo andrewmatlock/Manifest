@@ -32,7 +32,9 @@
         "test/components/options.html",
         "test/components/utilities.html",
         "test/components/test.html",
-        "test/components/styles.html"
+        "test/components/styles.html",
+        "test/components/colorpicker.html",
+        "test/components/popup.html"
     ],
     "preloadedComponents": [
         "test/components/header.html",

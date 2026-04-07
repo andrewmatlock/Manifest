@@ -28,6 +28,7 @@
   <link rel="stylesheet" href="/styles/elements/manifest.button.css">
   <link rel="stylesheet" href="/styles/elements/manifest.checkbox.css">
   <link rel="stylesheet" href="/styles/elements/manifest.code.css">
+  <link rel="stylesheet" href="/styles/elements/manifest.colorpicker.css">
   <link rel="stylesheet" href="/styles/elements/manifest.dialog.css">
   <link rel="stylesheet" href="/styles/elements/manifest.divider.css">
   <link rel="stylesheet" href="/styles/elements/manifest.dropdown.css">
@@ -68,6 +69,7 @@
   <script src="/scripts/manifest.tooltips.js"></script>
   <script src="/scripts/manifest.url.parameters.js"></script>
   <script src="/scripts/manifest.utilities.js"></script>
+  <script src="/scripts/manifest.colorpicker.js"></script>
 
   <!-- Appwrite SDK and plugins -->
   <script src="https://cdn.jsdelivr.net/npm/appwrite@latest"></script>
@@ -105,7 +107,7 @@
 
     <!-- Tab Panels -->
     <div class="col gap-4 pt-12 pb-40">
-      <x-styles x-show="tab === 'styles'"></x-styles>
+      <x-colorpicker></x-colorpicker>
       <x-core x-show="tab === 'core'"></x-core>
       <x-appwrite x-show="tab === 'appwrite'"></x-appwrite>
       <x-local-data x-show="tab === 'local-data'"></x-local-data>
@@ -127,6 +129,12 @@
       <p>Current locale: <strong x-text="$locale.current">?</strong></p>
       <p>Home title (live): <strong x-text="$x.splitLocales.home.title">?</strong></p>
       <p>Counter: <strong x-text="count">0</strong> <button @click="count++" style="margin-left: 0.5rem; padding: 0.25rem 0.75rem; cursor: pointer">+1</button></p>
+    </div>
+
+    <!-- x-markdown: baked content should display without the runtime plugin re-hiding it -->
+    <div style="padding: 1rem; border: 1px solid var(--color-line, #ccc); border-radius: 4px">
+      <p style="opacity: 0.5; font-size: 0.85em">x-markdown test — content below should be visible as static HTML</p>
+      <div x-markdown="test/data/test-article.md"></div>
     </div>
 
     <a href="/">← Back to Home</a>
@@ -162,6 +170,9 @@
     <p>No route matches this URL.</p>
     <a href="/">← Back to Home</a>
   </section>
+
+  <!-- Popup test: data-hydrate scope propagation (webchat pattern) -->
+  <x-popup></x-popup>
 
 </body>
 

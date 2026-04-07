@@ -947,6 +947,13 @@ function stripPrerenderHydrateMarkers(html) {
   return html.replace(/\sdata-prerender-hydrate(?:=(?:"[^"]*"|'[^']*'|[^\s>]+))?/gi, '');
 }
 
+// Remove the snapshot id attribute used by the hydrate restore phase.  These ids
+// only exist to let the post-Alpine restore step in Puppeteer find each snapshotted
+// element back; they have no purpose in the final output.
+function stripPrerenderHydrateSnapshotIds(html) {
+  return html.replace(/\sdata-manifest-hyd-id(?:=(?:"[^"]*"|'[^']*'|[^\s>]+))?/gi, '');
+}
+
 function markPrerenderedManifestComponents(html) {
   return html.replace(/<(x-[a-z][\w-]*)([^>]*)>/gi, (full, tag, attrs) => {
     const a = attrs || '';
@@ -1335,6 +1342,7 @@ function generateLocaleVariantHtml({
   // detect data-prerender-hydrate markers and skip components inside hydrate islands.
   html = markPrerenderedManifestComponents(html);
   html = stripPrerenderHydrateMarkers(html);
+  html = stripPrerenderHydrateSnapshotIds(html);
 
   const fileSegments = pathToFileSegments(pathSeg ? '/' + pathSeg : '/');
   html = rewriteHtmlAssetPaths(html, fileSegments.length);
@@ -1857,6 +1865,104 @@ async function runPrerender(config) {
         }
       }, currentLocale);
 
+      // Snapshot pristine source attributes of hydrate-target elements BEFORE Alpine
+      // touches them.  We do this by wrapping `Alpine.initTree` — Alpine calls this
+      // for the initial tree walk AND every time the components plugin lazy-loads a
+      // new <x-*> component.  Right before Alpine processes a subtree, we walk it
+      // and snapshot every hydrate target inside.  This is the exact moment the
+      // user's source HTML is sitting in the DOM with no Alpine mutations applied.
+      //
+      // The snapshots are restored in a later page.evaluate call after Alpine
+      // settles.  This is true hydration: Alpine never gets to bake state into
+      // hydrate elements, so every directive (`:class`, `:style`, `x-text`, custom
+      // plugin directives, etc.) works in the prerendered MPA exactly the way it
+      // does in the live SPA — no per-binding strip logic, no cloak band-aids, no
+      // edge cases to chase.
+      await page.evaluateOnNewDocument(() => {
+        const allSnapshots = [];
+        let nextId = 0;
+        const skipTags = new Set(['MAIN', 'BODY', 'HTML']);
+
+        const snapshotElement = (el) => {
+          if (!el || el.nodeType !== 1) return;
+          if (el.hasAttribute('data-manifest-hyd-id')) return; // already snapshotted
+          const id = '__manifest-hyd-' + nextId++;
+          el.setAttribute('data-manifest-hyd-id', id);
+          const attrs = {};
+          for (let i = 0; i < el.attributes.length; i++) {
+            const a = el.attributes[i];
+            if (a.name === 'data-manifest-hyd-id') continue;
+            attrs[a.name] = a.value;
+          }
+          allSnapshots.push({ id, attrs });
+        };
+
+        const snapshotElementAndDescendants = (el) => {
+          snapshotElement(el);
+          if (el && el.querySelectorAll) {
+            el.querySelectorAll('*').forEach(snapshotElement);
+          }
+        };
+
+        const snapshotSubtree = (root) => {
+          if (!root || root.nodeType !== 1) return;
+
+          // 1. Direct data-hydrate roots + descendants within this subtree.
+          const hydrateRoots = [];
+          if (root.matches && root.matches('[data-hydrate]')) hydrateRoots.push(root);
+          if (root.querySelectorAll) {
+            root.querySelectorAll('[data-hydrate]').forEach((el) => hydrateRoots.push(el));
+          }
+          hydrateRoots.forEach(snapshotElementAndDescendants);
+
+          // 2. x-theme elements (color mode plugin needs runtime click handler).
+          if (root.matches && root.matches('[x-theme]')) snapshotElementAndDescendants(root);
+          if (root.querySelectorAll) {
+            root.querySelectorAll('[x-theme]').forEach(snapshotElementAndDescendants);
+          }
+
+          // 3. Propagate from data-hydrate children to nearest LOCAL x-data ancestor
+          //    so the reactive controller, sibling event handlers (@click toggles
+          //    etc.) and all bindings inside the scope are preserved together.
+          //    Skip page-level scopes (main, body, [x-route]).
+          hydrateRoots.forEach((el) => {
+            let ancestor = el.parentElement;
+            while (ancestor && ancestor !== document.body) {
+              if (
+                ancestor.hasAttribute('x-data') &&
+                !skipTags.has(ancestor.tagName) &&
+                !ancestor.hasAttribute('x-route')
+              ) {
+                snapshotElementAndDescendants(ancestor);
+                break;
+              }
+              ancestor = ancestor.parentElement;
+            }
+          });
+
+          window.__manifestHydrateSnapshots = allSnapshots;
+        };
+
+        // Wrap Alpine.initTree once Alpine is available.  alpine:init fires before
+        // Alpine walks the tree for the first time, giving us the perfect insertion
+        // point.  After wrapping, every initTree call (initial walk + every lazy
+        // component load) snapshots its subtree before Alpine processes it.
+        let installed = false;
+        const installInterceptor = () => {
+          if (installed || !window.Alpine || typeof window.Alpine.initTree !== 'function') return;
+          installed = true;
+          const original = window.Alpine.initTree.bind(window.Alpine);
+          window.Alpine.initTree = function (root) {
+            try { snapshotSubtree(root || document.body); } catch (_) { /* graceful */ }
+            return original.apply(this, arguments);
+          };
+        };
+        if (typeof document !== 'undefined') {
+          document.addEventListener('alpine:init', installInterceptor);
+          document.addEventListener('alpine:initialized', installInterceptor);
+        }
+      });
+
       pushDebug({ path: displayPath, stage: 'start' });
       await page.goto(url, {
         waitUntil: 'domcontentloaded',
@@ -2077,11 +2183,39 @@ async function runPrerender(config) {
         });
       });
 
-      // Mark data-hydrate islands so static compile transforms skip them.
+      // Strip x-markdown from elements that already have baked content.
+      // The markdown plugin hides elements with opacity:0 on init, then re-fetches and re-renders.
+      // For prerendered pages the content is already baked — removing x-markdown prevents the
+      // runtime plugin from re-processing (and temporarily hiding) the static content.
       await page.evaluate(() => {
-        document.querySelectorAll('[data-hydrate]').forEach((root) => {
-          root.setAttribute('data-prerender-hydrate', '1');
-          root.querySelectorAll('*').forEach((el) => el.setAttribute('data-prerender-hydrate', '1'));
+        document.querySelectorAll('[x-markdown]').forEach((el) => {
+          if (!el.textContent.trim() && !el.innerHTML.trim()) return;
+          el.removeAttribute('x-markdown');
+        });
+      });
+
+      // Restore hydrate-target elements to their pristine source attributes
+      // (snapshotted via evaluateOnNewDocument before Alpine ran).  This is true
+      // hydration: every Alpine binding (`:class`, `:style`, `:value`, `x-text`,
+      // `x-init`, custom plugin directives, …) is preserved exactly as authored,
+      // and Alpine processes them at runtime in the prerendered MPA the same way
+      // it would in the live SPA.  After restoring source attributes we re-add the
+      // `data-prerender-hydrate` marker so downstream Node.js stripping passes
+      // continue to skip these elements.
+      await page.evaluate(() => {
+        const snapshots = window.__manifestHydrateSnapshots || [];
+        snapshots.forEach(({ id, attrs }) => {
+          const el = document.querySelector(`[data-manifest-hyd-id="${id}"]`);
+          if (!el) return;
+          // Wipe everything Alpine may have added or mutated.
+          Array.from(el.attributes).map((a) => a.name).forEach((name) => el.removeAttribute(name));
+          // Put the original source attributes back.
+          Object.entries(attrs).forEach(([name, value]) => {
+            el.setAttribute(name, value);
+          });
+          // Marker so downstream stripping (xfor processing, dynamic-binding strip,
+          // component pre-render marking, etc.) skips this element.
+          el.setAttribute('data-prerender-hydrate', '1');
         });
       });
 
@@ -2428,6 +2562,7 @@ async function runPrerender(config) {
       // detect data-prerender-hydrate markers and skip components inside hydrate islands.
       html = markPrerenderedManifestComponents(html);
       html = stripPrerenderHydrateMarkers(html);
+      html = stripPrerenderHydrateSnapshotIds(html);
       html = rewriteHtmlAssetPaths(html, fileSegments.length);
       const liveBase = config.liveUrl.replace(/\/$/, '');
       const canonicalHreflang = buildCanonicalAndHreflang(is404 ? '' : pathSeg, locales, defaultLocale, liveBase);

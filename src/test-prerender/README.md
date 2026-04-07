@@ -3,10 +3,13 @@
 ## Quick Start
 
 ```bash
-npm run start:src    # Start src directory with live reload
-npm run start:docs   # Start docs directory with live reload
-npm run start:starter # Start starter template with live reload
+npm run start:src      # Serve /src (framework test project)
+npm run start:docs     # Serve /docs (documentation website)
+npm run start:starter  # Serve /templates/starter (starter template)
+npm run start:dist     # Serve /src/test-prerender (prerendered MPA output)
 ```
+
+All servers use `mnfst-run` (`packages/run/serve.mjs`) with zero npm dependencies. SPA vs MPA mode is auto-detected from the served `index.html`.
 
 ---
 
@@ -16,122 +19,92 @@ npm run start:starter # Start starter template with live reload
 npm run build
 ```
 
-**Build Process:**
-- Combines subscripts into monolith plugin files (components, router, utilities, auth, data, etc.)
-- Bundles CSS stylesheets from `/src/styles` into `manifest.css`
-- Minifies CSS files (`manifest.css` → `manifest.min.css`, `manifest.code.css` → `manifest.code.min.css`)
+**Build output:**
+- Combines subscripts into monolith plugin files (`manifest.components.js`, `manifest.router.js`, `manifest.data.js`, etc.)
+- Bundles and minifies CSS from `/src/styles` into `manifest.css` / `manifest.min.css`
 - Syncs starter template from `/templates/starter` to `/packages/create-starter/templates`
-- Copies all files to `/lib` directory for npm publishing
+- Copies all files to `/lib` for npm publishing
 
-**Note:** The build process no longer creates bundles (`manifest.bundle.js`, `manifest.quickstart.js`). Only the dynamic loader (`manifest.js`) is produced, which loads plugins on-demand from CDN.
+Only the dynamic loader (`manifest.js`) is produced — it loads plugins on-demand from CDN.
 
 ---
 
-## Publish to npm and jsDelivr
+## Prerender
 
-**Manual Publishing Steps:**
+```bash
+npm run prerender           # Prerender /src → /src/test-prerender
+npm run prerender:docs      # Prerender /docs → /docs/website
+npm run prerender:starter   # Prerender /templates/starter
+```
 
-1. **Build the project:**
-   ```bash
-   npm run build
-   ```
+---
 
-2. **Update version in package.json:**
-   ```bash
-   npm version patch  # or minor, or major
-   ```
-   Or manually edit `package.json` to set the version.
+## NPX Commands
 
-3. **Commit and tag:**
-   ```bash
-   git add .
-   git commit -m "Release vX.X.X"
-   git tag vX.X.X
-   git push origin master
-   git push origin vX.X.X
-   ```
+These are the CLI commands available to framework users in the wild:
 
-4. **Publish to npm:**
-   ```bash
-   npm publish --access public
-   ```
+| Command | Package | Description |
+|---------|---------|-------------|
+| `npx mnfst-starter MyProject` | `mnfst-starter` | Scaffold a new project from the starter template |
+| `npx mnfst-render` | `mnfst-render` | Prerender a Manifest SPA into a static MPA output folder |
+| `npx mnfst-run` | `mnfst-run` | Serve a project locally — SPA or MPA auto-detected. Opens browser automatically. |
 
-5. **Publish starter template (optional):**
-   ```bash
-   npm run publish:starter
-   ```
+---
+
+## Publish to npm
+
+Each package is published independently. Build first when publishing the main `mnfst` package.
+
+### Main package (mnfst)
+
+```bash
+npm run build
+npm version patch        # or minor / major
+git add .
+git commit -m "Release vX.X.X"
+git tag vX.X.X
+git push origin master
+git push origin vX.X.X
+npm publish --access public
+```
+
+### Sub-packages
+
+```bash
+npm run publish:starter  # publishes packages/create-starter → mnfst-starter
+npm run publish:render   # publishes packages/render        → mnfst-render
+npm run publish:run      # publishes packages/run           → mnfst-run
+```
 
 **Note:** You must be logged into npm (`npm login`) before publishing.
 
-Files are then available at CDN URLs like:
-- `https://cdn.jsdelivr.net/npm/mnfst@latest/lib/manifest.js` (dynamic loader)
-- `https://cdn.jsdelivr.net/npm/mnfst@latest/lib/manifest.css`
-- `https://cdn.jsdelivr.net/npm/mnfst@latest/lib/manifest.min.css`
-- `https://cdn.jsdelivr.net/npm/mnfst@latest/lib/manifest.components.js` (plugin)
-- `https://cdn.jsdelivr.net/npm/mnfst@latest/lib/manifest.data.js` (plugin)
-- etc.
+> **First-run prompt:** `npx` asks for install confirmation the first time a new package version is downloaded. This is an npm security feature and cannot be suppressed from within the package — it only appears once per version, after which the package is cached locally.
 
-### Version Numbering Strategy
+### CDN (jsDelivr)
 
-**Main Package (mnfst):**
-- Use semantic versioning (MAJOR.MINOR.PATCH)
-- For bug fixes and small improvements: `npm version patch` (0.5.14 → 0.5.15)
-- For new features: `npm version minor` (0.5.14 → 0.6.0)
-- For breaking changes: `npm version major` (0.5.14 → 1.0.0)
-- Always check existing tags first: `git tag --list | tail -5`
-- If version already exists, manually update `package.json` and commit before tagging
+After publishing `mnfst`, files are available at:
 
-**Starter Template (manifestjs-starter):**
-- Independent versioning from main package
-- Current version in `packages/create-starter/package.json`
-- Use `npm version patch` in the create-starter directory
-- Or manually update version and run `npm run publish:starter`
-
-**Publishing Workflow:**
-1. Make changes and commit
-2. Check current version: `git tag --list | tail -5`
-3. Update version: `npm version patch` (or manually edit package.json)
-4. Create and push tag: `git tag vX.X.X && git push origin vX.X.X`
-5. Publish: `npm publish --access public`
-6. For starter template: `npm run publish:starter`
+```
+https://cdn.jsdelivr.net/npm/mnfst@latest/lib/manifest.js
+https://cdn.jsdelivr.net/npm/mnfst@latest/lib/manifest.css
+https://cdn.jsdelivr.net/npm/mnfst@latest/lib/manifest.min.css
+https://cdn.jsdelivr.net/npm/mnfst@latest/lib/manifest.components.js
+https://cdn.jsdelivr.net/npm/mnfst@latest/lib/manifest.data.js
+```
 
 ---
 
-## Publish Starter Template
+## Version Numbering
+
+All packages use independent semantic versioning (MAJOR.MINOR.PATCH).
+
+| Package | Location | Notes |
+|---------|----------|-------|
+| `mnfst` | `package.json` | Main framework — build before publishing |
+| `mnfst-starter` | `packages/create-starter/package.json` | Starter template scaffolder |
+| `mnfst-render` | `packages/render/package.json` | Prerender CLI |
+| `mnfst-run` | `packages/run/package.json` | Dev server CLI |
 
 ```bash
-npm run publish:starter
+git tag --list | tail -5   # Check existing tags before bumping
 ```
-Publishes starter template to npm as `manifestjs-starter`.
-
----
-
-## Install Starter Template
-
-```bash
-npx manifestjs-starter my-app
-```
-Creates new Manifest project from template.
-
----
-
-## Update Manifest Files
-
-### Individual File Updates
-
-```bash
-npx manifestjs-add js
-npx manifestjs-add css
-npx manifestjs-add theme
-npx manifestjs-add code
-```
-Downloads and overwrites specific Manifest files with latest versions from CDN.
-
-### Bulk Update
-
-```bash
-npx manifestjs-add update
-```
-Scans project directory and updates all Manifest files except `manifest.theme.css` (which is preserved for custom modifications).
-
-**Note:** These commands require the `manifestjs-add` package to be published to npm first.

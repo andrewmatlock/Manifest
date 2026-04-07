@@ -11,6 +11,11 @@ window.ManifestComponentsProcessor = {
             return;
         }
         if (element.hasAttribute('data-pre-rendered') || element.hasAttribute('data-processed')) {
+            // Pre-rendered components skip re-fetching, but hydrate-marked content
+            // still needs Alpine initialization (x-data, @click, :class, x-theme etc.).
+            if (element.hasAttribute('data-pre-rendered') && window.Alpine && typeof window.Alpine.initTree === 'function') {
+                try { window.Alpine.initTree(element); } catch (e) { /* graceful */ }
+            }
             return;
         }
         const content = await loader.loadComponent(name);

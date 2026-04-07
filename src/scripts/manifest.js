@@ -36,7 +36,8 @@
 		'dropdowns',
 		'tabs',
 		'slides',
-		'resize'
+		'resize',
+		'colorpicker'
 	];
 
 	// Appwrite integration plugins (opt-in only, never auto-loaded)

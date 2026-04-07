@@ -98,7 +98,7 @@
       doc: "/articles/styles/reset.md"
     - name: "Theme"
       path: "theme"
-      icon: "lucide:palette"
+      icon: "lucide:paint-bucket"
       doc: "/articles/styles/theme.md"
     - name: "Utilities"
       path: "utilities"

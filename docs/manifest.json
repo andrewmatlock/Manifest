@@ -20,6 +20,8 @@
         }
     ],
     "components": [
+        "components/main/theme-controls.html",
+        "components/main/theme-preview.html",
         "components/main/appwrite.html",
         "components/examples/disclaimer.html",
         "components/examples/header-basic.html",

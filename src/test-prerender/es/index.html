@@ -1,4 +1,4 @@
-<html lang="es" class="dark" dir="ltr"><head>
+<html lang="es" class="light" dir="ltr"><head>
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,7 +13,7 @@
   <meta name="google" content="notranslate">
 
   <!-- Web App & Manifest -->
-  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
   <link rel="manifest" href="../manifest.json">
 
@@ -25,6 +25,7 @@
   <link rel="stylesheet" href="../styles/elements/manifest.button.css">
   <link rel="stylesheet" href="../styles/elements/manifest.checkbox.css">
   <link rel="stylesheet" href="../styles/elements/manifest.code.css">
+  <link rel="stylesheet" href="../styles/elements/manifest.colorpicker.css">
   <link rel="stylesheet" href="../styles/elements/manifest.dialog.css">
   <link rel="stylesheet" href="../styles/elements/manifest.divider.css">
   <link rel="stylesheet" href="../styles/elements/manifest.dropdown.css">
@@ -52,6 +53,8 @@
 @layer theme {
   :root, :host {
     --spacing: 0.25rem;
+    --text-xs: 0.75rem;
+    --text-xs--line-height: calc(1 / 0.75);
     --text-sm: 0.875rem;
     --text-sm--line-height: calc(1.25 / 0.875);
     --text-xl: 1.25rem;
@@ -61,17 +64,46 @@
     --font-weight-medium: 500;
     --font-weight-semibold: 600;
     --font-weight-bold: 700;
+    --default-transition-duration: 150ms;
+    --default-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   }
 }
 @layer utilities {
+  .pointer-events-none {
+    pointer-events: none;
+  }
+  .absolute {
+    position: absolute;
+  }
+  .fixed {
+    position: fixed;
+  }
   .sticky {
     position: sticky;
+  }
+  .start-0 {
+    inset-inline-start: calc(var(--spacing) * 0);
+  }
+  .end-10 {
+    inset-inline-end: calc(var(--spacing) * 10);
   }
   .top-0 {
     top: calc(var(--spacing) * 0);
   }
+  .bottom-0 {
+    bottom: calc(var(--spacing) * 0);
+  }
+  .bottom-10 {
+    bottom: calc(var(--spacing) * 10);
+  }
+  .z-100 {
+    z-index: 100;
+  }
   .ms-auto {
     margin-inline-start: auto;
+  }
+  .me-auto {
+    margin-inline-end: auto;
   }
   .mt-2 {
     margin-top: calc(var(--spacing) * 2);
@@ -194,6 +226,10 @@
     font-size: var(--text-xl);
     line-height: var(--tw-leading, var(--text-xl--line-height));
   }
+  .text-xs {
+    font-size: var(--text-xs);
+    line-height: var(--tw-leading, var(--text-xs--line-height));
+  }
   .font-bold {
     --tw-font-weight: var(--font-weight-bold);
     font-weight: var(--font-weight-bold);
@@ -206,6 +242,22 @@
     --tw-font-weight: var(--font-weight-semibold);
     font-weight: var(--font-weight-semibold);
   }
+  .opacity-0 {
+    opacity: 0%;
+  }
+  .shadow-lg {
+    --tw-shadow: 0 10px 15px -3px var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 4px 6px -4px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
+    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+  }
+  .transition-all {
+    transition-property: all;
+    transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
+    transition-duration: var(--tw-duration, var(--default-transition-duration));
+  }
+  .duration-300 {
+    --tw-duration: 300ms;
+    transition-duration: 300ms;
+  }
 }
 @property --tw-border-style {
   syntax: "*";
@@ -216,11 +268,95 @@
   syntax: "*";
   inherits: false;
 }
+@property --tw-shadow {
+  syntax: "*";
+  inherits: false;
+  initial-value: 0 0 #0000;
+}
+@property --tw-shadow-color {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-shadow-alpha {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 100%;
+}
+@property --tw-inset-shadow {
+  syntax: "*";
+  inherits: false;
+  initial-value: 0 0 #0000;
+}
+@property --tw-inset-shadow-color {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-inset-shadow-alpha {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 100%;
+}
+@property --tw-ring-color {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-ring-shadow {
+  syntax: "*";
+  inherits: false;
+  initial-value: 0 0 #0000;
+}
+@property --tw-inset-ring-color {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-inset-ring-shadow {
+  syntax: "*";
+  inherits: false;
+  initial-value: 0 0 #0000;
+}
+@property --tw-ring-inset {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-ring-offset-width {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+@property --tw-ring-offset-color {
+  syntax: "*";
+  inherits: false;
+  initial-value: #fff;
+}
+@property --tw-ring-offset-shadow {
+  syntax: "*";
+  inherits: false;
+  initial-value: 0 0 #0000;
+}
+@property --tw-duration {
+  syntax: "*";
+  inherits: false;
+}
 @layer properties {
   @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
     *, ::before, ::after, ::backdrop {
       --tw-border-style: solid;
       --tw-font-weight: initial;
+      --tw-shadow: 0 0 #0000;
+      --tw-shadow-color: initial;
+      --tw-shadow-alpha: 100%;
+      --tw-inset-shadow: 0 0 #0000;
+      --tw-inset-shadow-color: initial;
+      --tw-inset-shadow-alpha: 100%;
+      --tw-ring-color: initial;
+      --tw-ring-shadow: 0 0 #0000;
+      --tw-inset-ring-color: initial;
+      --tw-inset-ring-shadow: 0 0 #0000;
+      --tw-ring-inset: initial;
+      --tw-ring-offset-width: 0px;
+      --tw-ring-offset-color: #fff;
+      --tw-ring-offset-shadow: 0 0 #0000;
+      --tw-duration: initial;
     }
   }
 }
@@ -243,6 +379,7 @@
   <script src="../scripts/manifest.tooltips.js"></script>
   <script src="../scripts/manifest.url.parameters.js"></script>
   <script src="../scripts/manifest.utilities.js"></script>
+  <script src="../scripts/manifest.colorpicker.js"></script>
 
   <!-- Appwrite SDK and plugins -->
   <script src="https://cdn.jsdelivr.net/npm/appwrite@latest"></script>
@@ -291,7 +428,7 @@
     <button @click="tab = 'appwrite'" :class="tab === 'appwrite' ? 'selected' : ''" class="">Appwrite</button>
     <button @click="tab = 'local-data'" :class="tab === 'local-data' ? 'selected' : ''" class="">Local Data</button>
     <button @click="tab = 'utilities'" :class="tab === 'utilities' ? 'selected' : ''" class="">Utilities</button>
-    <button x-dropdown="options" x-icon="lucide:settings" class="ms-auto" popovertarget="options" style="anchor-name: --dropdown-6v90vb7xi"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" viewBox="0 0 24 24" data-icon="lucide:settings" class="iconify iconify--lucide"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0a2.34 2.34 0 0 0 3.319 1.915a2.34 2.34 0 0 1 2.33 4.033a2.34 2.34 0 0 0 0 3.831a2.34 2.34 0 0 1-2.33 4.033a2.34 2.34 0 0 0-3.319 1.915a2.34 2.34 0 0 1-4.659 0a2.34 2.34 0 0 0-3.32-1.915a2.34 2.34 0 0 1-2.33-4.033a2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"></path><circle cx="12" cy="12" r="3"></circle></g></svg></button><menu popover="" id="options" class="ms-auto" style="position-anchor: --dropdown-6v90vb7xi">
+    <button x-dropdown="options" x-icon="lucide:settings" class="ms-auto" popovertarget="options" style="anchor-name: --dropdown-e86fz5tjw"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" viewBox="0 0 24 24" data-icon="lucide:settings" class="iconify iconify--lucide"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0a2.34 2.34 0 0 0 3.319 1.915a2.34 2.34 0 0 1 2.33 4.033a2.34 2.34 0 0 0 0 3.831a2.34 2.34 0 0 1-2.33 4.033a2.34 2.34 0 0 0-3.319 1.915a2.34 2.34 0 0 1-4.659 0a2.34 2.34 0 0 0-3.32-1.915a2.34 2.34 0 0 1-2.33-4.033a2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"></path><circle cx="12" cy="12" r="3"></circle></g></svg></button><menu popover="" id="options" class="ms-auto" style="position-anchor: --dropdown-e86fz5tjw">
     <li x-theme="'light'">Light</li>
     <li x-theme="'dark'">Dark</li>
     <li x-theme="'system'">System</li>
@@ -304,106 +441,191 @@
 
     <!-- Tab Panels -->
     <div class="col gap-4 pt-12 pb-40">
-      <div class="col gap-4 p-4 border border-line" x-show="tab === 'styles'" data-component="styles-1">
+      <button x-dropdown="colorpicker" class="colorpicker-swatch" data-component="colorpicker-1" popovertarget="colorpicker" style="anchor-name: --dropdown-maljeeo75"></button><menu popover="" id="colorpicker" class="colorpicker" x-colorpicker="" x-data="{ tab: 'solid' }" style="position-anchor: --dropdown-maljeeo75">
 
-    <div class="col gap-4">
-        <h1 contenteditable="">Heading 1</h1>
-        <h2 contenteditable="">Heading 2</h2>
-        <h3 contenteditable="">Heading 3</h3>
-        <h4 contenteditable="">Heading 4</h4>
-        <h5 contenteditable="">Heading 5</h5>
-        <h6 contenteditable="">Heading 6</h6>
+    <!-- Hidden input for form participation -->
+    <input type="color" value="#f97316" hidden="">
+
+    <!-- Tabs -->
+    <div class="row">
+        <button class="sm ghost selected" :class="tab === 'solid' &amp;&amp; 'selected'" @click="tab = 'solid'" x-icon="lucide:square" x-tooltip="Solid" aria-label="Solid"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" viewBox="0 0 24 24" data-icon="lucide:square" class="iconify iconify--lucide"><rect width="18" height="18" x="3" y="3" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" rx="2"></rect></svg></button>
+        <button class="sm ghost" :class="tab === 'gradient' &amp;&amp; 'selected'" @click="tab = 'gradient'" x-icon="lucide:blend" x-tooltip="Gradient" aria-label="Gradient"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" viewBox="0 0 24 24" data-icon="lucide:blend" class="iconify iconify--lucide"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><circle cx="9" cy="9" r="7"></circle><circle cx="15" cy="15" r="7"></circle></g></svg></button>
+        <button class="sm ghost me-auto" :class="tab === 'library' &amp;&amp; 'selected'" @click="tab = 'library'" x-icon="lucide:swatch-book" x-tooltip="Library" aria-label="Library"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" viewBox="0 0 24 24" data-icon="lucide:swatch-book" class="iconify iconify--lucide"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M11 17a4 4 0 0 1-8 0V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2Z"></path><path d="M16.7 13H19a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2H7m0-4h.01"></path><path d="m11 8l2.3-2.3a2.4 2.4 0 0 1 3.404.004L18.6 7.6a2.4 2.4 0 0 1 .026 3.434L9.9 19.8"></path></g></svg></button>
+        <button class="eyedropper sm ghost" x-icon="lucide:pipette"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" viewBox="0 0 24 24" data-icon="lucide:pipette" class="iconify iconify--lucide"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="m12 9l-8.414 8.414A2 2 0 0 0 3 18.828v1.344a2 2 0 0 1-.586 1.414A2 2 0 0 1 3.828 21h1.344a2 2 0 0 0 1.414-.586L15 12"></path><path d="m18 9l.4.4a1 1 0 1 1-3 3l-3.8-3.8a1 1 0 1 1 3-3l.4.4l3.4-3.4a1 1 0 1 1 3 3zM2 22l.414-.414"></path></g></svg></button>
     </div>
 
-</div>
-      <h2 x-show="tab === 'core'" style="display: none" data-component="core-1">Icons &amp; Tooltips</h2><div x-icon="lucide:info" x-tooltip="Tooltip" x-show="tab === 'core'" style="display: none"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" viewBox="0 0 24 24" data-icon="lucide:info" class="iconify iconify--lucide"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4m0-4h.01"></path></g></svg></div><button x-tooltip="Tooltip" x-show="tab === 'core'" style="display: none">Tooltip</button><hr x-show="tab === 'core'" style="display: none"><h2 x-show="tab === 'core'" style="display: none">Toasts</h2><button x-toast="This is a toast" x-show="tab === 'core'" style="display: none">Press me</button><hr x-show="tab === 'core'" style="display: none"><h2 x-show="tab === 'core'" style="display: none">Markdown</h2><div x-markdown="README.md" x-show="tab === 'core'" style="display: none; opacity: 1; transition: opacity 0.15s ease-in-out"><h1 id="manifest-development">Manifest Development</h1><h2 id="quick-start">Quick Start</h2><x-code language="bash" data-component="code-1" data-pre-rendered="1"><pre><code class="language-bash hljs" data-highlighted="yes">npm run start:src    <span class="hljs-comment"># Start src directory with live reload</span>
-npm run start:docs   <span class="hljs-comment"># Start docs directory with live reload</span>
-npm run start:starter <span class="hljs-comment"># Start starter template with live reload</span></code></pre></x-code>
+    <hr>
+
+    <!-- Gradient layers section -->
+    <div class="p-3" x-show="tab === 'gradient'" style="display: none">
+        <div class="row justify-between items-center gap-2">
+            <span class="text-xs text-content-neutral">Gradient</span>
+            <button class="gradient-add-layer sm ghost" x-icon="lucide:plus" x-tooltip="Add gradient layer" aria-label="Add gradient layer"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" viewBox="0 0 24 24" data-icon="lucide:plus" class="iconify iconify--lucide"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7-7v14"></path></svg></button>
+        </div>
+        <!-- <div class="gradient-layers"></div> -->
+
+        <!-- Layer template (cloned per layer by the plugin) -->
+        <template class="gradient-layer">
+            <div class="row items-center gap-2">
+                <button class="sm ghost flex-1" x-dropdown="gradient-options">
+                    <span x-icon="lucide:square-dashed"></span>
+                </button>
+                <menu popover="" id="gradient-options">
+                    <li data-type="linear"><span x-icon="lucide:square-dashed"></span><span>Linear</span></li>
+                    <li data-type="radial"><span x-icon="lucide:circle-dashed"></span><span>Radial</span></li>
+                    <li data-type="conic"><span x-icon="lucide:triangle-dashed"></span><span>Conic</span></li>
+                    <hr>
+                    <li class="layer-duplicate">Duplicate</li>
+                    <li class="layer-remove negative">Remove</li>
+                </menu>
+                <div class="gradient-layer grow"></div>
+                <label class="layer-angle"><input type="number" class="sm" min="0" max="360"><span>°</span></label>
+                <menu class="layer-angle-menu">
+                    <li class="layer-rotate">Rotate 90°</li>
+                    <li class="layer-flip">Flip Direction</li>
+                </menu>
+            </div>
+        </template>
+    </div>
+
+    <hr x-show="tab === 'gradient'" style="display: none">
+
+    <!-- Canvas -->
+    <canvas x-show="tab !== 'library'"></canvas>
+
+    <!-- Solid color controls -->
+    <div class="color-controls" x-show="tab !== 'library'">
+        <input type="range" class="hue">
+        <input type="range" class="alpha">
+
+        <div class="row gap-1 w-full">
+            <div role="group" class="grow">
+                <select class="color-format sm">
+                    <option value="hex">Hex</option>
+                    <option value="rgb">RGB</option>
+                    <option value="hsl">HSL</option>
+                    <option value="oklch">OKLCH</option>
+                </select>
+                <input type="text" class="color-value sm" onclick="this.select()">
+            </div>
+            <input type="number" class="alpha-value sm" min="0" max="100" step="1" onclick="this.select()">
+        </div>
+    </div>
+
+    <!-- Library (swatches) -->
+    <div class="swatches" x-show="tab === 'library'" style="display: none">
+        <span data-color="#ef4444" style="background:#ef4444"></span>
+        <span data-color="#f97316" style="background:#f97316"></span>
+        <span data-color="#eab308" style="background:#eab308"></span>
+        <span data-color="#22c55e" style="background:#22c55e"></span>
+        <span data-color="#3b82f6" style="background:#3b82f6"></span>
+        <span data-color="#8b5cf6" style="background:#8b5cf6"></span>
+        <span data-color="#ec4899" style="background:#ec4899"></span>
+        <span data-color="#000000" style="background:#000000"></span>
+        <span data-color="#ffffff" style="background:#ffffff"></span>
+    </div>
+
+</menu>
+      <h2 x-show="tab === 'core'" style="display: none" data-component="core-1">Icons &amp; Tooltips</h2><div x-icon="lucide:info" x-tooltip="Tooltip" x-show="tab === 'core'" style="display: none"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" viewBox="0 0 24 24" data-icon="lucide:info" class="iconify iconify--lucide"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4m0-4h.01"></path></g></svg></div><button x-tooltip="Tooltip" x-show="tab === 'core'" style="display: none">Tooltip</button><hr x-show="tab === 'core'" style="display: none"><h2 x-show="tab === 'core'" style="display: none">Toasts</h2><button x-toast="This is a toast" x-show="tab === 'core'" style="display: none">Press me</button><hr x-show="tab === 'core'" style="display: none"><h2 x-show="tab === 'core'" style="display: none">Markdown</h2><div x-show="tab === 'core'" style="display: none; opacity: 1; transition: opacity 0.15s ease-in-out"><h1 id="manifest-development">Manifest Development</h1><h2 id="quick-start">Quick Start</h2><x-code language="bash" data-component="code-1" data-pre-rendered="1"><pre><code class="language-bash hljs" data-highlighted="yes">npm run start:src      <span class="hljs-comment"># Serve /src (framework test project)</span>
+npm run start:docs     <span class="hljs-comment"># Serve /docs (documentation website)</span>
+npm run start:starter  <span class="hljs-comment"># Serve /templates/starter (starter template)</span>
+npm run start:dist     <span class="hljs-comment"># Serve /src/test-prerender (prerendered MPA output)</span></code></pre></x-code>
+<p>All servers use <code>mnfst-run</code> (<code>packages/run/serve.mjs</code>) with zero npm dependencies. SPA vs MPA mode is auto-detected from the served <code>index.html</code>.</p>
 <hr>
 <h2 id="build">Build</h2><x-code language="bash" data-component="code-1" data-pre-rendered="1"><pre><code class="language-bash hljs" data-highlighted="yes">npm run build</code></pre></x-code>
-<p><strong>Build Process:</strong></p>
+<p><strong>Build output:</strong></p>
 <ul>
-<li>Combines subscripts into monolith plugin files (components, router, utilities, auth, data, etc.)</li>
-<li>Bundles CSS stylesheets from <code>/src/styles</code> into <code>manifest.css</code></li>
-<li>Minifies CSS files (<code>manifest.css</code> → <code>manifest.min.css</code>, <code>manifest.code.css</code> → <code>manifest.code.min.css</code>)</li>
+<li>Combines subscripts into monolith plugin files (<code>manifest.components.js</code>, <code>manifest.router.js</code>, <code>manifest.data.js</code>, etc.)</li>
+<li>Bundles and minifies CSS from <code>/src/styles</code> into <code>manifest.css</code> / <code>manifest.min.css</code></li>
 <li>Syncs starter template from <code>/templates/starter</code> to <code>/packages/create-starter/templates</code></li>
-<li>Copies all files to <code>/lib</code> directory for npm publishing</li>
+<li>Copies all files to <code>/lib</code> for npm publishing</li>
 </ul>
-<p><strong>Note:</strong> The build process no longer creates bundles (<code>manifest.bundle.js</code>, <code>manifest.quickstart.js</code>). Only the dynamic loader (<code>manifest.js</code>) is produced, which loads plugins on-demand from CDN.</p>
+<p>Only the dynamic loader (<code>manifest.js</code>) is produced — it loads plugins on-demand from CDN.</p>
 <hr>
-<h2 id="publish-to-npm-and-jsdelivr">Publish to npm and jsDelivr</h2><p><strong>Manual Publishing Steps:</strong></p>
-<ol>
-<li><p><strong>Build the project:</strong></p>
-<x-code language="bash" data-component="code-2" data-pre-rendered="1"><pre><code class="language-bash hljs" data-highlighted="yes">npm run build</code></pre></x-code>
-</li>
-<li><p><strong>Update version in package.json:</strong></p>
-<x-code language="bash" data-component="code-3" data-pre-rendered="1"><pre><code class="language-bash hljs" data-highlighted="yes">npm version patch  <span class="hljs-comment"># or minor, or major</span></code></pre></x-code>
-<p>Or manually edit <code>package.json</code> to set the version.</p>
-</li>
-<li><p><strong>Commit and tag:</strong></p>
-<x-code language="bash" data-component="code-4" data-pre-rendered="1"><pre><code class="language-bash hljs" data-highlighted="yes">git add .
+<h2 id="prerender">Prerender</h2><x-code language="bash" data-component="code-2" data-pre-rendered="1"><pre><code class="language-bash hljs" data-highlighted="yes">npm run prerender           <span class="hljs-comment"># Prerender /src → /src/test-prerender</span>
+npm run prerender:docs      <span class="hljs-comment"># Prerender /docs → /docs/website</span>
+npm run prerender:starter   <span class="hljs-comment"># Prerender /templates/starter</span></code></pre></x-code>
+<hr>
+<h2 id="npx-commands">NPX Commands</h2><p>These are the CLI commands available to framework users in the wild:</p>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Package</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>npx mnfst-starter MyProject</code></td>
+<td><code>mnfst-starter</code></td>
+<td>Scaffold a new project from the starter template</td>
+</tr>
+<tr>
+<td><code>npx mnfst-render</code></td>
+<td><code>mnfst-render</code></td>
+<td>Prerender a Manifest SPA into a static MPA output folder</td>
+</tr>
+<tr>
+<td><code>npx mnfst-run</code></td>
+<td><code>mnfst-run</code></td>
+<td>Serve a project locally — SPA or MPA auto-detected. Opens browser automatically.</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="publish-to-npm">Publish to npm</h2><p>Each package is published independently. Build first when publishing the main <code>mnfst</code> package.</p>
+<h3 id="main-package-mnfst">Main package (mnfst)</h3><x-code language="bash" data-component="code-3" data-pre-rendered="1"><pre><code class="language-bash hljs" data-highlighted="yes">npm run build
+npm version patch        <span class="hljs-comment"># or minor / major</span>
+git add .
 git commit -m <span class="hljs-string">"Release vX.X.X"</span>
 git tag vX.X.X
 git push origin master
-git push origin vX.X.X</code></pre></x-code>
-</li>
-<li><p><strong>Publish to npm:</strong></p>
-<x-code language="bash" data-component="code-5" data-pre-rendered="1"><pre><code class="language-bash hljs" data-highlighted="yes">npm publish --access public</code></pre></x-code>
-</li>
-<li><p><strong>Publish starter template (optional):</strong></p>
-<x-code language="bash" data-component="code-6" data-pre-rendered="1"><pre><code class="language-bash hljs" data-highlighted="yes">npm run publish:starter</code></pre></x-code>
-</li>
-</ol>
+git push origin vX.X.X
+npm publish --access public</code></pre></x-code>
+<h3 id="sub-packages">Sub-packages</h3><x-code language="bash" data-component="code-4" data-pre-rendered="1"><pre><code class="language-bash hljs" data-highlighted="yes">npm run publish:starter  <span class="hljs-comment"># publishes packages/create-starter → mnfst-starter</span>
+npm run publish:render   <span class="hljs-comment"># publishes packages/render        → mnfst-render</span>
+npm run publish:run      <span class="hljs-comment"># publishes packages/run           → mnfst-run</span></code></pre></x-code>
 <p><strong>Note:</strong> You must be logged into npm (<code>npm login</code>) before publishing.</p>
-<p>Files are then available at CDN URLs like:</p>
-<ul>
-<li><code>https://cdn.jsdelivr.net/npm/mnfst@latest/lib/manifest.js</code> (dynamic loader)</li>
-<li><code>https://cdn.jsdelivr.net/npm/mnfst@latest/lib/manifest.css</code></li>
-<li><code>https://cdn.jsdelivr.net/npm/mnfst@latest/lib/manifest.min.css</code></li>
-<li><code>https://cdn.jsdelivr.net/npm/mnfst@latest/lib/manifest.components.js</code> (plugin)</li>
-<li><code>https://cdn.jsdelivr.net/npm/mnfst@latest/lib/manifest.data.js</code> (plugin)</li>
-<li>etc.</li>
-</ul>
-<h3 id="version-numbering-strategy">Version Numbering Strategy</h3><p><strong>Main Package (mnfst):</strong></p>
-<ul>
-<li>Use semantic versioning (MAJOR.MINOR.PATCH)</li>
-<li>For bug fixes and small improvements: <code>npm version patch</code> (0.5.14 → 0.5.15)</li>
-<li>For new features: <code>npm version minor</code> (0.5.14 → 0.6.0)</li>
-<li>For breaking changes: <code>npm version major</code> (0.5.14 → 1.0.0)</li>
-<li>Always check existing tags first: <code>git tag --list | tail -5</code></li>
-<li>If version already exists, manually update <code>package.json</code> and commit before tagging</li>
-</ul>
-<p><strong>Starter Template (manifestjs-starter):</strong></p>
-<ul>
-<li>Independent versioning from main package</li>
-<li>Current version in <code>packages/create-starter/package.json</code></li>
-<li>Use <code>npm version patch</code> in the create-starter directory</li>
-<li>Or manually update version and run <code>npm run publish:starter</code></li>
-</ul>
-<p><strong>Publishing Workflow:</strong></p>
-<ol>
-<li>Make changes and commit</li>
-<li>Check current version: <code>git tag --list | tail -5</code></li>
-<li>Update version: <code>npm version patch</code> (or manually edit package.json)</li>
-<li>Create and push tag: <code>git tag vX.X.X &amp;&amp; git push origin vX.X.X</code></li>
-<li>Publish: <code>npm publish --access public</code></li>
-<li>For starter template: <code>npm run publish:starter</code></li>
-</ol>
+<blockquote>
+<p><strong>First-run prompt:</strong> <code>npx</code> asks for install confirmation the first time a new package version is downloaded. This is an npm security feature and cannot be suppressed from within the package — it only appears once per version, after which the package is cached locally.</p>
+</blockquote>
+<h3 id="cdn-jsdelivr">CDN (jsDelivr)</h3><p>After publishing <code>mnfst</code>, files are available at:</p>
+<x-code data-component="code-5" data-pre-rendered="1"><pre><code class="hljs language-bash" data-highlighted="yes">https://cdn.jsdelivr.net/npm/mnfst@latest/lib/manifest.js
+https://cdn.jsdelivr.net/npm/mnfst@latest/lib/manifest.css
+https://cdn.jsdelivr.net/npm/mnfst@latest/lib/manifest.min.css
+https://cdn.jsdelivr.net/npm/mnfst@latest/lib/manifest.components.js
+https://cdn.jsdelivr.net/npm/mnfst@latest/lib/manifest.data.js</code></pre></x-code>
 <hr>
-<h2 id="publish-starter-template">Publish Starter Template</h2><x-code language="bash" data-component="code-7" data-pre-rendered="1"><pre><code class="language-bash hljs" data-highlighted="yes">npm run publish:starter</code></pre></x-code>
-<p>Publishes starter template to npm as <code>manifestjs-starter</code>.</p>
-<hr>
-<h2 id="install-starter-template">Install Starter Template</h2><x-code language="bash" data-component="code-8" data-pre-rendered="1"><pre><code class="language-bash hljs" data-highlighted="yes">npx manifestjs-starter my-app</code></pre></x-code>
-<p>Creates new Manifest project from template.</p>
-<hr>
-<h2 id="update-manifest-files">Update Manifest Files</h2><h3 id="individual-file-updates">Individual File Updates</h3><x-code language="bash" data-component="code-9" data-pre-rendered="1"><pre><code class="language-bash hljs" data-highlighted="yes">npx manifestjs-add js
-npx manifestjs-add css
-npx manifestjs-add theme
-npx manifestjs-add code</code></pre></x-code>
-<p>Downloads and overwrites specific Manifest files with latest versions from CDN.</p>
-<h3 id="bulk-update">Bulk Update</h3><x-code language="bash" data-component="code-10" data-pre-rendered="1"><pre><code class="language-bash hljs" data-highlighted="yes">npx manifestjs-add update</code></pre></x-code>
-<p>Scans project directory and updates all Manifest files except <code>manifest.theme.css</code> (which is preserved for custom modifications).</p>
-<p><strong>Note:</strong> These commands require the <code>manifestjs-add</code> package to be published to npm first.</p>
+<h2 id="version-numbering">Version Numbering</h2><p>All packages use independent semantic versioning (MAJOR.MINOR.PATCH).</p>
+<table>
+<thead>
+<tr>
+<th>Package</th>
+<th>Location</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>mnfst</code></td>
+<td><code>package.json</code></td>
+<td>Main framework — build before publishing</td>
+</tr>
+<tr>
+<td><code>mnfst-starter</code></td>
+<td><code>packages/create-starter/package.json</code></td>
+<td>Starter template scaffolder</td>
+</tr>
+<tr>
+<td><code>mnfst-render</code></td>
+<td><code>packages/render/package.json</code></td>
+<td>Prerender CLI</td>
+</tr>
+<tr>
+<td><code>mnfst-run</code></td>
+<td><code>packages/run/package.json</code></td>
+<td>Dev server CLI</td>
+</tr>
+</tbody></table>
+<x-code language="bash" data-component="code-6" data-pre-rendered="1"><pre><code class="language-bash hljs" data-highlighted="yes">git tag --list | <span class="hljs-built_in">tail</span> -5   <span class="hljs-comment"># Check existing tags before bumping</span></code></pre></x-code>
 </div>
       <h2 x-show="tab === 'appwrite'" style="display: none" data-component="appwrite-1">Users</h2><div class="row-wrap gap-2" x-show="tab === 'appwrite'" style="display: none">
     <!-- OAuth Buttons -->
@@ -1431,6 +1653,20 @@ npx manifestjs-add code</code></pre></x-code>
   <!-- 404 route -->
   
 
+  <!-- Popup test: data-hydrate scope propagation (webchat pattern) -->
+  <div class="fixed bottom-10 end-10 z-100" x-data="{ showChannels: false }" style="position:fixed; bottom:2.5rem; right:2.5rem; z-index:100" data-order="6" data-component="popup-1">
+
+    <!-- Popup button A — data-hydrate with conditional classes -->
+    <a role="button" href="#popup-a" class="absolute bottom-0 start-0 brand shadow-lg transition-all duration-300" :class="showChannels ? 'bottom-36 opacity-100' : 'bottom-0 opacity-0 pointer-events-none'" data-hydrate="" style="position:absolute; bottom:0; left:0">Popup A</a>
+
+    <!-- Popup button B — data-hydrate with conditional classes -->
+    <button class="absolute bottom-0 start-0 brand shadow-lg transition-all duration-300" :class="showChannels ? 'bottom-18 opacity-100' : 'bottom-0 opacity-0 pointer-events-none'" data-hydrate="" style="position:absolute; bottom:0; left:0">Popup B</button>
+
+    <!-- Toggle button — must also be hydrate-protected (sibling in x-data scope) -->
+    <button @click="showChannels = !showChannels" style="padding:0.5rem 1rem; cursor:pointer">Toggle Channels</button>
+
+</div>
 
 
-<div popover="" id="tooltip-5rm8y5c33" class="tooltip">Tooltip</div><div popover="" id="tooltip-uay2sjy2e" class="tooltip">Tooltip</div></body></html>
+
+<div popover="" id="tooltip-kxvituqjb" class="tooltip">Solid</div><div popover="" id="tooltip-4ugih48vw" class="tooltip">Gradient</div><div popover="" id="tooltip-2ekc8jepq" class="tooltip">Library</div><div popover="" id="tooltip-rwpal09xn" class="tooltip">Add gradient layer</div><div popover="" id="tooltip-z3znx7zgg" class="tooltip">Tooltip</div><div popover="" id="tooltip-q9rbd2bxk" class="tooltip">Tooltip</div></body></html>

@@ -1883,6 +1883,36 @@ async function runPrerender(config) {
         let nextId = 0;
         const skipTags = new Set(['MAIN', 'BODY', 'HTML']);
 
+        // Own MutationObserver registered before any other script on the page.
+        // This guarantees we process DOM additions before Alpine's observer does —
+        // critically, before Alpine's observer calls initTree on newly expanded
+        // Manifest components (preloaded or lazy) and bakes their `:class` state.
+        const installHydrateObserver = () => {
+          if (window.__manifestHydrateObserver || !document.body) return;
+          const obs = new MutationObserver((mutations) => {
+            for (const m of mutations) {
+              if (m.type !== 'childList') continue;
+              for (const node of m.addedNodes) {
+                if (node.nodeType !== 1) continue;
+                try { snapshotSubtree(node); } catch (_) {}
+              }
+            }
+          });
+          obs.observe(document.body, { childList: true, subtree: true });
+          window.__manifestHydrateObserver = obs;
+        };
+        if (typeof document !== 'undefined') {
+          if (document.body) {
+            installHydrateObserver();
+          } else {
+            document.addEventListener('DOMContentLoaded', installHydrateObserver, { once: true });
+            // Also try once readyState flips to interactive
+            document.addEventListener('readystatechange', () => {
+              if (document.readyState !== 'loading') installHydrateObserver();
+            });
+          }
+        }
+
         const snapshotElement = (el) => {
           if (!el || el.nodeType !== 1) return;
           if (el.hasAttribute('data-manifest-hyd-id')) return; // already snapshotted
@@ -1894,7 +1924,7 @@ async function runPrerender(config) {
             if (a.name === 'data-manifest-hyd-id') continue;
             attrs[a.name] = a.value;
           }
-          allSnapshots.push({ id, attrs });
+          allSnapshots.push({ id, tag: el.tagName, attrs });
         };
 
         const snapshotElementAndDescendants = (el) => {
@@ -1943,23 +1973,52 @@ async function runPrerender(config) {
           window.__manifestHydrateSnapshots = allSnapshots;
         };
 
-        // Wrap Alpine.initTree once Alpine is available.  alpine:init fires before
-        // Alpine walks the tree for the first time, giving us the perfect insertion
-        // point.  After wrapping, every initTree call (initial walk + every lazy
-        // component load) snapshots its subtree before Alpine processes it.
-        let installed = false;
-        const installInterceptor = () => {
-          if (installed || !window.Alpine || typeof window.Alpine.initTree !== 'function') return;
-          installed = true;
-          const original = window.Alpine.initTree.bind(window.Alpine);
-          window.Alpine.initTree = function (root) {
-            try { snapshotSubtree(root || document.body); } catch (_) { /* graceful */ }
-            return original.apply(this, arguments);
-          };
+        // Wrap Alpine.start so the snapshot runs INSIDE the start call, before
+        // Alpine has a chance to walk and mutate the tree.  alpine:init as an
+        // external hook proved unreliable — in some configurations it fires after
+        // Alpine has already processed some elements.  Alpine.start is the single
+        // synchronous entry point for the initial walk, so wrapping it guarantees
+        // we capture source state before any directive has been applied.
+        //
+        // We also wrap Alpine.initTree for lazy-loaded components that appear in
+        // the DOM after Alpine.start() has completed (fetched by the components
+        // plugin in response to new <x-*> placeholders).
+        //
+        // Both wraps are installed via a defineProperty setter on window.Alpine
+        // so they land the instant Alpine's CDN script does `window.Alpine = ...`.
+        const wrap = (alpine) => {
+          if (!alpine || alpine.__manifestRenderWrapped) return;
+          alpine.__manifestRenderWrapped = true;
+          if (typeof alpine.start === 'function') {
+            const originalStart = alpine.start.bind(alpine);
+            alpine.start = function () {
+              try { snapshotSubtree(document.body); } catch (_) { /* graceful */ }
+              return originalStart.apply(this, arguments);
+            };
+          }
+          if (typeof alpine.initTree === 'function') {
+            const originalInit = alpine.initTree.bind(alpine);
+            alpine.initTree = function (root) {
+              try { snapshotSubtree(root || document.body); } catch (_) { /* graceful */ }
+              return originalInit.apply(this, arguments);
+            };
+          }
         };
+
+        let _Alpine;
+        try {
+          Object.defineProperty(window, 'Alpine', {
+            configurable: true,
+            enumerable: true,
+            get() { return _Alpine; },
+            set(v) { _Alpine = v; wrap(v); },
+          });
+        } catch (_) { /* defineProperty failed, fall back to event listeners */ }
+
         if (typeof document !== 'undefined') {
-          document.addEventListener('alpine:init', installInterceptor);
-          document.addEventListener('alpine:initialized', installInterceptor);
+          // Event-based fallback in case the setter trap missed Alpine assignment.
+          document.addEventListener('alpine:init', () => wrap(window.Alpine));
+          document.addEventListener('alpine:initialized', () => wrap(window.Alpine));
         }
       });
 
@@ -2202,22 +2261,81 @@ async function runPrerender(config) {
       // it would in the live SPA.  After restoring source attributes we re-add the
       // `data-prerender-hydrate` marker so downstream Node.js stripping passes
       // continue to skip these elements.
-      await page.evaluate(() => {
+      //
+      // Implementation note: we use `outerHTML` to swap the element rather than
+      // `setAttribute` per-attribute.  Alpine's special attribute names (`@click`,
+      // possibly others starting with `@`) are not valid DOM Names per the XML
+      // production, so `setAttribute('@click', …)` throws InvalidCharacterError.
+      // The HTML parser, on the other hand, is lenient and accepts these names.
+      // Building an HTML string and assigning it via outerHTML round-trips through
+      // the parser and produces an element with all source attributes intact.
+      // Stop Alpine from observing further DOM mutations and flush any pending
+      // effects.  Then restore each hydrate target by replacing it with a fresh
+      // element parsed from a source-attribute HTML string.  Replacing the element
+      // (rather than mutating attributes in place) detaches it from Alpine's
+      // reactive bindings entirely — the new node has no `_x_*` state, no
+      // effects, and no observers.  Alpine's MutationObserver is stopped first
+      // so it can't pick up the new node and re-process it.
+      //
+      // We process snapshots deepest-first so that when an ancestor is rebuilt,
+      // its children have already been replaced with their pristine versions and
+      // are captured (via innerHTML) into the new ancestor.
+      const restoreReport = await page.evaluate(async () => {
+        try { window.Alpine && window.Alpine.flushAndStopDeferringMutations && window.Alpine.flushAndStopDeferringMutations(); } catch (_) {}
+        try { window.Alpine && window.Alpine.stopObservingMutations && window.Alpine.stopObservingMutations(); } catch (_) {}
+        await Promise.resolve();
+        await Promise.resolve();
+
         const snapshots = window.__manifestHydrateSnapshots || [];
+        const report = { total: snapshots.length, restored: 0, notFound: 0, errors: [] };
+
+        // Resolve every snapshot to its element, then sort by depth (deepest first).
+        const items = [];
         snapshots.forEach(({ id, attrs }) => {
           const el = document.querySelector(`[data-manifest-hyd-id="${id}"]`);
-          if (!el) return;
-          // Wipe everything Alpine may have added or mutated.
-          Array.from(el.attributes).map((a) => a.name).forEach((name) => el.removeAttribute(name));
-          // Put the original source attributes back.
-          Object.entries(attrs).forEach(([name, value]) => {
-            el.setAttribute(name, value);
-          });
-          // Marker so downstream stripping (xfor processing, dynamic-binding strip,
-          // component pre-render marking, etc.) skips this element.
-          el.setAttribute('data-prerender-hydrate', '1');
+          if (!el) { report.notFound++; return; }
+          let depth = 0;
+          for (let p = el.parentNode; p; p = p.parentNode) depth++;
+          items.push({ id, el, attrs, depth });
         });
+        items.sort((a, b) => b.depth - a.depth);
+
+        const voidEls = new Set(['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'param', 'source', 'track', 'wbr']);
+        const escAttr = (s) => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/"/g, '&quot;');
+
+        items.forEach(({ id, attrs }) => {
+          // Re-resolve the element by id every iteration: ancestors that were
+          // already rebuilt will have re-parsed their children, so previous
+          // references are stale.
+          const el = document.querySelector(`[data-manifest-hyd-id="${id}"]`);
+          if (!el || !el.parentNode) { report.errors.push({ id, msg: 'lost reference' }); return; }
+          const tag = el.tagName.toLowerCase();
+          const attrString = Object.entries(attrs)
+            .map(([name, value]) => `${name}="${escAttr(value)}"`)
+            .join(' ');
+          const innerHTML = voidEls.has(tag) ? '' : el.innerHTML;
+          const newHTML = voidEls.has(tag)
+            ? `<${tag} ${attrString} data-prerender-hydrate="1">`
+            : `<${tag} ${attrString} data-prerender-hydrate="1">${innerHTML}</${tag}>`;
+          // Parse via a temporary container so we can use replaceChild (more
+          // reliable than outerHTML in nested-replace scenarios).
+          const tmp = document.createElement(el.parentNode.tagName === 'TR' ? 'tr' : 'div');
+          tmp.innerHTML = newHTML;
+          const parsed = tmp.firstElementChild;
+          if (!parsed) { report.errors.push({ id, msg: 'parse failed' }); return; }
+          try {
+            el.parentNode.replaceChild(parsed, el);
+            report.restored++;
+          } catch (e) {
+            report.errors.push({ id, tag, msg: String(e && e.message || e) });
+          }
+        });
+
+        return report;
       });
+      if (config.debugPrerender) {
+        pushDebug({ path: displayPath, stage: 'hydrate-restore', metrics: restoreReport });
+      }
 
       // x-for lists: keep static lists in the HTML for SEO; collapse only dynamic lists so Alpine re-renders.
       // Explicit: data-prerender="dynamic"|"skip". Inferred: x-for uses $search/$query,

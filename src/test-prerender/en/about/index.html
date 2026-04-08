@@ -1,4 +1,4 @@
-<html lang="en" class="light" dir="ltr"><head>
+<html lang="en" class="dark"><head>
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,7 +13,7 @@
   <meta name="google" content="notranslate">
 
   <!-- Web App & Manifest -->
-  <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
   <link rel="manifest" href="../../manifest.json">
 
@@ -423,16 +423,16 @@
 
   <!-- About route: localized content + data-hydrate island -->
   <section x-route="about" style="padding: 2rem; max-width: 640px; margin: 0px auto; flex-direction: column; gap: 1.5rem" data-order="2">
-    <h1>Sobre nosotros</h1>
+    <h1>About Us</h1>
     <p>Tests: localized baked content + <code>data-hydrate</code> island.</p>
-    <p>Baked: <strong>Sobre nosotros</strong> (should be locale-correct after prerender)</p>
-    <p>Contact: <strong>Correo</strong> / <strong>Teléfono</strong></p>
+    <p>Baked: <strong>About Us</strong> (should be locale-correct after prerender)</p>
+    <p>Contact: <strong>Email</strong> / <strong>Phone</strong></p>
 
     <!-- data-hydrate: Alpine directives preserved in output, evaluated at runtime -->
     <div data-hydrate="" x-data="{ count: 0 }" style="padding: 1rem; border: 1px solid var(--color-line, #ccc); border-radius: 4px; display: flex; flex-direction: column; gap: 0.5rem">
       <p style="opacity: 0.5; font-size: 0.85em">data-hydrate island — not baked, evaluated at runtime</p>
-      <p>Current locale: <strong x-text="$locale.current">es</strong></p>
-      <p>Home title (live): <strong>Inicio</strong></p>
+      <p>Current locale: <strong x-text="$locale.current">en</strong></p>
+      <p>Home title (live): <strong x-text="$x.splitLocales.home.title">Home</strong></p>
       <p>Counter: <strong x-text="count">0</strong> <button @click="count++" style="margin-left: 0.5rem; padding: 0.25rem 0.75rem; cursor: pointer">+1</button></p>
     </div>
 
@@ -462,7 +462,7 @@
   
 
   <!-- Popup test: data-hydrate scope propagation (webchat pattern) -->
-  <div class="fixed bottom-10 end-10 z-100" x-data="{ showChannels: false }" style="position:fixed; bottom:2.5rem; right:2.5rem; z-index:100" data-order="6" data-component="popup-1">
+  <div class="fixed bottom-10 end-10 z-100" x-data="{ showChannels: false }" style="position:fixed; bottom:2.5rem; right:2.5rem; z-index:100" data-order="6">
 
     <!-- Popup button A — data-hydrate with conditional classes -->
     <a role="button" href="#popup-a" class="absolute bottom-0 start-0 brand shadow-lg transition-all duration-300" :class="showChannels ? 'bottom-36 opacity-100' : 'bottom-0 opacity-0 pointer-events-none'" data-hydrate="" style="position:absolute; bottom:0; left:0">Popup A</a>
@@ -477,4 +477,4 @@
 
 
 
-<div popover="" id="tooltip-4o4ntmna3" class="tooltip">Solid</div><div popover="" id="tooltip-hm3j4ndtr" class="tooltip">Gradient</div><div popover="" id="tooltip-twedibyni" class="tooltip">Library</div><div popover="" id="tooltip-7nqqzjc9i" class="tooltip">Add gradient layer</div><div popover="" id="tooltip-zi8n44jia" class="tooltip">Tooltip</div><div popover="" id="tooltip-fukgmby85" class="tooltip">Tooltip</div></body></html>
+<div popover="" id="tooltip-qc5wk63qc" class="tooltip">Solid</div><div popover="" id="tooltip-ivqupeu9f" class="tooltip">Gradient</div><div popover="" id="tooltip-s8hv17lp4" class="tooltip">Library</div><div popover="" id="tooltip-xi1ej312n" class="tooltip">Add gradient layer</div><div popover="" id="tooltip-le152aarq" class="tooltip">Tooltip</div><div popover="" id="tooltip-d7ues5g1c" class="tooltip">Tooltip</div></body></html>

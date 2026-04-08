@@ -33,12 +33,12 @@
         "test/components/utilities.html",
         "test/components/test.html",
         "test/components/styles.html",
-        "test/components/colorpicker.html",
-        "test/components/popup.html"
+        "test/components/colorpicker.html"
     ],
     "preloadedComponents": [
         "test/components/header.html",
-        "test/components/logo.html"
+        "test/components/logo.html",
+        "test/components/popup.html"
     ],
     "data": {
         "manifest": "/manifest.json",

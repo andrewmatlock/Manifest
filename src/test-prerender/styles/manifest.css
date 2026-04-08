@@ -748,10 +748,10 @@
             margin-bottom: 2px
         }
 
-        & :where(li, a, button, label) {
+        /* & :where(li, a, button, label) {
             width: fit-content;
             min-width: var(--spacing-field-height, 2.25rem)
-        }
+        } */
 
         /* Canvas wrapper */
         & .canvas-wrapper {
@@ -924,6 +924,63 @@
             gap: 0.5rem;
         }
 
+        /* Floating menus (non-popover, manually positioned) */
+        & .layer-angle-menu,
+        & .stop-floating-menu {
+            display: none;
+            flex-direction: column;
+            min-width: 140px;
+            margin: 0;
+            padding: 0.25rem;
+            list-style: none;
+            background: var(--color-popover-surface, oklch(100% 0 0));
+            border-radius: var(--radius, 0.5rem);
+            box-shadow: rgba(15, 15, 15, 0.05) 0px 0px 0px 1px, rgba(15, 15, 15, 0.1) 0px 3px 6px, rgba(15, 15, 15, 0.2) 0px 9px 24px;
+            z-index: 100;
+
+            & :where(li) {
+                display: flex;
+                align-items: center;
+                padding: 0.25rem 0.5rem;
+                font-size: 0.8125rem;
+                color: var(--color-content-stark, oklch(16.6% 0.026 267));
+                border-radius: 6px;
+                cursor: pointer;
+                user-select: none;
+
+                &:hover {
+                    background-color: var(--color-field-surface, oklch(91.79% 0.0029 264.26));
+                }
+
+                &.negative:hover {
+                    color: var(--color-negative-content, #ef4444);
+                }
+            }
+
+            & :where(hr) {
+                margin: 0.25rem 0;
+                border: none;
+                border-top: 1px solid var(--color-line, color-mix(in oklch, oklch(16.6% 0.026 267) 11%, transparent));
+            }
+
+            & :where(small) {
+                display: block;
+                padding: 0.25rem 0.5rem 0.125rem;
+                font-size: 0.6875rem;
+                color: var(--color-content-subtle, oklch(52.38% 0.017 264.26));
+            }
+        }
+
+        & .layer-angle-menu.show,
+        & .stop-floating-menu {
+            display: flex;
+        }
+
+        /* Stop-floating-menu always shows when present (added to DOM) */
+        & .stop-floating-menu {
+            display: flex;
+        }
+
         /* Angle input label */
         & .layer-angle {
             display: inline-flex;
@@ -941,13 +998,8 @@
                 color: var(--color-content-stark, oklch(16.6% 0.026 267));
                 outline: none;
                 cursor: ew-resize;
-                -moz-appearance: textfield;
-
-                &::-webkit-inner-spin-button,
-                &::-webkit-outer-spin-button {
-                    -webkit-appearance: none;
-                    margin: 0;
-                }
+                -moz-appearance: textfield !important;
+                appearance: textfield !important;
 
                 &:focus {
                     cursor: text;
@@ -1024,6 +1076,17 @@
                 }
             }
         }
+    }
+
+    /* Hide number input spin buttons inside colorpicker (high specificity, flat selectors) */
+    menu[popover].colorpicker .layer-angle input[type=number]::-webkit-inner-spin-button,
+    menu[popover].colorpicker .layer-angle input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none !important;
+        appearance: none !important;
+        margin: 0 !important;
+        display: none !important;
+        width: 0 !important;
+        height: 0 !important;
     }
 }
 

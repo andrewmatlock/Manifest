@@ -177,7 +177,7 @@ function initializeColorpickerPlugin() {
             colorInput: el.querySelector('.color-value') || el.querySelector('[role=group] input[type=text]'),
             alphaInput: el.querySelector('input.alpha-value'),
             eyedropperBtn: el.querySelector('.eyedropper'),
-            layersContainer: el.querySelector('.gradient-layers'),
+            layerTemplate: el.querySelector('template.gradient-layer'),
             reticle: null,
 
             // ---- Active color proxy ----
@@ -374,16 +374,21 @@ function initializeColorpickerPlugin() {
             // ---- Render gradient layers from <template> ----
 
             renderLayers() {
-                if (!this.layersContainer) return;
-                const template = el.querySelector('template.gradient-layer');
+                const template = this.layerTemplate;
                 if (!template) return;
+                const parent = template.parentNode;
+                if (!parent) return;
 
-                this.layersContainer.innerHTML = '';
+                // Remove only previously cloned layer elements (marked with data-cp-layer-clone)
+                parent.querySelectorAll(':scope > [data-cp-layer-clone]').forEach(el => el.remove());
 
                 this.layers.forEach((layer, li) => {
                     const clone = template.content.cloneNode(true);
                     const root = clone.firstElementChild || clone.children[0];
                     if (!root) return;
+
+                    // Mark for cleanup on next render
+                    root.setAttribute('data-cp-layer-clone', '');
 
                     const uid = 'cp-layer-' + anchorCounter + '-' + li;
 
@@ -452,6 +457,7 @@ function initializeColorpickerPlugin() {
                     }
 
                     if (angleInput) {
+                        angleInput.setAttribute('value', layer.angle);
                         angleInput.value = layer.angle;
                         angleInput.addEventListener('input', () => {
                             layer.angle = parseFloat(angleInput.value) || 0;
@@ -510,7 +516,7 @@ function initializeColorpickerPlugin() {
                         if (angleInput) angleInput.value = this.layers[li].angle;
                     });
 
-                    this.layersContainer.appendChild(clone);
+                    parent.appendChild(clone);
                 });
             },
 

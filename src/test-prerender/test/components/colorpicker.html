@@ -19,11 +19,11 @@
 
     <!-- Gradient layers section -->
     <div class="p-3" x-show="tab === 'gradient'">
+
         <div class="row justify-between items-center gap-2">
             <span class="text-xs text-content-neutral">Gradient</span>
-            <button class="gradient-add-layer sm ghost" x-icon="lucide:plus" x-tooltip="Add gradient layer" aria-label="Add gradient layer"></button>
+            <button class="gradient-add-layer sm ghost w-fit" x-icon="lucide:plus" x-tooltip="Add gradient layer" aria-label="Add gradient layer"></button>
         </div>
-        <!-- <div class="gradient-layers"></div> -->
 
         <!-- Layer template (cloned per layer by the plugin) -->
         <template class="gradient-layer">
@@ -40,8 +40,8 @@
                     <li class="layer-remove negative">Remove</li>
                 </menu>
                 <div class="gradient-layer grow"></div>
-                <label class="layer-angle"><input type="number" class="sm" min="0" max="360" /><span>&deg;</span></label>
-                <menu class="layer-angle-menu">
+                <input type="number" class="layer-angle sm w-[5ch]" min="0" max="360" />
+                <menu popover class="layer-angle-menu">
                     <li class="layer-rotate">Rotate 90&deg;</li>
                     <li class="layer-flip">Flip Direction</li>
                 </menu>

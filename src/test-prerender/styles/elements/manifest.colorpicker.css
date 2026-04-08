@@ -306,13 +306,8 @@
                 color: var(--color-content-stark, oklch(16.6% 0.026 267));
                 outline: none;
                 cursor: ew-resize;
-                -moz-appearance: textfield;
-
-                &::-webkit-inner-spin-button,
-                &::-webkit-outer-spin-button {
-                    -webkit-appearance: none;
-                    margin: 0;
-                }
+                -moz-appearance: textfield !important;
+                appearance: textfield !important;
 
                 &:focus {
                     cursor: text;
@@ -389,5 +384,16 @@
                 }
             }
         }
+    }
+
+    /* Hide number input spin buttons inside colorpicker (high specificity, flat selectors) */
+    menu[popover].colorpicker .layer-angle input[type=number]::-webkit-inner-spin-button,
+    menu[popover].colorpicker .layer-angle input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none !important;
+        appearance: none !important;
+        margin: 0 !important;
+        display: none !important;
+        width: 0 !important;
+        height: 0 !important;
     }
 }

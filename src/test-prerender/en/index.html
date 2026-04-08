@@ -1,4 +1,4 @@
-<html lang="en" class="light"><head>
+<html lang="en" class="dark"><head>
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,7 +13,7 @@
   <meta name="google" content="notranslate">
 
   <!-- Web App & Manifest -->
-  <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
   <link rel="manifest" href="../manifest.json">
 
@@ -428,7 +428,7 @@
     <button @click="tab = 'appwrite'" :class="tab === 'appwrite' ? 'selected' : ''" class="">Appwrite</button>
     <button @click="tab = 'local-data'" :class="tab === 'local-data' ? 'selected' : ''" class="">Local Data</button>
     <button @click="tab = 'utilities'" :class="tab === 'utilities' ? 'selected' : ''" class="">Utilities</button>
-    <button x-dropdown="options" x-icon="lucide:settings" class="ms-auto" popovertarget="options" style="anchor-name: --dropdown-01gm9hsjv"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" viewBox="0 0 24 24" data-icon="lucide:settings" class="iconify iconify--lucide"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0a2.34 2.34 0 0 0 3.319 1.915a2.34 2.34 0 0 1 2.33 4.033a2.34 2.34 0 0 0 0 3.831a2.34 2.34 0 0 1-2.33 4.033a2.34 2.34 0 0 0-3.319 1.915a2.34 2.34 0 0 1-4.659 0a2.34 2.34 0 0 0-3.32-1.915a2.34 2.34 0 0 1-2.33-4.033a2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"></path><circle cx="12" cy="12" r="3"></circle></g></svg></button><menu popover="" id="options" class="ms-auto" style="position-anchor: --dropdown-01gm9hsjv">
+    <button x-dropdown="options" x-icon="lucide:settings" class="ms-auto" popovertarget="options" style="anchor-name: --dropdown-km9pkklnq"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" viewBox="0 0 24 24" data-icon="lucide:settings" class="iconify iconify--lucide"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0a2.34 2.34 0 0 0 3.319 1.915a2.34 2.34 0 0 1 2.33 4.033a2.34 2.34 0 0 0 0 3.831a2.34 2.34 0 0 1-2.33 4.033a2.34 2.34 0 0 0-3.319 1.915a2.34 2.34 0 0 1-4.659 0a2.34 2.34 0 0 0-3.32-1.915a2.34 2.34 0 0 1-2.33-4.033a2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"></path><circle cx="12" cy="12" r="3"></circle></g></svg></button><menu popover="" id="options" class="ms-auto" style="position-anchor: --dropdown-km9pkklnq">
     <li x-theme="'light'">Light</li>
     <li x-theme="'dark'">Dark</li>
     <li x-theme="'system'">System</li>
@@ -441,7 +441,7 @@
 
     <!-- Tab Panels -->
     <div class="col gap-4 pt-12 pb-40">
-      <button x-dropdown="colorpicker" class="colorpicker-swatch" data-component="colorpicker-1" popovertarget="colorpicker" style="anchor-name: --dropdown-q3q7nkloo; --swatch-color: #f97316"></button><menu popover="" id="colorpicker" class="colorpicker" x-colorpicker="" x-data="{ tab: 'solid' }" style="position-anchor: --dropdown-q3q7nkloo">
+      <button x-dropdown="colorpicker" class="colorpicker-swatch" data-component="colorpicker-1" popovertarget="colorpicker" style="anchor-name: --dropdown-mrutn44cz; --swatch-color: #f97316"></button><menu popover="" id="colorpicker" class="colorpicker" x-colorpicker="" x-data="{ tab: 'solid' }" style="position-anchor: --dropdown-mrutn44cz">
 
     <!-- Hidden input for form participation -->
     <input type="color" value="#f97316" hidden="">
@@ -458,11 +458,11 @@
 
     <!-- Gradient layers section -->
     <div class="p-3" x-show="tab === 'gradient'" style="display: none">
+
         <div class="row justify-between items-center gap-2">
             <span class="text-xs text-content-neutral">Gradient</span>
-            <button class="gradient-add-layer sm ghost" x-icon="lucide:plus" x-tooltip="Add gradient layer" aria-label="Add gradient layer"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" viewBox="0 0 24 24" data-icon="lucide:plus" class="iconify iconify--lucide"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7-7v14"></path></svg></button>
+            <button class="gradient-add-layer sm ghost w-fit" x-icon="lucide:plus" x-tooltip="Add gradient layer" aria-label="Add gradient layer"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" viewBox="0 0 24 24" data-icon="lucide:plus" class="iconify iconify--lucide"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7-7v14"></path></svg></button>
         </div>
-        <!-- <div class="gradient-layers"></div> -->
 
         <!-- Layer template (cloned per layer by the plugin) -->
         <template class="gradient-layer">
@@ -479,8 +479,8 @@
                     <li class="layer-remove negative">Remove</li>
                 </menu>
                 <div class="gradient-layer grow"></div>
-                <label class="layer-angle"><input type="number" class="sm" min="0" max="360"><span>°</span></label>
-                <menu class="layer-angle-menu">
+                <input type="number" class="layer-angle sm w-[5ch]" min="0" max="360">
+                <menu popover="" class="layer-angle-menu">
                     <li class="layer-rotate">Rotate 90°</li>
                     <li class="layer-flip">Flip Direction</li>
                 </menu>
@@ -1654,7 +1654,7 @@ https://cdn.jsdelivr.net/npm/mnfst@latest/lib/manifest.data.js</code></pre></x-c
   
 
   <!-- Popup test: data-hydrate scope propagation (webchat pattern) -->
-  <div class="fixed bottom-10 end-10 z-100" x-data="{ showChannels: false }" style="position:fixed; bottom:2.5rem; right:2.5rem; z-index:100" data-order="6" data-component="popup-1">
+  <div class="fixed bottom-10 end-10 z-100" x-data="{ showChannels: false }" style="position:fixed; bottom:2.5rem; right:2.5rem; z-index:100" data-order="6">
 
     <!-- Popup button A — data-hydrate with conditional classes -->
     <a role="button" href="#popup-a" class="absolute bottom-0 start-0 brand shadow-lg transition-all duration-300" :class="showChannels ? 'bottom-36 opacity-100' : 'bottom-0 opacity-0 pointer-events-none'" data-hydrate="" style="position:absolute; bottom:0; left:0">Popup A</a>
@@ -1669,4 +1669,4 @@ https://cdn.jsdelivr.net/npm/mnfst@latest/lib/manifest.data.js</code></pre></x-c
 
 
 
-<div popover="" id="tooltip-s82k6a1vj" class="tooltip">Solid</div><div popover="" id="tooltip-f3g7m7u9u" class="tooltip">Gradient</div><div popover="" id="tooltip-hx7upkxbj" class="tooltip">Library</div><div popover="" id="tooltip-2ujtatthr" class="tooltip">Add gradient layer</div><div popover="" id="tooltip-1zy77r8s9" class="tooltip">Tooltip</div><div popover="" id="tooltip-8m5fho97o" class="tooltip">Tooltip</div></body></html>
+<div popover="" id="tooltip-3uc2nftsk" class="tooltip">Solid</div><div popover="" id="tooltip-z5fh1eps7" class="tooltip">Gradient</div><div popover="" id="tooltip-97riobjmp" class="tooltip">Library</div><div popover="" id="tooltip-xpjh8eztq" class="tooltip">Add gradient layer</div><div popover="" id="tooltip-qgztfgc8o" class="tooltip">Tooltip</div><div popover="" id="tooltip-lpb7ktd2s" class="tooltip">Tooltip</div></body></html>
